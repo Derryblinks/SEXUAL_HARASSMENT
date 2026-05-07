@@ -78,7 +78,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "A safe, respectful and inclusive university community. Learn about the UG Gender Policy, understand sexual harassment, and access confidential support." },
       { name: "author", content: "University of Ghana — Equal Opportunities Board" },
       { property: "og:title", content: "Aegis UG — Creating a Safe University Community" },
-      { property: "og:description", content: "Education, prevention and confidential reporting under the University of Ghana Gender
+      { property: "og:description", content: "Education, prevention and confidential reporting under the University of Ghana Gender Policy." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
@@ -115,7 +115,13 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <div className="flex min-h-screen flex-col">
+        <Navbar />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
     </QueryClientProvider>
   );
 }
