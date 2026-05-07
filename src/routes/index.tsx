@@ -442,3 +442,80 @@ function FaqPreview() {
     { q: "Can I report anonymously?", a: "Yes — initial concerns can be raised anonymously. For a formal investigation to proceed, identifying information may be needed at later stages." },
     { q: "What rights does a respondent have?", a: "Respondents are presumed innocent until proven otherwise, are informed of allegations, may respond fully, and may object to panel members." },
     { q: "How long do investigations take?", a: "Timelines vary depending on complexity. The EOB aims to resolve matters efficiently while
+ ensuring fairness for all parties." },
+  ];
+  return (
+    <section className="relative py-28 md:py-36 bg-secondary/60">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid lg:grid-cols-12 gap-12">
+          <div className="lg:col-span-5">
+            <SectionHeader
+              eyebrow="Frequently Asked"
+              title={<>Answers, in plain language.</>}
+              description="The questions we hear most often — addressed with care and clarity."
+            />
+            <Reveal delay={0.2}>
+              <Button asChild variant="outline" className="mt-8 rounded-full">
+                <Link to="/faq">All questions <ArrowRight className="h-4 w-4" /></Link>
+              </Button>
+            </Reveal>
+          </div>
+          <div className="lg:col-span-7">
+            <Reveal>
+              <div className="rounded-3xl border border-border bg-card p-2 shadow-elegant">
+                <Accordion type="single" collapsible className="w-full">
+                  {faqs.map((f, i) => (
+                    <AccordionItem key={i} value={`f${i}`} className="border-b last:border-b-0 px-5">
+                      <AccordionTrigger className="text-left font-display text-base font-medium py-5">
+                        {f.q}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-muted-foreground leading-relaxed pb-5 pr-6">
+                        {f.a}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- EMERGENCY BANNER ---------------- */
+function EmergencyBanner() {
+  return (
+    <section className="relative py-20 md:py-24">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="relative overflow-hidden rounded-[2rem] border border-border bg-primary text-primary-foreground p-10 md:p-14 shadow-deep">
+          <div className="absolute inset-0 grain opacity-[0.06]" />
+          <div className="absolute -top-20 -right-10 h-[280px] w-[280px] rounded-full opacity-40 blur-3xl" style={{ background: "radial-gradient(circle, oklch(0.78 0.13 75 / 0.5), transparent)" }} />
+          <div className="relative grid md:grid-cols-12 gap-8 items-center">
+            <div className="md:col-span-8">
+              <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-gold">
+                <AlertTriangle className="h-3 w-3" /> Need help right now?
+              </div>
+              <h3 className="mt-5 font-display text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-balance">
+                Confidential support is one call away.
+              </h3>
+              <p className="mt-4 text-primary-foreground/70 max-w-xl leading-relaxed">
+                Speak privately with a trained advisor at the Equal Opportunities Board.
+                You will be believed, respected and supported.
+              </p>
+            </div>
+            <div className="md:col-span-4 flex md:justify-end gap-3">
+              <Button asChild size="lg" className="rounded-full h-12 px-6 bg-gold text-gold-foreground hover:bg-gold/90">
+                <a href="tel:+233000000000"><Phone className="h-4 w-4" />Call now</a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="rounded-full h-12 px-6 bg-primary-foreground/5 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
+                <Link to="/contact"><MessageSquareWarning className="h-4 w-4" />Message</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
