@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UnderstandingRouteImport } from './routes/understanding'
+import { Route as ReportingRouteImport } from './routes/reporting'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
 const UnderstandingRoute = UnderstandingRouteImport.update({
   id: '/understanding',
   path: '/understanding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportingRoute = ReportingRouteImport.update({
+  id: '/reporting',
+  path: '/reporting',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -32,30 +38,34 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/reporting': typeof ReportingRoute
   '/understanding': typeof UnderstandingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/reporting': typeof ReportingRoute
   '/understanding': typeof UnderstandingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/reporting': typeof ReportingRoute
   '/understanding': typeof UnderstandingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/understanding'
+  fullPaths: '/' | '/about' | '/reporting' | '/understanding'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/understanding'
-  id: '__root__' | '/' | '/about' | '/understanding'
+  to: '/' | '/about' | '/reporting' | '/understanding'
+  id: '__root__' | '/' | '/about' | '/reporting' | '/understanding'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ReportingRoute: typeof ReportingRoute
   UnderstandingRoute: typeof UnderstandingRoute
 }
 
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/understanding'
       fullPath: '/understanding'
       preLoaderRoute: typeof UnderstandingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reporting': {
+      id: '/reporting'
+      path: '/reporting'
+      fullPath: '/reporting'
+      preLoaderRoute: typeof ReportingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -88,8 +105,19 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ReportingRoute: ReportingRoute,
   UnderstandingRoute: UnderstandingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
