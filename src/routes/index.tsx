@@ -441,8 +441,7 @@ function FaqPreview() {
     { q: "What if I'm afraid of retaliation?", a: "The policy protects complainants and witnesses. Retaliation is itself a violation of the policy and is taken seriously by the EOB." },
     { q: "Can I report anonymously?", a: "Yes — initial concerns can be raised anonymously. For a formal investigation to proceed, identifying information may be needed at later stages." },
     { q: "What rights does a respondent have?", a: "Respondents are presumed innocent until proven otherwise, are informed of allegations, may respond fully, and may object to panel members." },
-    { q: "How long do investigations take?", a: "Timelines vary depending on complexity. The EOB aims to resolve matters efficiently while
- ensuring fairness for all parties." },
+    { q: "How long do investigations take?", a: "Timelines vary depending on complexity. The EOB aims to resolve matters efficiently while ensuring fairness for all parties." },
   ];
   return (
     <section className="relative py-28 md:py-36 bg-secondary/60">
