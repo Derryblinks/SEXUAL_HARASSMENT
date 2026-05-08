@@ -3,11 +3,12 @@ import { Link, useLocation } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ugLogo from "@/assets/ug-logo.jpeg";
 
 const NAV = [
   { to: "/", label: "Home" },
   { to: "/about", label: "The Policy" },
-  { to: "/understanding", label: "Understanding" },
+  { to: "/understanding", label: "Education" },
   { to: "/reporting", label: "Report & Support" },
   { to: "/stakeholders", label: "Stakeholders" },
   { to: "/resources", label: "Resources" },
@@ -49,12 +50,14 @@ export function Navbar() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <div className="flex items-center justify-between gap-6 h-[72px]">
               <Link to="/" className="flex items-center gap-3 group shrink-0">
-                <div className="h-11 w-11 rounded-md bg-primary text-primary-foreground flex items-center justify-center font-display font-semibold text-sm tracking-tight shadow-elegant">
-                  UG
-                </div>
-                <div className="leading-tight">
+                <img
+                  src={ugLogo}
+                  alt="University of Ghana coat of arms"
+                  className="h-12 w-auto object-contain"
+                />
+                <div className="leading-tight border-l border-border/70 pl-3">
                   <div className="font-display text-[15px] font-semibold text-foreground tracking-tight">University of Ghana</div>
-                  <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Sextortion Platform</div>
+                  <div className="text-[11px] uppercase tracking-[0.18em] text-gold font-medium">Sextortion Platform</div>
                 </div>
               </Link>
 

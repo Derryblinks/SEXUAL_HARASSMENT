@@ -23,7 +23,7 @@ const RESOURCES = [
   { icon: BookOpen, type: "Guide", title: "Bystander Action Toolkit", desc: "Direct, distract, delegate, document — practical scripts.", href: "/understanding", action: "Open toolkit" },
   { icon: Video, type: "Training", title: "Consent in Practice", desc: "A 12-minute interactive module on consent in everyday life.", href: "#", action: "Coming soon" },
   { icon: Headphones, type: "Audio", title: "Voices of Dignity", desc: "Anonymised first-person reflections from survivors and allies.", href: "#", action: "Coming soon" },
-  { icon: FileText, type: "Reference", title: "Glossary of Terms", desc: "Key vocabulary in plain, respectful language.", href: "/faq", action: "Read glossary" },
+  { icon: FileText, type: "Reference", title: "Glossary of Terms", desc: "Key vocabulary in plain, respectful language.", href: "/glossary", action: "Read glossary" },
 ];
 
 function ResourcesPage() {
@@ -45,17 +45,18 @@ function ResourcesPage() {
             {RESOURCES.map((r) => {
               const isExternal = r.href.startsWith("/UG-") || r.href.startsWith("http");
               const inner = (
-                <div className="group relative h-full rounded-3xl border border-border bg-card p-7 hover:shadow-elegant hover:-translate-y-0.5 transition-all duration-500 overflow-hidden">
-                  <div className="absolute -top-20 -right-20 h-40 w-40 rounded-full opacity-0 group-hover:opacity-100 blur-3xl transition-opacity duration-700" style={{ background: "var(--gradient-gold)" }} />
-                  <div className="relative">
-                    <div className="text-[10px] uppercase tracking-[0.2em] text-gold font-medium">{r.type}</div>
-                    <r.icon className="mt-4 h-7 w-7 text-primary" strokeWidth={1.5} />
-                    <h3 className="mt-4 font-display text-lg font-semibold tracking-tight">{r.title}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
-                    <div className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary">
-                      {r.download ? <Download className="h-3.5 w-3.5" /> : isExternal ? <ExternalLink className="h-3.5 w-3.5" /> : <ArrowRight className="h-3.5 w-3.5" />}
-                      {r.action}
+                <div className="group h-full rounded-3xl border border-border bg-card p-7 hover:shadow-elegant hover:-translate-y-0.5 transition-all duration-500">
+                  <div className="flex items-center justify-between">
+                    <div className="h-11 w-11 rounded-xl bg-secondary text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                      <r.icon className="h-5 w-5" strokeWidth={1.6} />
                     </div>
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-gold font-medium">{r.type}</div>
+                  </div>
+                  <h3 className="mt-5 font-display text-lg font-semibold tracking-tight">{r.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
+                  <div className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary">
+                    {r.download ? <Download className="h-3.5 w-3.5" /> : isExternal ? <ExternalLink className="h-3.5 w-3.5" /> : <ArrowRight className="h-3.5 w-3.5" />}
+                    {r.action}
                   </div>
                 </div>
               );
