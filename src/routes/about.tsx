@@ -6,6 +6,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import policyHero from "@/assets/policy-hero.jpeg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -24,6 +25,7 @@ function AboutPage() {
     <>
       <PageHero
         eyebrow="Gender Policy 2022"
+        bgImage={policyHero}
         title={<>An institution where equity is a <span className="italic" style={{ background: "var(--gradient-gold)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>policy</span>, not a platitude.</>}
         description="The University of Ghana Gender Policy provides the framework for achieving a gender-equitable environment that engages both males and females in all critical spheres of decision-making."
       >
