@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { ArrowRight, FileText, Scale, Target, Shield, Users, BookOpen } from "lucide-react";
+import { ArrowRight, FileText, Scale, Target, Shield, Users, BookOpen, Download, CheckCircle2, Compass, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeader } from "@/components/site/SectionHeader";
@@ -27,9 +27,17 @@ function AboutPage() {
         title={<>An institution where equity is a <span className="italic" style={{ background: "var(--gradient-gold)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>policy</span>, not a platitude.</>}
         description="The University of Ghana Gender Policy provides the framework for achieving a gender-equitable environment that engages both males and females in all critical spheres of decision-making."
       >
-        <Button asChild size="lg" variant="outline" className="rounded-full bg-primary-foreground/5 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground backdrop-blur h-12 px-7">
-          <a href="/UG-Gender-Policy.pdf" target="_blank" rel="noopener noreferrer"><FileText className="h-4 w-4" /> Download Full Policy (PDF)</a>
-        </Button>
+        <a
+          href="/UG-Gender-Policy.pdf"
+          download="UG-Gender-Policy.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex items-center gap-2.5 rounded-full bg-gold text-gold-foreground h-12 px-7 text-sm font-medium shadow-elegant hover:shadow-glow transition-all duration-500 active:scale-[0.98]"
+        >
+          <Download className="h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          Download Full Policy (PDF)
+          <span className="text-xs text-gold-foreground/70 ml-1 hidden sm:inline">· PDF · 311 KB</span>
+        </a>
       </PageHero>
 
       {/* Purpose */}
@@ -88,29 +96,82 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="py-28 md:py-36">
+      {/* Governance — balanced editorial bento */}
+      <section className="relative py-28 md:py-36 overflow-hidden">
+        <div className="absolute inset-0 -z-10 opacity-60" style={{ background: "radial-gradient(60% 50% at 80% 20%, oklch(0.78 0.13 75 / 0.10), transparent 70%), radial-gradient(50% 40% at 10% 90%, oklch(0.42 0.14 265 / 0.08), transparent 70%)" }} />
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeader
             eyebrow="Governance"
             title={<>Application & scope.</>}
             description="This policy applies to all members — current and prospective — of the University community, covering all activities and programmes in education, training, research and work approved by the University."
           />
-          <Reveal delay={0.1}>
-            <div className="mt-16 rounded-3xl border border-border bg-card p-8 md:p-10 shadow-elegant max-w-3xl">
-              <p className="text-muted-foreground leading-relaxed text-pretty">
-                The policy acknowledges that to enable the University to achieve gender equality,
-                there may be the need to enact special measures for the benefit of one gender.
-                According to law, the University shall not be held to be in breach of this
-                policy by those who do not benefit from or who feel discriminated against as a
-                result of these special measures.
-              </p>
-              <div className="mt-6 flex items-center gap-4 border-t border-border pt-6 text-sm text-muted-foreground">
-                <BookOpen className="h-4 w-4 text-gold" />
-                <span>The Gender Policy shall be reviewed every <strong className="text-foreground">five (5) years</strong> to account for emerging issues and trends.</span>
+
+          <div className="mt-16 grid lg:grid-cols-12 gap-5">
+            {/* LEFT — acknowledgment quote card */}
+            <Reveal className="lg:col-span-7">
+              <div className="relative h-full rounded-3xl border border-border bg-card p-8 md:p-10 shadow-elegant overflow-hidden">
+                <div className="absolute -top-24 -right-24 h-56 w-56 rounded-full opacity-20 blur-3xl" style={{ background: "var(--gradient-gold)" }} />
+                <div className="relative">
+                  <div className="text-xs uppercase tracking-[0.2em] text-gold font-medium">Acknowledgment</div>
+                  <p className="mt-5 font-display text-xl md:text-2xl leading-relaxed text-pretty">
+                    The policy acknowledges that to enable the University to achieve gender
+                    equality, there may be the need to enact <em className="text-primary">special measures</em> for the benefit of one gender.
+                  </p>
+                  <p className="mt-5 text-muted-foreground leading-relaxed text-pretty">
+                    According to law, the University shall not be held to be in breach of this policy by those who do not benefit from — or who feel discriminated against as a result of — these special measures.
+                  </p>
+                  <div className="mt-8 flex items-center gap-3 border-t border-border pt-6 text-sm text-muted-foreground">
+                    <RefreshCw className="h-4 w-4 text-gold" />
+                    <span>Reviewed every <strong className="text-foreground">five (5) years</strong> to account for emerging issues and trends.</span>
+                  </div>
+                </div>
               </div>
+            </Reveal>
+
+            {/* RIGHT — institutional cards */}
+            <div className="lg:col-span-5 grid gap-5 content-start">
+              <Reveal delay={0.05}>
+                <div className="rounded-3xl border border-border bg-card p-6 hover:shadow-elegant transition-shadow">
+                  <div className="flex items-center gap-3">
+                    <div className="h-9 w-9 rounded-xl bg-secondary text-primary flex items-center justify-center"><Compass className="h-4 w-4" /></div>
+                    <div className="font-display text-base font-semibold">Who it covers</div>
+                  </div>
+                  <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
+                    {["Students — undergraduate & graduate", "Faculty & administrative staff", "Visiting & contract personnel", "Prospective members of the community"].map((x) => (
+                      <li key={x} className="flex items-start gap-2.5"><CheckCircle2 className="h-4 w-4 text-gold mt-0.5 flex-shrink-0" /><span>{x}</span></li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+
+              <div className="grid grid-cols-2 gap-5">
+                <Reveal delay={0.1}>
+                  <div className="rounded-3xl border border-border bg-primary text-primary-foreground p-6 h-full relative overflow-hidden">
+                    <div className="absolute inset-0 grain opacity-[0.06]" />
+                    <div className="relative">
+                      <div className="font-display text-4xl font-semibold">5<span className="text-gold">.</span></div>
+                      <div className="mt-2 text-xs uppercase tracking-[0.18em] text-primary-foreground/60">Years between reviews</div>
+                    </div>
+                  </div>
+                </Reveal>
+                <Reveal delay={0.15}>
+                  <div className="rounded-3xl border border-border bg-card p-6 h-full">
+                    <div className="font-display text-4xl font-semibold text-primary">2022</div>
+                    <div className="mt-2 text-xs uppercase tracking-[0.18em] text-muted-foreground">Current edition adopted</div>
+                  </div>
+                </Reveal>
+              </div>
+
+              <Reveal delay={0.2}>
+                <div className="rounded-3xl border border-gold/30 bg-gradient-to-br from-secondary/60 to-card p-6 flex items-start gap-3">
+                  <BookOpen className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Special measures are a <strong className="text-foreground">lawful instrument of equity</strong>, not a deviation from it.
+                  </p>
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
