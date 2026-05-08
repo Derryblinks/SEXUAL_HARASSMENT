@@ -10,11 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UnderstandingRouteImport } from './routes/understanding'
-import { Route as StakeholdersRouteImport } from './routes/stakeholders'
-import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ReportingRouteImport } from './routes/reporting'
-import { Route as FaqRouteImport } from './routes/faq'
-import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -23,29 +19,9 @@ const UnderstandingRoute = UnderstandingRouteImport.update({
   path: '/understanding',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StakeholdersRoute = StakeholdersRouteImport.update({
-  id: '/stakeholders',
-  path: '/stakeholders',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResourcesRoute = ResourcesRouteImport.update({
-  id: '/resources',
-  path: '/resources',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ReportingRoute = ReportingRouteImport.update({
   id: '/reporting',
   path: '/reporting',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FaqRoute = FaqRouteImport.update({
-  id: '/faq',
-  path: '/faq',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -62,75 +38,34 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/contact': typeof ContactRoute
-  '/faq': typeof FaqRoute
   '/reporting': typeof ReportingRoute
-  '/resources': typeof ResourcesRoute
-  '/stakeholders': typeof StakeholdersRoute
   '/understanding': typeof UnderstandingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/contact': typeof ContactRoute
-  '/faq': typeof FaqRoute
   '/reporting': typeof ReportingRoute
-  '/resources': typeof ResourcesRoute
-  '/stakeholders': typeof StakeholdersRoute
   '/understanding': typeof UnderstandingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/contact': typeof ContactRoute
-  '/faq': typeof FaqRoute
   '/reporting': typeof ReportingRoute
-  '/resources': typeof ResourcesRoute
-  '/stakeholders': typeof StakeholdersRoute
   '/understanding': typeof UnderstandingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/about'
-    | '/contact'
-    | '/faq'
-    | '/reporting'
-    | '/resources'
-    | '/stakeholders'
-    | '/understanding'
+  fullPaths: '/' | '/about' | '/reporting' | '/understanding'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/about'
-    | '/contact'
-    | '/faq'
-    | '/reporting'
-    | '/resources'
-    | '/stakeholders'
-    | '/understanding'
-  id:
-    | '__root__'
-    | '/'
-    | '/about'
-    | '/contact'
-    | '/faq'
-    | '/reporting'
-    | '/resources'
-    | '/stakeholders'
-    | '/understanding'
+  to: '/' | '/about' | '/reporting' | '/understanding'
+  id: '__root__' | '/' | '/about' | '/reporting' | '/understanding'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  ContactRoute: typeof ContactRoute
-  FaqRoute: typeof FaqRoute
   ReportingRoute: typeof ReportingRoute
-  ResourcesRoute: typeof ResourcesRoute
-  StakeholdersRoute: typeof StakeholdersRoute
   UnderstandingRoute: typeof UnderstandingRoute
 }
 
@@ -143,39 +78,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnderstandingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/stakeholders': {
-      id: '/stakeholders'
-      path: '/stakeholders'
-      fullPath: '/stakeholders'
-      preLoaderRoute: typeof StakeholdersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/resources': {
-      id: '/resources'
-      path: '/resources'
-      fullPath: '/resources'
-      preLoaderRoute: typeof ResourcesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/reporting': {
       id: '/reporting'
       path: '/reporting'
       fullPath: '/reporting'
       preLoaderRoute: typeof ReportingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/faq': {
-      id: '/faq'
-      path: '/faq'
-      fullPath: '/faq'
-      preLoaderRoute: typeof FaqRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -198,13 +105,19 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  ContactRoute: ContactRoute,
-  FaqRoute: FaqRoute,
   ReportingRoute: ReportingRoute,
-  ResourcesRoute: ResourcesRoute,
-  StakeholdersRoute: StakeholdersRoute,
   UnderstandingRoute: UnderstandingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

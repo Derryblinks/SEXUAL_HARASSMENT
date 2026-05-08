@@ -41,20 +41,20 @@ export function Navbar() {
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div
-            className={`flex items-center justify-between gap-6 rounded-full border px-4 py-2.5 transition-all duration-500 backdrop-blur-xl ${
+            className={`flex items-center justify-between gap-6 rounded-full border px-4 py-2.5 transition-all duration-500 ${
               scrolled
                 ? "glass-light shadow-elegant border-border/60"
-                : "bg-primary/30 border-primary-foreground/15 shadow-elegant"
+                : "border-transparent bg-transparent"
             }`}
           >
             <Link to="/" className="flex items-center gap-2.5 group">
-              <div className={`relative h-9 w-9 rounded-xl flex items-center justify-center overflow-hidden shadow-elegant transition-colors ${scrolled ? "bg-primary" : "bg-primary-foreground/15 ring-1 ring-primary-foreground/20"}`}>
+              <div className="relative h-9 w-9 rounded-xl bg-primary flex items-center justify-center overflow-hidden shadow-elegant">
                 <div className="absolute inset-0 bg-gold-grad opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <ShieldAlert className="relative h-4.5 w-4.5 text-primary-foreground" />
               </div>
               <div className="leading-tight">
-                <div className={`font-display text-sm font-semibold tracking-tight ${scrolled ? "text-foreground" : "text-primary-foreground"}`}>Aegis UG</div>
-                <div className={`text-[10px] uppercase tracking-[0.18em] ${scrolled ? "text-muted-foreground" : "text-primary-foreground/60"}`}>Gender Equity Initiative</div>
+                <div className="font-display text-sm font-semibold tracking-tight">Aegis UG</div>
+                <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Gender Equity Initiative</div>
               </div>
             </Link>
 
@@ -66,16 +66,14 @@ export function Navbar() {
                     key={item.to}
                     to={item.to}
                     className={`relative rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
-                      active
-                        ? scrolled ? "text-primary" : "text-primary-foreground"
-                        : scrolled ? "text-muted-foreground hover:text-foreground" : "text-primary-foreground/70 hover:text-primary-foreground"
+                      active ? "text-primary" : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     {active && (
                       <motion.span
                         layoutId="nav-pill"
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                        className={`absolute inset-0 rounded-full ${scrolled ? "bg-secondary" : "bg-primary-foreground/15 ring-1 ring-primary-foreground/20"}`}
+                        className="absolute inset-0 rounded-full bg-secondary"
                       />
                     )}
                     <span className="relative">{item.label}</span>
@@ -85,11 +83,11 @@ export function Navbar() {
             </nav>
 
             <div className="flex items-center gap-2">
-              <Button asChild size="sm" className={`hidden sm:inline-flex rounded-full shadow-elegant transition-colors ${scrolled ? "bg-primary hover:bg-primary/90 text-primary-foreground" : "bg-gold hover:bg-gold/90 text-gold-foreground"}`}>
+              <Button asChild size="sm" className="hidden sm:inline-flex rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-elegant">
                 <Link to="/reporting">Report Safely</Link>
               </Button>
               <button
-                className={`lg:hidden h-9 w-9 inline-flex items-center justify-center rounded-full border transition-colors ${scrolled ? "border-border bg-card text-foreground" : "border-primary-foreground/20 bg-primary-foreground/10 text-primary-foreground"}`}
+                className="lg:hidden h-9 w-9 inline-flex items-center justify-center rounded-full border border-border bg-card"
                 onClick={() => setOpen((o) => !o)}
                 aria-label="Toggle menu"
               >
