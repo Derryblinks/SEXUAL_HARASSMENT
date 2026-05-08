@@ -13,6 +13,7 @@ import { Route as UnderstandingRouteImport } from './routes/understanding'
 import { Route as StakeholdersRouteImport } from './routes/stakeholders'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ReportingRouteImport } from './routes/reporting'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -36,6 +37,11 @@ const ReportingRoute = ReportingRouteImport.update({
   path: '/reporting',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -50,6 +56,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/faq': typeof FaqRoute
   '/reporting': typeof ReportingRoute
   '/resources': typeof ResourcesRoute
   '/stakeholders': typeof StakeholdersRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/faq': typeof FaqRoute
   '/reporting': typeof ReportingRoute
   '/resources': typeof ResourcesRoute
   '/stakeholders': typeof StakeholdersRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/faq': typeof FaqRoute
   '/reporting': typeof ReportingRoute
   '/resources': typeof ResourcesRoute
   '/stakeholders': typeof StakeholdersRoute
@@ -77,6 +86,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/faq'
     | '/reporting'
     | '/resources'
     | '/stakeholders'
@@ -85,6 +95,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/faq'
     | '/reporting'
     | '/resources'
     | '/stakeholders'
@@ -93,6 +104,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/faq'
     | '/reporting'
     | '/resources'
     | '/stakeholders'
@@ -102,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  FaqRoute: typeof FaqRoute
   ReportingRoute: typeof ReportingRoute
   ResourcesRoute: typeof ResourcesRoute
   StakeholdersRoute: typeof StakeholdersRoute
@@ -138,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -158,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  FaqRoute: FaqRoute,
   ReportingRoute: ReportingRoute,
   ResourcesRoute: ResourcesRoute,
   StakeholdersRoute: StakeholdersRoute,
