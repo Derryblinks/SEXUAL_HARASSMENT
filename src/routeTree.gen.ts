@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UnderstandingRouteImport } from './routes/understanding'
 import { Route as StakeholdersRouteImport } from './routes/stakeholders'
+import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ReportingRouteImport } from './routes/reporting'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -23,6 +24,11 @@ const UnderstandingRoute = UnderstandingRouteImport.update({
 const StakeholdersRoute = StakeholdersRouteImport.update({
   id: '/stakeholders',
   path: '/stakeholders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesRoute = ResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReportingRoute = ReportingRouteImport.update({
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/reporting': typeof ReportingRoute
+  '/resources': typeof ResourcesRoute
   '/stakeholders': typeof StakeholdersRoute
   '/understanding': typeof UnderstandingRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/reporting': typeof ReportingRoute
+  '/resources': typeof ResourcesRoute
   '/stakeholders': typeof StakeholdersRoute
   '/understanding': typeof UnderstandingRoute
 }
@@ -60,19 +68,33 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/reporting': typeof ReportingRoute
+  '/resources': typeof ResourcesRoute
   '/stakeholders': typeof StakeholdersRoute
   '/understanding': typeof UnderstandingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/reporting' | '/stakeholders' | '/understanding'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/reporting'
+    | '/resources'
+    | '/stakeholders'
+    | '/understanding'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/reporting' | '/stakeholders' | '/understanding'
+  to:
+    | '/'
+    | '/about'
+    | '/reporting'
+    | '/resources'
+    | '/stakeholders'
+    | '/understanding'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/reporting'
+    | '/resources'
     | '/stakeholders'
     | '/understanding'
   fileRoutesById: FileRoutesById
@@ -81,6 +103,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ReportingRoute: typeof ReportingRoute
+  ResourcesRoute: typeof ResourcesRoute
   StakeholdersRoute: typeof StakeholdersRoute
   UnderstandingRoute: typeof UnderstandingRoute
 }
@@ -99,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/stakeholders'
       fullPath: '/stakeholders'
       preLoaderRoute: typeof StakeholdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources': {
+      id: '/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof ResourcesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reporting': {
@@ -129,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ReportingRoute: ReportingRoute,
+  ResourcesRoute: ResourcesRoute,
   StakeholdersRoute: StakeholdersRoute,
   UnderstandingRoute: UnderstandingRoute,
 }
