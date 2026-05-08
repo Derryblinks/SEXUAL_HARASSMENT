@@ -109,11 +109,23 @@ function UnderstandingPage() {
                   { t: "Unwelcome", d: "Conduct the recipient has not invited and does not want." },
                   { t: "Sexual nature", d: "Verbal, physical or visual conduct of a sexual character." },
                   { t: "Impact-based", d: "What matters is the impact on the person, not solely intent." },
-                ].map((p) => (
-                  <div key={p.t} className="rounded-2xl border border-border bg-card p-5">
-                    <div className="text-xs uppercase tracking-[0.18em] text-gold font-medium">{p.t}</div>
-                    <div className="mt-2 text-sm text-muted-foreground leading-relaxed">{p.d}</div>
-                  </div>
+                ].map((p, i) => (
+                  <motion.div
+                    key={p.t}
+                    whileHover={{ y: -4 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    className="group relative rounded-2xl border border-border bg-card p-5 overflow-hidden cursor-default"
+                  >
+                    <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(120% 80% at 50% 0%, oklch(0.78 0.13 75 / 0.10), transparent 70%)" }} />
+                    <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="relative">
+                      <div className="flex items-center gap-2">
+                        <span className="font-display text-xs text-muted-foreground/70">0{i + 1}</span>
+                        <div className="text-xs uppercase tracking-[0.18em] text-gold font-medium">{p.t}</div>
+                      </div>
+                      <div className="mt-2 text-sm text-muted-foreground leading-relaxed">{p.d}</div>
+                    </div>
+                  </motion.div>
                 ))}
               </div>
             </Reveal>
@@ -202,11 +214,21 @@ function UnderstandingPage() {
               { t: "Specific", d: "Yes to one act is not yes to all." },
             ].map((c) => (
               <StaggerItem key={c.t}>
-                <div className="h-full rounded-3xl border border-border bg-card p-6">
-                  <Heart className="h-6 w-6 text-gold" strokeWidth={1.5} />
-                  <div className="mt-4 font-display text-base font-semibold">{c.t}</div>
-                  <div className="mt-2 text-sm text-muted-foreground leading-relaxed">{c.d}</div>
-                </div>
+                <motion.div
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  className="group relative h-full rounded-3xl border border-border bg-card p-6 overflow-hidden cursor-default"
+                >
+                  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(120% 80% at 50% 0%, oklch(0.78 0.13 75 / 0.12), transparent 70%)" }} />
+                  <div className="pointer-events-none absolute left-6 right-6 top-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                  <div className="relative">
+                    <div className="h-10 w-10 rounded-xl bg-secondary/80 flex items-center justify-center group-hover:bg-gold/15 transition-colors duration-500">
+                      <Heart className="h-5 w-5 text-gold transition-transform duration-500 group-hover:scale-110" strokeWidth={1.5} />
+                    </div>
+                    <div className="mt-4 font-display text-base font-semibold">{c.t}</div>
+                    <div className="mt-2 text-sm text-muted-foreground leading-relaxed">{c.d}</div>
+                  </div>
+                </motion.div>
               </StaggerItem>
             ))}
           </StaggerGroup>
