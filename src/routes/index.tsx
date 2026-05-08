@@ -53,7 +53,8 @@ function Hero() {
         height={1280}
       />
       {/* Editorial gradient overlay for legibility */}
-      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, oklch(0.18 0.05 260 / 0.78) 0%, oklch(0.18 0.05 260 / 0.62) 50%, oklch(0.14 0.04 260 / 0.92) 100%)" }} />
+      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, oklch(0.18 0.05 260 / 0.55) 0%, oklch(0.18 0.05 260 / 0.45) 45%, oklch(0.14 0.04 260 / 0.85) 100%)" }} />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
       <div className="absolute inset-0 grain opacity-[0.05]" />
 
       <div className="relative mx-auto max-w-7xl px-6 pt-20 md:pt-32 pb-24 md:pb-32">
