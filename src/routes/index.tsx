@@ -228,7 +228,6 @@ function StatsSection() {
   return (
     <section className="relative py-28 md:py-36 overflow-hidden bg-primary text-primary-foreground">
       <div className="absolute inset-0 grain opacity-[0.05]" />
-      <div className="absolute -top-32 right-1/3 h-[400px] w-[400px] rounded-full opacity-30 blur-3xl" style={{ background: "radial-gradient(circle, oklch(0.78 0.13 75) 0%, transparent 60%)" }} />
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-5">
