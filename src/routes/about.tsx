@@ -36,7 +36,7 @@ function AboutPage() {
         >
           <Download className="h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           Download Full Policy (PDF)
-          <span className="text-xs text-gold-foreground/70 ml-1 hidden sm:inline">· 1.4 MB</span>
+          <span className="text-xs text-gold-foreground/70 ml-1 hidden sm:inline">· PDF · 311 KB</span>
         </a>
       </PageHero>
 
