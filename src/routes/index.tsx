@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import {
   ArrowRight, ShieldCheck, Lock, BookOpen, HeartHandshake, Scale,
-  AlertTriangle, ChevronRight, Users, MessageSquareWarning,
-  Phone, Quote
+  AlertTriangle, ChevronRight, Sparkles, Users, MessageSquareWarning,
+  Phone, FileText, GraduationCap, Quote
 } from "lucide-react";
-import heroCampus from "@/assets/hero-campus.jpg";
 import { Button } from "@/components/ui/button";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
 import { SectionHeader } from "@/components/site/SectionHeader";
@@ -14,9 +14,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "University of Ghana Sextortion Platform" },
-      { name: "description", content: "An institutional platform of the University of Ghana for education, prevention, confidential reporting and support against sexual harassment and sextortion." },
-      { property: "og:title", content: "University of Ghana Sextortion Platform" },
+      { title: "Aegis UG — A Safe, Respectful & Inclusive University" },
+      { name: "description", content: "The University of Ghana's institutional commitment to gender equity, safe reporting and a community free from harassment." },
+      { property: "og:title", content: "Aegis UG — A Safe, Respectful & Inclusive University" },
       { property: "og:description", content: "Learn the policy. Know your rights. Access confidential support." },
     ],
   }),
@@ -43,84 +43,124 @@ function HomePage() {
 
 /* ---------------- HERO ---------------- */
 function Hero() {
-  return (
-    <section className="relative min-h-[88vh] overflow-hidden text-primary-foreground pt-[112px]">
-      <img
-        src={heroCampus}
-        alt="University of Ghana Balme Library tower at golden hour with students walking on the lawn"
-        className="absolute inset-0 h-full w-full object-cover"
-        width={1920}
-        height={1280}
-      />
-      {/* Editorial gradient overlay for legibility */}
-      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, oklch(0.18 0.05 260 / 0.78) 0%, oklch(0.18 0.05 260 / 0.62) 50%, oklch(0.14 0.04 260 / 0.92) 100%)" }} />
-      <div className="absolute inset-0 grain opacity-[0.05]" />
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-      <div className="relative mx-auto max-w-7xl px-6 pt-20 md:pt-32 pb-24 md:pb-32">
+  return (
+    <section ref={ref} className="relative min-h-screen overflow-hidden bg-hero text-primary-foreground">
+      <div className="absolute inset-0 grain opacity-[0.06]" />
+      {/* aurora orbs */}
+      <motion.div
+        style={{ y: y1 }}
+        className="absolute -top-40 -left-40 h-[600px] w-[600px] rounded-full opacity-40 blur-3xl"
+      >
+        <div className="h-full w-full rounded-full" style={{ background: "radial-gradient(circle, oklch(0.42 0.16 285) 0%, transparent 65%)" }} />
+      </motion.div>
+      <motion.div
+        style={{ y: y2 }}
+        className="absolute -bottom-32 -right-32 h-[700px] w-[700px] rounded-full opacity-30 blur-3xl"
+      >
+        <div className="h-full w-full rounded-full" style={{ background: "radial-gradient(circle, oklch(0.78 0.13 75) 0%, transparent 65%)" }} />
+      </motion.div>
+
+      {/* particles */}
+      <div className="absolute inset-0 pointer-events-none">
+        {Array.from({ length: 14 }).map((_, i) => (
+          <motion.span
+            key={i}
+            className="absolute h-1 w-1 rounded-full bg-gold/60"
+            style={{ left: `${(i * 73) % 100}%`, top: `${(i * 37) % 100}%` }}
+            animate={{ y: [0, -30, 0], opacity: [0.2, 0.8, 0.2] }}
+            transition={{ duration: 5 + (i % 4), repeat: Infinity, delay: i * 0.3 }}
+          />
+        ))}
+      </div>
+
+      <motion.div style={{ opacity }} className="relative mx-auto max-w-7xl px-6 pt-44 pb-32 md:pt-56 md:pb-48">
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 border-l-2 border-gold pl-3 text-[11px] uppercase tracking-[0.22em] text-primary-foreground/85"
+          transition={{ duration: 0.7 }}
+          className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/15 bg-primary-foreground/5 backdrop-blur px-3.5 py-1.5 text-xs uppercase tracking-[0.2em] text-primary-foreground/85"
         >
+          <Sparkles className="h-3 w-3 text-gold" />
           University of Ghana — Gender Policy 2022
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-6 max-w-4xl font-display text-4xl sm:text-5xl md:text-[3.75rem] font-medium tracking-tight leading-[1.08] text-balance"
+          transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-7 max-w-5xl font-display text-[2.75rem] sm:text-6xl md:text-[5.5rem] font-semibold tracking-[-0.035em] leading-[0.98] text-balance"
         >
-          A safe, respectful and inclusive university community.
+          A safe, respectful and{" "}
+          <span className="relative inline-block">
+            <span className="relative z-10 italic font-medium" style={{ background: "var(--gradient-gold)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
+              inclusive
+            </span>
+          </span>{" "}
+          university community.
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          className="mt-6 max-w-2xl text-base md:text-lg text-primary-foreground/80 leading-relaxed text-pretty font-sans"
+          transition={{ duration: 0.8, delay: 0.25 }}
+          className="mt-7 max-w-2xl text-lg md:text-xl text-primary-foreground/70 leading-relaxed text-pretty"
         >
-          The University of Ghana Sextortion Platform is an institutional initiative for
-          education, prevention and confidential support — guided by the UG Gender Policy.
+          Aegis UG is the University of Ghana's institutional initiative for gender equity,
+          harassment prevention and confidential support — guided by our Gender Policy.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.25 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
           className="mt-10 flex flex-col sm:flex-row gap-3"
         >
-          <Button asChild size="lg" className="rounded-sm bg-gold text-gold-foreground hover:bg-gold/90 h-12 px-7 text-[14px] font-medium tracking-wide">
+          <Button asChild size="lg" className="rounded-full bg-gold text-gold-foreground hover:bg-gold/90 shadow-glow h-12 px-7 text-base font-medium">
             <Link to="/reporting">
               Report safely <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
-          <Button asChild size="lg" variant="outline" className="rounded-sm bg-transparent border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground h-12 px-7 text-[14px]">
+          <Button asChild size="lg" variant="outline" className="rounded-full bg-primary-foreground/5 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground backdrop-blur h-12 px-7 text-base">
             <Link to="/understanding">Learn the policy</Link>
           </Button>
         </motion.div>
 
-        {/* hero stats — institutional, calm */}
+        {/* hero stats */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 border-t border-primary-foreground/15"
+          transition={{ duration: 0.9, delay: 0.55 }}
+          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-px rounded-3xl border border-primary-foreground/10 bg-primary-foreground/[0.03] backdrop-blur overflow-hidden"
         >
           {[
             { k: "100%", v: "Confidential reporting" },
             { k: "24/7", v: "Support availability" },
-            { k: "09", v: "Implementation bodies" },
+            { k: "9", v: "Implementation bodies" },
             { k: "2022", v: "Gender Policy in force" },
           ].map((s) => (
-            <div key={s.v} className="py-6 md:py-7 pr-6 border-r border-primary-foreground/10 last:border-r-0">
-              <div className="font-display text-2xl md:text-3xl font-medium text-gold tracking-tight">{s.k}</div>
-              <div className="mt-1.5 text-[11px] uppercase tracking-[0.18em] text-primary-foreground/65">{s.v}</div>
+            <div key={s.v} className="p-6 md:p-8 bg-primary/40">
+              <div className="font-display text-3xl md:text-4xl font-semibold text-gold tracking-tight">{s.k}</div>
+              <div className="mt-2 text-xs uppercase tracking-[0.16em] text-primary-foreground/60">{s.v}</div>
             </div>
           ))}
         </motion.div>
-      </div>
+      </motion.div>
+
+      {/* scroll cue */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.3em] text-primary-foreground/40"
+      >
+        scroll to explore
+      </motion.div>
     </section>
   );
 }
@@ -228,6 +268,7 @@ function StatsSection() {
   return (
     <section className="relative py-28 md:py-36 overflow-hidden bg-primary text-primary-foreground">
       <div className="absolute inset-0 grain opacity-[0.05]" />
+      <div className="absolute -top-32 right-1/3 h-[400px] w-[400px] rounded-full opacity-30 blur-3xl" style={{ background: "radial-gradient(circle, oklch(0.78 0.13 75) 0%, transparent 60%)" }} />
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-5">
@@ -376,11 +417,12 @@ function StakeholdersGrid() {
 /* ---------------- IMPACT QUOTE ---------------- */
 function ImpactQuote() {
   return (
-    <section className="relative py-24 md:py-32 overflow-hidden bg-secondary/40">
+    <section className="relative py-28 md:py-40 overflow-hidden">
+      <div className="absolute inset-0 opacity-30 blur-3xl" style={{ background: "radial-gradient(ellipse at center, oklch(0.78 0.13 75 / 0.3), transparent 60%)" }} />
       <div className="relative mx-auto max-w-4xl px-6 text-center">
-        <Quote className="mx-auto h-9 w-9 text-gold" strokeWidth={1.5} />
+        <Quote className="mx-auto h-10 w-10 text-gold" strokeWidth={1.5} />
         <Reveal delay={0.1}>
-          <p className="mt-7 font-display text-2xl md:text-[2.25rem] font-medium tracking-tight leading-[1.25] text-balance text-foreground">
+          <p className="mt-8 font-display text-3xl md:text-5xl font-semibold tracking-tight leading-[1.15] text-balance">
             "The dignity of the human person is protected when every member of this community is fairly heard, safely supported and equally respected."
           </p>
         </Reveal>
@@ -448,6 +490,7 @@ function EmergencyBanner() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="relative overflow-hidden rounded-[2rem] border border-border bg-primary text-primary-foreground p-10 md:p-14 shadow-deep">
           <div className="absolute inset-0 grain opacity-[0.06]" />
+          <div className="absolute -top-20 -right-10 h-[280px] w-[280px] rounded-full opacity-40 blur-3xl" style={{ background: "radial-gradient(circle, oklch(0.78 0.13 75 / 0.5), transparent)" }} />
           <div className="relative grid md:grid-cols-12 gap-8 items-center">
             <div className="md:col-span-8">
               <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-gold">
