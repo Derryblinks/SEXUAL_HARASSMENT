@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { ArrowRight, FileText, Scale, Target, Shield, Users, BookOpen } from "lucide-react";
+import { ArrowRight, FileText, Scale, Target, Shield, Users, BookOpen, Download, CheckCircle2, Compass, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeader } from "@/components/site/SectionHeader";
@@ -27,9 +27,17 @@ function AboutPage() {
         title={<>An institution where equity is a <span className="italic" style={{ background: "var(--gradient-gold)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>policy</span>, not a platitude.</>}
         description="The University of Ghana Gender Policy provides the framework for achieving a gender-equitable environment that engages both males and females in all critical spheres of decision-making."
       >
-        <Button asChild size="lg" variant="outline" className="rounded-full bg-primary-foreground/5 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground backdrop-blur h-12 px-7">
-          <a href="/UG-Gender-Policy.pdf" target="_blank" rel="noopener noreferrer"><FileText className="h-4 w-4" /> Download Full Policy (PDF)</a>
-        </Button>
+        <a
+          href="/UG-Gender-Policy.pdf"
+          download="UG-Gender-Policy.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex items-center gap-2.5 rounded-full bg-gold text-gold-foreground h-12 px-7 text-sm font-medium shadow-elegant hover:shadow-glow transition-all duration-500 active:scale-[0.98]"
+        >
+          <Download className="h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          Download Full Policy (PDF)
+          <span className="text-xs text-gold-foreground/70 ml-1 hidden sm:inline">· 1.4 MB</span>
+        </a>
       </PageHero>
 
       {/* Purpose */}
