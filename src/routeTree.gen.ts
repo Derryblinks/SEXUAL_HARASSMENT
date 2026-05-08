@@ -13,6 +13,7 @@ import { Route as UnderstandingRouteImport } from './routes/understanding'
 import { Route as StakeholdersRouteImport } from './routes/stakeholders'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ReportingRouteImport } from './routes/reporting'
+import { Route as GlossaryRouteImport } from './routes/glossary'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
@@ -36,6 +37,11 @@ const ResourcesRoute = ResourcesRouteImport.update({
 const ReportingRoute = ReportingRouteImport.update({
   id: '/reporting',
   path: '/reporting',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlossaryRoute = GlossaryRouteImport.update({
+  id: '/glossary',
+  path: '/glossary',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/glossary': typeof GlossaryRoute
   '/reporting': typeof ReportingRoute
   '/resources': typeof ResourcesRoute
   '/stakeholders': typeof StakeholdersRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/glossary': typeof GlossaryRoute
   '/reporting': typeof ReportingRoute
   '/resources': typeof ResourcesRoute
   '/stakeholders': typeof StakeholdersRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/glossary': typeof GlossaryRoute
   '/reporting': typeof ReportingRoute
   '/resources': typeof ResourcesRoute
   '/stakeholders': typeof StakeholdersRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/faq'
+    | '/glossary'
     | '/reporting'
     | '/resources'
     | '/stakeholders'
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/faq'
+    | '/glossary'
     | '/reporting'
     | '/resources'
     | '/stakeholders'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/faq'
+    | '/glossary'
     | '/reporting'
     | '/resources'
     | '/stakeholders'
@@ -128,6 +140,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
+  GlossaryRoute: typeof GlossaryRoute
   ReportingRoute: typeof ReportingRoute
   ResourcesRoute: typeof ResourcesRoute
   StakeholdersRoute: typeof StakeholdersRoute
@@ -162,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/reporting'
       fullPath: '/reporting'
       preLoaderRoute: typeof ReportingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/glossary': {
+      id: '/glossary'
+      path: '/glossary'
+      fullPath: '/glossary'
+      preLoaderRoute: typeof GlossaryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -200,6 +220,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
+  GlossaryRoute: GlossaryRoute,
   ReportingRoute: ReportingRoute,
   ResourcesRoute: ResourcesRoute,
   StakeholdersRoute: StakeholdersRoute,
@@ -208,3 +229,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
