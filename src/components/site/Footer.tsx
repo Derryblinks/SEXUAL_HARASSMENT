@@ -29,7 +29,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid gap-12 lg:grid-cols-12">
           {/* Identity */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-3">
             <div className="flex items-center gap-3">
               <div className="h-12 w-12 rounded-md bg-primary-foreground/10 ring-1 ring-primary-foreground/15 flex items-center justify-center font-display font-semibold text-base">
                 UG
@@ -100,7 +100,7 @@ export function Footer() {
 
 function FooterCol({ title, links, external }: { title: string; links: Array<[string, string]>; external?: boolean }) {
   return (
-    <div className="lg:col-span-2.5 lg:[grid-column:span_2.66]">
+    <div className="lg:col-span-3">
       <div className="text-[11px] uppercase tracking-[0.2em] text-primary-foreground/55 font-medium">{title}</div>
       <ul className="mt-5 space-y-3 text-sm">
         {links.map(([label, href]) => (
