@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-<<<<<<< HEAD
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import {
   Phone,
@@ -17,14 +16,10 @@ import {
   Shield,
   UserCircle2,
 } from "lucide-react";
-=======
-import { Phone, Mail, Lock, ShieldCheck, ArrowRight, AlertTriangle, Scale } from "lucide-react";
->>>>>>> cb1628592c231f56f54661977629a3248306c706
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
-<<<<<<< HEAD
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
@@ -39,26 +34,18 @@ import {
   type IncidentType,
   type ReportRecord,
 } from "@/lib/reporting";
-=======
->>>>>>> cb1628592c231f56f54661977629a3248306c706
 
 export const Route = createFileRoute("/reporting")({
   head: () => ({
     meta: [
-<<<<<<< HEAD
       { title: "Report & Support — Sexual Harassment & Misconduct | University of Ghana" },
       { name: "description", content: "Confidential reporting and support under the University of Ghana Sexual Harassment and Misconduct Policy — Anti-Sexual Harassment Committee and CEGENSA." },
-=======
-      { title: "Report and Support - Aegis UG" },
-      { name: "description", content: "A confidential pathway to report and access support under the UG Gender Policy." },
->>>>>>> cb1628592c231f56f54661977629a3248306c706
     ],
   }),
   component: ReportingPage,
 });
 
 const STEPS = [
-<<<<<<< HEAD
   { n: "01", t: "Informal options", d: "You may address the behaviour directly, ask a trusted person to intervene confidentially, or request mediation through the Committee if the respondent agrees." },
   { n: "02", t: "Severe misconduct", d: "For extreme cases (e.g. sexual assault), complainants should be counselled to report to the Police and file a formal complaint before the Committee." },
   { n: "03", t: "Formal complaint", d: "Speak to a Committee member, then lodge a written complaint. If you cannot write, the Committee will assist and ensure you understand before you sign or thumbprint." },
@@ -205,16 +192,6 @@ function ReportingPage() {
     }, 1200);
   };
 
-=======
-  { n: "01", t: "Raise the concern", d: "Speak informally with a supervisor, or go directly to the Equal Opportunities Board (EOB)." },
-  { n: "02", t: "Submit your complaint", d: "Submit in writing to the EOB Administrator. If unable to write, the Administrator will record and transcribe it for you." },
-  { n: "03", t: "Acknowledgement", d: "The Administrator forwards the complaint to the Chair of the EOB. You are kept informed throughout." },
-  { n: "04", t: "Investigation or mediation", d: "A panel reviews evidence; mediation may be offered with the mutual agreement of both parties." },
-  { n: "05", t: "Outcome and support", d: "A decision is reached with full confidentiality and protection from retaliation." },
-];
-
-function ReportingPage() {
->>>>>>> cb1628592c231f56f54661977629a3248306c706
   return (
     <>
       <PageHero
@@ -223,7 +200,6 @@ function ReportingPage() {
         description="The reporting process is designed to reduce anxiety. Your rights are protected at every stage. So are those of the respondent."
       >
         <div className="flex flex-wrap gap-3">
-<<<<<<< HEAD
           <Button
             asChild
             size="lg"
@@ -244,18 +220,10 @@ function ReportingPage() {
               <Mail className="h-4 w-4" />
               Email the intake desk
             </a>
-=======
-          <Button asChild size="lg" className="rounded-full bg-gold text-gold-foreground hover:bg-gold/90 h-12 px-7">
-            <a href="tel:+233000000000"><Phone className="h-4 w-4" />Call EOB now</a>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="rounded-full bg-primary-foreground/5 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground h-12 px-7">
-            <a href="mailto:eob@ug.edu.gh"><Mail className="h-4 w-4" />Email confidentially</a>
->>>>>>> cb1628592c231f56f54661977629a3248306c706
           </Button>
         </div>
       </PageHero>
 
-<<<<<<< HEAD
       <section id="report-form" className="py-24 md:py-28 scroll-mt-28">
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeader
@@ -554,8 +522,6 @@ function ReportingPage() {
         </div>
       </section>
 
-=======
->>>>>>> cb1628592c231f56f54661977629a3248306c706
       {/* Steps */}
       <section className="py-28 md:py-36">
         <div className="mx-auto max-w-7xl px-6">
@@ -577,11 +543,7 @@ function ReportingPage() {
       {/* Rights */}
       <section className="py-28 md:py-36 bg-secondary/60">
         <div className="mx-auto max-w-7xl px-6">
-<<<<<<< HEAD
           <SectionHeader eyebrow="Your rights" title={<>Protection on both sides of the process.</>} description="The Sexual Harassment and Misconduct Policy sets out rights for complainants and respondents, including representation and confidentiality." />
-=======
-          <SectionHeader eyebrow="Your rights" title={<>Protection on both sides of the process.</>} description="The UG Gender Policy enshrines the rights of complainants and respondents." />
->>>>>>> cb1628592c231f56f54661977629a3248306c706
           <div className="mt-16 grid md:grid-cols-2 gap-6">
             <Reveal>
               <div className="h-full rounded-3xl border border-border bg-card p-8">
@@ -590,11 +552,7 @@ function ReportingPage() {
                   <h3 className="font-display text-xl font-semibold">Rights of the Complainant</h3>
                 </div>
                 <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
-<<<<<<< HEAD
                   {["To pursue redress without reprimand, retaliation or discrimination in good faith", "To have retaliation monitored and reported under the same procedures", "To request mediation where appropriate", "To withdraw a complaint in writing with reasons, even during investigation", "To representation by counsel (subject to hearing rules)", "To referral for counselling or psycho-social support when appropriate"].map((r) => (
-=======
-                  {["To be heard with respect and without judgement", "To confidentiality throughout the process", "To be informed of the progress of your case", "To withdraw a complaint at any stage", "To full protection from retaliation", "To support and counselling services"].map((r) => (
->>>>>>> cb1628592c231f56f54661977629a3248306c706
                     <li key={r} className="flex gap-3"><span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-gold flex-shrink-0" /><span className="leading-relaxed">{r}</span></li>
                   ))}
                 </ul>
@@ -607,11 +565,7 @@ function ReportingPage() {
                   <h3 className="font-display text-xl font-semibold">Rights of the Respondent</h3>
                 </div>
                 <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
-<<<<<<< HEAD
                   {["To be presumed innocent unless and until a final finding of culpability or a stipulated admission", "To be notified and to file a written response within seven days (with assistance if needed)", "To be heard by an adjudication panel and to cross-examine as provided", "To representation by counsel (counsel may not speak for parties during proceedings)", "To have the investigation proceed even if you do not participate", "To confidentiality as advised for all parties"].map((r) => (
-=======
-                  {["To be presumed innocent until proven otherwise", "To be informed of the complaint made against them", "To respond fully and in writing", "To object to any panel member with stated basis", "To call witnesses and present evidence", "To confidentiality throughout the proceedings"].map((r) => (
->>>>>>> cb1628592c231f56f54661977629a3248306c706
                     <li key={r} className="flex gap-3"><span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-gold flex-shrink-0" /><span className="leading-relaxed">{r}</span></li>
                   ))}
                 </ul>
@@ -624,20 +578,12 @@ function ReportingPage() {
       {/* Confidentiality */}
       <section className="py-28 md:py-36">
         <div className="mx-auto max-w-7xl px-6">
-<<<<<<< HEAD
           <SectionHeader eyebrow="What we promise" title="Confidentiality is the foundation." description="The Committee maintains confidentiality of reports and proceedings; parties and representatives are advised that this protects the integrity of investigations." />
-=======
-          <SectionHeader eyebrow="What we promise" title="Confidentiality is the foundation." description="All parties to an investigation are required to maintain confidentiality to protect the integrity of the proceedings." />
->>>>>>> cb1628592c231f56f54661977629a3248306c706
           <StaggerGroup className="mt-16 grid sm:grid-cols-3 gap-5">
             {[
               { i: Lock, t: "End-to-end confidentiality", d: "Information is shared only with those directly involved in the proceedings." },
               { i: ShieldCheck, t: "Protection from retaliation", d: "Retaliation is itself a violation of the policy and is treated seriously." },
-<<<<<<< HEAD
               { i: AlertTriangle, t: "Malicious complaints", d: "Deliberately malicious allegations may attract formal disciplinary action under University procedures." },
-=======
-              { i: AlertTriangle, t: "Bad-faith protection", d: "Knowingly false reports are also a policy violation. Fairness flows both ways." },
->>>>>>> cb1628592c231f56f54661977629a3248306c706
             ].map((c, idx) => (
               <StaggerItem key={idx}>
                 <div className="h-full rounded-3xl border border-border bg-card p-7">
@@ -664,11 +610,7 @@ function ReportingPage() {
               </div>
               <div className="md:col-span-4 flex md:justify-end gap-3">
                 <Button asChild size="lg" className="rounded-full h-12 px-6 bg-gold text-gold-foreground hover:bg-gold/90">
-<<<<<<< HEAD
                   <Link to="/contact">Contact support <ArrowRight className="h-4 w-4" /></Link>
-=======
-                  <Link to="/contact">Contact EOB <ArrowRight className="h-4 w-4" /></Link>
->>>>>>> cb1628592c231f56f54661977629a3248306c706
                 </Button>
               </div>
             </div>

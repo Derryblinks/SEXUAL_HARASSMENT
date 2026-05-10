@@ -5,11 +5,7 @@ const COL_EXPLORE: Array<[string, string]> = [
   ["The Policy", "/about"],
   ["Understanding Harassment", "/understanding"],
   ["Report & Support", "/reporting"],
-<<<<<<< HEAD
   ["Contact & Help", "/contact"],
-=======
-  ["Stakeholders", "/stakeholders"],
->>>>>>> cb1628592c231f56f54661977629a3248306c706
 ];
 
 const COL_RESOURCES: Array<[string, string]> = [
@@ -28,11 +24,7 @@ const COL_UNIVERSITY: Array<[string, string]> = [
 
 export function Footer() {
   return (
-<<<<<<< HEAD
     <footer className="mt-24 bg-[#143D6B] text-primary-foreground">
-=======
-    <footer className="mt-24 bg-primary text-primary-foreground">
->>>>>>> cb1628592c231f56f54661977629a3248306c706
       {/* Top section */}
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid gap-12 lg:grid-cols-12">
@@ -48,25 +40,15 @@ export function Footer() {
               </div>
             </div>
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-primary-foreground/70">
-<<<<<<< HEAD
               An official University of Ghana platform for sexual harassment and misconduct
               education, prevention, confidential reporting and victim support — aligned with the
               Sexual Harassment and Misconduct Policy and supported by CEGENSA and the Anti-Sexual Harassment Committee.
-=======
-              An institutional initiative of the University of Ghana — providing
-              education, confidential support and a safe pathway to report
-              sexual harassment and sextortion. Guided by the UG Gender Policy (2022).
->>>>>>> cb1628592c231f56f54661977629a3248306c706
             </p>
 
             <address className="not-italic mt-7 space-y-3 text-sm text-primary-foreground/80">
               <div className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 mt-0.5 text-gold shrink-0" />
-<<<<<<< HEAD
                 <span>Anti-Sexual Harassment Committee / CEGENSA<br />University of Ghana, Legon — Accra, Ghana</span>
-=======
-                <span>Equal Opportunities Board<br/>University of Ghana, Legon — Accra, Ghana</span>
->>>>>>> cb1628592c231f56f54661977629a3248306c706
               </div>
               <div className="flex items-start gap-3">
                 <Phone className="h-4 w-4 mt-0.5 text-gold shrink-0" />
@@ -90,11 +72,7 @@ export function Footer() {
           {[
             ["Confidential support", "Available to all members of the UG community."],
             ["Trauma-informed care", "Trained counsellors and case officers on standby."],
-<<<<<<< HEAD
             ["Anti-retaliation", "Protections under the Sexual Harassment and Misconduct Policy."],
-=======
-            ["Anti-retaliation", "Protections under the UG Gender Policy."],
->>>>>>> cb1628592c231f56f54661977629a3248306c706
           ].map(([t, d]) => (
             <div key={t}>
               <div className="text-[11px] uppercase tracking-[0.2em] text-gold">{t}</div>
@@ -105,15 +83,9 @@ export function Footer() {
       </div>
 
       {/* Bottom legal bar */}
-<<<<<<< HEAD
       <div className="border-t border-primary-foreground/10 bg-[#143D6B]">
         <div className="mx-auto max-w-7xl px-6 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-[12px] text-primary-foreground/55">
           <div>© {new Date().getFullYear()} University of Ghana. Sexual harassment awareness &amp; reporting platform.</div>
-=======
-      <div className="border-t border-primary-foreground/10 bg-primary">
-        <div className="mx-auto max-w-7xl px-6 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-[12px] text-primary-foreground/55">
-          <div>© {new Date().getFullYear()} University of Ghana — Equal Opportunities Board. All rights reserved.</div>
->>>>>>> cb1628592c231f56f54661977629a3248306c706
           <div className="flex gap-6">
             <Link to="/about" className="hover:text-primary-foreground transition-colors">Policy Document</Link>
             <Link to="/contact" className="hover:text-primary-foreground transition-colors">Accessibility</Link>

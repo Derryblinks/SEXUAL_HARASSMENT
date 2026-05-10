@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-<<<<<<< HEAD
 import {
   ArrowRight,
   AlertCircle,
@@ -15,32 +14,20 @@ import {
   CloudLightning,
   ShieldAlert,
 } from "lucide-react";
-=======
-import { ArrowRight, AlertCircle, MessageCircle, Hand, Globe, ShieldOff, Users, Eye, Heart } from "lucide-react";
->>>>>>> cb1628592c231f56f54661977629a3248306c706
+
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
-<<<<<<< HEAD
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-=======
->>>>>>> cb1628592c231f56f54661977629a3248306c706
 
 export const Route = createFileRoute("/understanding")({
   head: () => ({
     meta: [
-<<<<<<< HEAD
       { title: "Education — Sexual Harassment & Misconduct | University of Ghana" },
       { name: "description", content: "Institutional education on sexual harassment and misconduct, consent, hostile environments, reporting and support under the University of Ghana policy." },
       { property: "og:title", content: "Education — Sexual Harassment & Misconduct | University of Ghana" },
       { property: "og:description", content: "Recognise misconduct. Understand consent. Know how to report and get support." },
-=======
-      { title: "Understanding Sexual Harassment — Aegis UG" },
-      { name: "description", content: "Trauma-informed education on what sexual harassment is, its forms, power dynamics, consent, and how to recognise and respond." },
-      { property: "og:title", content: "Understanding Sexual Harassment — Aegis UG" },
-      { property: "og:description", content: "Recognise. Respond. Refer." },
->>>>>>> cb1628592c231f56f54661977629a3248306c706
     ],
   }),
   component: UnderstandingPage,
@@ -50,52 +37,30 @@ const TYPES = [
   {
     id: "verbal",
     icon: MessageCircle,
-<<<<<<< HEAD
     label: "Verbal / written",
     title: "Verbal, written & electronic conduct",
     body: "Unwelcome sexual advances, propositions, epithets, jokes, innuendo, gossip about sexual activity, offensive messages (including email, SMS and WhatsApp), and passing pornographic or degrading material.",
     examples: ["Sexual jokes or comments about someone’s body or clothing", "Unwanted love letters, calls or gifts", "Sharing sexual images or messages without consent"],
-=======
-    label: "Verbal",
-    title: "Verbal harassment",
-    body: "Unwelcome sexual comments, jokes, requests for sexual favours, persistent personal questions or repeated invitations after a clear refusal.",
-    examples: ["Sexually suggestive remarks about appearance", "Persistent unwelcome romantic advances", "Pressuring someone for a date or relationship"],
->>>>>>> cb1628592c231f56f54661977629a3248306c706
   },
   {
     id: "physical",
     icon: Hand,
-<<<<<<< HEAD
     label: "Physical / non-verbal",
     title: "Non-verbal & physical conduct",
     body: "Unwelcome touching, patting, pinching, brushing, grabbing, kisses, blocking movement, leering, whistling, heckling, indecent exposure, and other physical or bodily conduct of a sexual nature.",
     examples: ["Unnecessary hugging or touching", "Unwelcome kissing or fondling", "Intimidating proximity or gestures"],
-=======
-    label: "Physical",
-    title: "Physical conduct",
-    body: "Unwelcome physical contact of a sexual nature, including touching, blocking movement, or any non-consensual physical interaction.",
-    examples: ["Unwanted touching, hugging or kissing", "Blocking someone's path", "Standing too close in a way that is intimidating"],
->>>>>>> cb1628592c231f56f54661977629a3248306c706
   },
   {
     id: "online",
     icon: Globe,
-<<<<<<< HEAD
     label: "Online / digital",
     title: "Online harassment & misuse of tech",
     body: "Conduct of a sexual nature through digital channels that affects study, work or safety — including cyberstalking, unwanted electronic contact, and non-consensual recording or sharing of intimate images.",
     examples: ["Harassing DMs or group chats", "Sharing intimate images without consent", "Tracking or monitoring someone online in a way that induces fear"],
-=======
-    label: "Online",
-    title: "Digital & online harassment",
-    body: "Sexual harassment that occurs via email, messaging apps, social media, or other digital platforms within the University environment.",
-    examples: ["Sending sexually explicit messages or images", "Cyberstalking or repeated unwanted contact", "Sharing intimate images without consent"],
->>>>>>> cb1628592c231f56f54661977629a3248306c706
   },
   {
     id: "power",
     icon: ShieldOff,
-<<<<<<< HEAD
     label: "Authority",
     title: "Abuse of authority & quid pro quo",
     body: "Using a position of power to condition employment, grades, recommendations or opportunities on sexual submission; punishing refusal; or promising rewards for sexual favours. Student–teacher and supervisor–subordinate relationships carry heightened risk.",
@@ -132,28 +97,6 @@ const TYPES = [
     title: "Retaliation",
     body: "Threats, intimidation, reprisals, or adverse education or employment actions against someone who reports in good faith, assists a report, or participates in an investigation. Retaliation is treated as misconduct under the same procedures.",
     examples: ["Spreading gossip to punish a reporter", "Removing opportunities after a complaint", "Pressure on witnesses"],
-=======
-    label: "Power",
-    title: "Power imbalance & quid pro quo",
-    body: "When someone in a position of authority — a supervisor, lecturer, or senior — uses that power to demand sexual favours or condition opportunities on them.",
-    examples: ["Linking grades to sexual favours", "Conditioning promotions on dating", "Threatening retaliation for refusal"],
-  },
-  {
-    id: "gbv",
-    icon: AlertCircle,
-    label: "GBV",
-    title: "Gender-based violence",
-    body: "Force targeted at a person because of their gender — manifesting in physical, sexual or psychological harm, including threats and coercion.",
-    examples: ["Sexual assault", "Coercion through threats", "Psychological intimidation rooted in gender"],
-  },
-  {
-    id: "retaliation",
-    icon: Eye,
-    label: "Retaliation",
-    title: "Retaliation",
-    body: "Adverse action against someone for raising a complaint or supporting an investigation. Retaliation itself is a violation of the policy.",
-    examples: ["Punishing a complainant academically", "Excluding someone from opportunities", "Threats against witnesses"],
->>>>>>> cb1628592c231f56f54661977629a3248306c706
   },
 ];
 
@@ -164,16 +107,10 @@ function UnderstandingPage() {
   return (
     <>
       <PageHero
-<<<<<<< HEAD
         eyebrow="Education · Sexual harassment & misconduct"
         title={<>Understanding misconduct is the first <span className="italic" style={{ background: "var(--gradient-gold)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>act of prevention</span>.</>}
         description="Trauma-informed education grounded in the University of Ghana Sexual Harassment and Misconduct Policy — for students, staff and everyone the University serves."
         bgImage="/education-hero.png"
-=======
-        eyebrow="Education · Awareness"
-        title={<>Understanding harassment is the first <span className="italic" style={{ background: "var(--gradient-gold)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>act of prevention</span>.</>}
-        description="Trauma-informed, respectful and accessible education for every member of our community. Recognise the signs. Know the language. Respond with care."
->>>>>>> cb1628592c231f56f54661977629a3248306c706
       />
 
       {/* Definition */}
@@ -189,33 +126,19 @@ function UnderstandingPage() {
             <Reveal>
               <div className="rounded-3xl border border-border bg-card p-8 md:p-10 shadow-elegant">
                 <p className="font-display text-2xl leading-relaxed text-pretty">
-<<<<<<< HEAD
                   Sexual harassment means <em className="text-primary">unwelcome conduct of a sexual nature</em>, including advances, requests for sexual favours, and verbal, non-verbal, written, electronic, graphic or physical behaviour when submission is tied to outcomes, affects evaluations, or{" "}
                   <em className="text-primary">unreasonably interferes</em> with work or study or creates an{" "}
                   <em className="text-primary">intimidating, hostile or offensive</em> environment.
                 </p>
                 <p className="mt-6 text-sm text-muted-foreground">Paraphrased from the University of Ghana Sexual Harassment and Misconduct Policy (2017).</p>
-=======
-                  Interaction between individuals — of the opposite or same gender — characterised by{" "}
-                  <em className="text-primary">unwelcome sexual advances</em>,{" "}
-                  <em className="text-primary">unwelcome requests for sexual favours</em>, and other{" "}
-                  <em className="text-primary">verbal or physical conduct of a sexual nature</em>.
-                </p>
-                <p className="mt-6 text-sm text-muted-foreground">As defined in the Sexual Harassment & Misconduct Policy of the University of Ghana.</p>
->>>>>>> cb1628592c231f56f54661977629a3248306c706
               </div>
             </Reveal>
             <Reveal delay={0.1}>
               <div className="mt-6 grid sm:grid-cols-3 gap-3">
                 {[
                   { t: "Unwelcome", d: "Conduct the recipient has not invited and does not want." },
-<<<<<<< HEAD
                   { t: "Power context", d: "In unequal relationships, “voluntary” participation alone does not prove conduct was welcome." },
                   { t: "Outcomes & climate", d: "Harassment includes conditioning opportunities on sex and conduct that poisons the environment." },
-=======
-                  { t: "Sexual nature", d: "Verbal, physical or visual conduct of a sexual character." },
-                  { t: "Impact-based", d: "What matters is the impact on the person, not solely intent." },
->>>>>>> cb1628592c231f56f54661977629a3248306c706
                 ].map((p, i) => (
                   <motion.div
                     key={p.t}
@@ -244,15 +167,9 @@ function UnderstandingPage() {
       <section className="py-28 md:py-36 bg-secondary/60">
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeader
-<<<<<<< HEAD
             eyebrow="Forms of misconduct"
             title={<>Eight lenses on the same standard of <span className="italic">dignity</span>.</>}
             description="The policy lists examples from campus life — online and in person. These modules summarise how misconduct commonly appears."
-=======
-            eyebrow="Forms of Harassment"
-            title={<>Six contexts. One shared standard of <span className="italic">respect</span>.</>}
-            description="Harassment takes many forms. Recognising them is how we protect each other."
->>>>>>> cb1628592c231f56f54661977629a3248306c706
           />
           <div className="mt-16 grid lg:grid-cols-12 gap-8">
             <div className="lg:col-span-4 flex lg:flex-col gap-2 overflow-x-auto">
@@ -315,7 +232,6 @@ function UnderstandingPage() {
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeader
             eyebrow="Consent"
-<<<<<<< HEAD
             title={<>What valid consent is — and is not.</>}
             description="Under the policy, consent achieved through force, threat, coercion or incapacitation is not consent. Sexual assault includes intercourse or contact without the other person’s consent."
           />
@@ -326,18 +242,6 @@ function UnderstandingPage() {
               { t: "Clear capacity", d: "Incapacitation undermines the ability to consent." },
               { t: "No coercion", d: "Fear of consequences is not freely given consent." },
               { t: "Boundaries", d: "Silence, passivity or prior intimacy alone are not substitutes for clear agreement." },
-=======
-            title={<>What consent looks like.</>}
-            description="Consent is freely given, reversible, informed, enthusiastic and specific."
-          />
-          <StaggerGroup className="mt-16 grid md:grid-cols-2 lg:grid-cols-5 gap-4">
-            {[
-              { t: "Freely given", d: "No pressure, manipulation or intoxication." },
-              { t: "Reversible", d: "Anyone can change their mind at any time." },
-              { t: "Informed", d: "All parties have the full picture." },
-              { t: "Enthusiastic", d: "Yes, eagerly — not silence or hesitation." },
-              { t: "Specific", d: "Yes to one act is not yes to all." },
->>>>>>> cb1628592c231f56f54661977629a3248306c706
             ].map((c) => (
               <StaggerItem key={c.t}>
                 <motion.div
@@ -361,7 +265,6 @@ function UnderstandingPage() {
         </div>
       </section>
 
-<<<<<<< HEAD
       {/* Procedures overview */}
       <section className="py-28 md:py-36 bg-secondary/40">
         <div className="mx-auto max-w-7xl px-6">
@@ -406,8 +309,6 @@ function UnderstandingPage() {
         </div>
       </section>
 
-=======
->>>>>>> cb1628592c231f56f54661977629a3248306c706
       {/* Bystander */}
       <section className="py-28 md:py-36 bg-primary text-primary-foreground relative overflow-hidden">
         <div className="absolute inset-0 grain opacity-[0.05]" />
@@ -448,11 +349,7 @@ function UnderstandingPage() {
             <p className="mt-4 text-muted-foreground">Confidential support is available. You will be believed, respected and supported.</p>
             <div className="mt-8 flex justify-center gap-3">
               <Button asChild size="lg" className="rounded-full h-12 px-7">
-<<<<<<< HEAD
                 <Link to="/reporting" hash="report-form">Begin a report <ArrowRight className="h-4 w-4" /></Link>
-=======
-                <Link to="/reporting">Begin a report <ArrowRight className="h-4 w-4" /></Link>
->>>>>>> cb1628592c231f56f54661977629a3248306c706
               </Button>
               <Button asChild size="lg" variant="outline" className="rounded-full h-12 px-7">
                 <Link to="/contact">Talk to someone</Link>

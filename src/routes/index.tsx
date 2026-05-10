@@ -14,17 +14,10 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-<<<<<<< HEAD
       { title: "Sexual Harassment Awareness & Reporting — University of Ghana" },
       { name: "description", content: "Official University of Ghana platform for sexual harassment and misconduct education, prevention, confidential reporting, and support under the Sexual Harassment and Misconduct Policy." },
       { property: "og:title", content: "Sexual Harassment Awareness & Reporting — University of Ghana" },
       { property: "og:description", content: "Education, safe reporting, and support aligned with the UG Sexual Harassment and Misconduct Policy." },
-=======
-      { title: "University of Ghana Sextortion Platform" },
-      { name: "description", content: "An institutional platform of the University of Ghana for education, prevention, confidential reporting and support against sexual harassment and sextortion." },
-      { property: "og:title", content: "University of Ghana Sextortion Platform" },
-      { property: "og:description", content: "Learn the policy. Know your rights. Access confidential support." },
->>>>>>> cb1628592c231f56f54661977629a3248306c706
     ],
   }),
   component: HomePage,
@@ -40,10 +33,6 @@ function HomePage() {
       <StatsSection />
       <UnderstandingPreview />
       <ReportingPathway />
-<<<<<<< HEAD
-=======
-      <StakeholdersGrid />
->>>>>>> cb1628592c231f56f54661977629a3248306c706
       <ImpactQuote />
       <FaqPreview />
       <EmergencyBanner />
@@ -74,11 +63,7 @@ function Hero() {
           transition={{ duration: 0.6 }}
           className="inline-flex items-center gap-2 border-l-2 border-gold pl-3 text-[11px] uppercase tracking-[0.22em] text-primary-foreground/85"
         >
-<<<<<<< HEAD
           University of Ghana — Sexual Harassment &amp; Misconduct Policy
-=======
-          University of Ghana — Gender Policy 2022
->>>>>>> cb1628592c231f56f54661977629a3248306c706
         </motion.div>
 
         <motion.h1
@@ -87,11 +72,7 @@ function Hero() {
           transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
           className="mt-6 max-w-4xl font-display text-4xl sm:text-5xl md:text-[3.75rem] font-medium tracking-tight leading-[1.08] text-balance"
         >
-<<<<<<< HEAD
           Awareness, prevention, and safe reporting for every member of our community.
-=======
-          A safe, respectful and inclusive university community.
->>>>>>> cb1628592c231f56f54661977629a3248306c706
         </motion.h1>
 
         <motion.p
@@ -100,14 +81,9 @@ function Hero() {
           transition={{ duration: 0.7, delay: 0.15 }}
           className="mt-6 max-w-2xl text-base md:text-lg text-primary-foreground/80 leading-relaxed text-pretty font-sans"
         >
-<<<<<<< HEAD
           This is an official University of Ghana institutional platform focused on sexual harassment
           awareness, misconduct prevention, consent education, victim support, and accountable reporting —
           grounded in the Sexual Harassment and Misconduct Policy.
-=======
-          The University of Ghana Sextortion Platform is an institutional initiative for
-          education, prevention and confidential support — guided by the UG Gender Policy.
->>>>>>> cb1628592c231f56f54661977629a3248306c706
         </motion.p>
 
         <motion.div
@@ -117,20 +93,12 @@ function Hero() {
           className="mt-10 flex flex-col sm:flex-row gap-3"
         >
           <Button asChild size="lg" className="rounded-sm bg-gold text-gold-foreground hover:bg-gold/90 h-12 px-7 text-[14px] font-medium tracking-wide">
-<<<<<<< HEAD
             <Link to="/reporting" hash="report-form">
-=======
-            <Link to="/reporting">
->>>>>>> cb1628592c231f56f54661977629a3248306c706
               Report safely <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="rounded-sm bg-transparent border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground h-12 px-7 text-[14px]">
-<<<<<<< HEAD
             <Link to="/understanding">Education hub</Link>
-=======
-            <Link to="/understanding">Learn the policy</Link>
->>>>>>> cb1628592c231f56f54661977629a3248306c706
           </Button>
         </motion.div>
 
@@ -142,17 +110,10 @@ function Hero() {
           className="mt-16 grid grid-cols-2 md:grid-cols-4 border-t border-primary-foreground/15"
         >
           {[
-<<<<<<< HEAD
             { k: "All", v: "Students, staff & agents covered" },
             { k: "1 yr", v: "Report promptly (policy guidance)" },
             { k: "60", v: "Working days target for formal process" },
             { k: "2017", v: "Policy gazette foundation" },
-=======
-            { k: "100%", v: "Confidential reporting" },
-            { k: "24/7", v: "Support availability" },
-            { k: "09", v: "Implementation bodies" },
-            { k: "2022", v: "Gender Policy in force" },
->>>>>>> cb1628592c231f56f54661977629a3248306c706
           ].map((s) => (
             <div key={s.v} className="py-6 md:py-7 pr-6 border-r border-primary-foreground/10 last:border-r-0">
               <div className="font-display text-2xl md:text-3xl font-medium text-gold tracking-tight">{s.k}</div>
@@ -169,19 +130,11 @@ function Hero() {
 function TrustBar() {
   const items = [
     "Trauma-informed",
-<<<<<<< HEAD
     "Confidential processes",
     "Policy-grounded",
     "Non-retaliation",
     "Survivor-centered",
     "Institutionally accountable",
-=======
-    "Confidential",
-    "Policy-aligned",
-    "Gender-equitable",
-    "Survivor-centered",
-    "WCAG-conscious",
->>>>>>> cb1628592c231f56f54661977629a3248306c706
   ];
   return (
     <div className="border-y border-border bg-card/50">
@@ -207,32 +160,19 @@ function CommitmentSection() {
             <SectionHeader
               eyebrow="Our Commitment"
               title={<>An institution where dignity is <span className="italic text-muted-foreground/80">non-negotiable</span>.</>}
-<<<<<<< HEAD
               description="The University is committed to a community free from intimidation, exploitation and abuse — where work and study happen with respect, and where sexual harassment and misconduct are prohibited, investigated and sanctioned under clear institutional procedures."
-=======
-              description="The University of Ghana is committed to creating an environment free from direct or indirect gender discrimination — one that provides equal participation in all decision-making bodies and a workplace and learning space where every person is safe."
->>>>>>> cb1628592c231f56f54661977629a3248306c706
             />
           </div>
           <div className="lg:col-span-5">
             <Reveal delay={0.2}>
               <div className="rounded-3xl border border-border bg-card p-8 shadow-elegant">
                 <div className="flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-<<<<<<< HEAD
                   <span className="h-1.5 w-1.5 rounded-full bg-gold" /> From the policy
                 </div>
                 <p className="mt-5 font-display text-xl leading-relaxed text-pretty">
                   "The University seeks to provide an atmosphere of work and study in which all individuals are treated with respect and dignity… [This policy] defines prohibited conduct, outlines procedures for reporting violations, conduct of investigations, sanctions, non-retaliatory mechanisms and establishes the Anti-Sexual Harassment Committee."
                 </p>
                 <div className="mt-6 text-xs text-muted-foreground">— University of Ghana Sexual Harassment and Misconduct Policy</div>
-=======
-                  <span className="h-1.5 w-1.5 rounded-full bg-gold" /> Policy Preamble
-                </div>
-                <p className="mt-5 font-display text-xl leading-relaxed text-pretty">
-                  "Maintaining gender equality is vital to the realisation of human rights for all — a society in which women and men enjoy the same opportunities, rights and obligations in all spheres of life."
-                </p>
-                <div className="mt-6 text-xs text-muted-foreground">— UG Gender Policy, 2022</div>
->>>>>>> cb1628592c231f56f54661977629a3248306c706
               </div>
             </Reveal>
           </div>
@@ -245,35 +185,20 @@ function CommitmentSection() {
 /* ---------------- POLICY HIGHLIGHTS ---------------- */
 function PolicyHighlights() {
   const items = [
-<<<<<<< HEAD
     { icon: ShieldCheck, title: "Prohibited conduct defined", body: "Sexual harassment and related misconduct — including quid pro quo, hostile environments, and abuse of authority in teaching or employment relationships.", href: "/about" },
     { icon: Scale, title: "Formal & informal pathways", body: "Direct communication, trusted intervention, optional mediation where appropriate, and formal complaints to the Anti-Sexual Harassment Committee.", href: "/reporting" },
     { icon: BookOpen, title: "Education & training", body: "Wide dissemination of the policy, materials on reporting, and training for those who receive informal disclosures.", href: "/understanding" },
     { icon: Users, title: "Institutional accountability", body: "Oversight by Council and the Vice-Chancellor; CEGENSA supports implementation and crisis counselling.", href: "/about" },
     { icon: Lock, title: "Confidentiality", body: "The Committee maintains confidentiality of reports and proceedings to protect the integrity of investigations.", href: "/reporting" },
     { icon: HeartHandshake, title: "Victim protection & non-retaliation", body: "Complainants and participants should not face retaliation or stigmatisation; retaliation may be reported under the same procedures.", href: "/reporting" },
-=======
-    { icon: ShieldCheck, title: "Inclusive & secure environment", body: "A space free from direct or indirect gender discrimination, with equal participation in decision-making.", href: "/about" },
-    { icon: Scale, title: "Equal opportunity", body: "Equity in recruitment, appointments, promotions, student enrolment and retention across all levels.", href: "/about" },
-    { icon: BookOpen, title: "Gender sensitivity in learning", body: "Gender-inclusive perspectives in teaching methodology, curriculum design and research.", href: "/understanding" },
-    { icon: Users, title: "Gender balance in governance", body: "Approximately equal representation in governance and student leadership structures.", href: "/stakeholders" },
-    { icon: Lock, title: "Confidential complaints mechanism", body: "A trusted, structured route to raise concerns — with rights protected for all parties.", href: "/reporting" },
-    { icon: HeartHandshake, title: "Support & mediation", body: "Trained mediators and the Equal Opportunities Board guide the resolution process.", href: "/reporting" },
->>>>>>> cb1628592c231f56f54661977629a3248306c706
   ];
   return (
     <section className="relative py-28 md:py-36 bg-secondary/60">
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeader
-<<<<<<< HEAD
           eyebrow="Policy in practice"
           title={<>Six anchors for a safer campus culture.</>}
           description="Drawn from the Sexual Harassment and Misconduct Policy — what the University commits to teach, prevent, investigate and uphold."
-=======
-          eyebrow="Policy Pillars"
-          title={<>Six commitments that shape every classroom, office and corridor.</>}
-          description="Drawn directly from the University of Ghana Gender Policy — these principles guide how we recruit, teach, govern and protect."
->>>>>>> cb1628592c231f56f54661977629a3248306c706
         />
         <StaggerGroup className="mt-16 grid gap-px bg-border rounded-3xl overflow-hidden border border-border md:grid-cols-2 lg:grid-cols-3">
           {items.map((it, i) => (
@@ -296,17 +221,10 @@ function PolicyHighlights() {
 /* ---------------- STATS ---------------- */
 function StatsSection() {
   const stats = [
-<<<<<<< HEAD
     { v: "14", l: "Member Anti-Sexual Harassment Committee (with gender parity)" },
     { v: "60", l: "Working days to complete formal investigation (extendable with VC approval)" },
     { v: "7d", l: "Written response window for respondents after notification" },
     { v: "All", l: "Campus locations, vehicles & controlled activities — policy scope" },
-=======
-    { v: "1992", l: "Constitution recognises sex-based discrimination as prohibited" },
-    { v: "5yr", l: "Policy review cycle to address emerging issues" },
-    { v: "EOB", l: "Equal Opportunities Board — independent oversight" },
-    { v: "All", l: "Members of the University community covered by the policy" },
->>>>>>> cb1628592c231f56f54661977629a3248306c706
   ];
   return (
     <section className="relative py-28 md:py-36 overflow-hidden bg-primary text-primary-foreground">
@@ -315,15 +233,9 @@ function StatsSection() {
         <div className="grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-5">
             <SectionHeader
-<<<<<<< HEAD
               eyebrow="Why it matters"
               title={<span className="text-primary-foreground">Clear timelines and structures — so people know what to expect.</span>}
               description={<span className="text-primary-foreground/70">The policy sets out who investigates, how confidentiality works, and how outcomes and sanctions are approached — alongside rights for complainants and respondents.</span>}
-=======
-              eyebrow="Why It Matters"
-              title={<span className="text-primary-foreground">Numbers that ground a generational commitment.</span>}
-              description={<span className="text-primary-foreground/70">From constitutional recognition to institutional architecture, the framework is built to last — and to be held accountable.</span>}
->>>>>>> cb1628592c231f56f54661977629a3248306c706
             />
           </div>
           <div className="lg:col-span-7 grid sm:grid-cols-2 gap-px bg-primary-foreground/10 rounded-3xl border border-primary-foreground/10 overflow-hidden">
@@ -343,17 +255,10 @@ function StatsSection() {
 /* ---------------- UNDERSTANDING ---------------- */
 function UnderstandingPreview() {
   const cards = [
-<<<<<<< HEAD
     { tag: "Definition", title: "Sexual harassment", body: "Unwelcome conduct of a sexual nature — including when submission is tied to outcomes, or when conduct creates an intimidating, hostile or offensive environment." },
     { tag: "Power", title: "Authority & consent", body: "Where there is a power imbalance, “voluntary” participation does not on its own show conduct was welcome. Certain supervisory relationships are prohibited." },
     { tag: "Misconduct", title: "Other prohibited behaviour", body: "Includes sexual assault, abuse, exploitative or degrading acts, stalking, intimidation, and retaliation after rejection or reporting." },
     { tag: "Support", title: "Reporting & care", body: "Formal and informal options, CEGENSA counselling support, and measures to reduce retaliation during investigation." },
-=======
-    { tag: "Definition", title: "What constitutes harassment", body: "Unwelcome sexual advances, requests for sexual favours, and other verbal or physical conduct of a sexual nature." },
-    { tag: "Power", title: "Imbalance & coercion", body: "Differential treatment attributable to gender — privileges or restrictions one group does not face." },
-    { tag: "Form", title: "Gender-based violence", body: "Force targeted at a person because of their gender — physical, sexual, psychological harm or threats." },
-    { tag: "Online", title: "Digital & retaliation", body: "Conduct that extends online, and protections against retaliation for raising concerns in good faith." },
->>>>>>> cb1628592c231f56f54661977629a3248306c706
   ];
   return (
     <section className="relative py-28 md:py-36">
@@ -390,19 +295,11 @@ function UnderstandingPreview() {
 /* ---------------- REPORTING ---------------- */
 function ReportingPathway() {
   const steps = [
-<<<<<<< HEAD
     { n: "01", t: "Consider informal options", d: "You may ask that unwelcome behaviour stop, seek a trusted intermediary, or request mediation through the Committee where both parties agree." },
     { n: "02", t: "Severe cases", d: "For extreme incidents (e.g. sexual assault), you should be counselled to report to Police and lodge a formal complaint before the Committee." },
     { n: "03", t: "Formal complaint", d: "Present your grievance orally to a Committee member, then submit a written complaint (the Committee can assist if you cannot write)." },
     { n: "04", t: "Response & hearing", d: "The respondent is notified; an adjudication panel may hear parties, consider evidence, and take steps to pre-empt retaliation." },
     { n: "05", t: "Outcome & review", d: "Findings and recommended sanctions go to institutional authorities; appeals lie with the University Appeals Board." },
-=======
-    { n: "01", t: "Raise the concern", d: "Informally with a supervisor or directly with the Equal Opportunities Board (EOB)." },
-    { n: "02", t: "Submit a formal complaint", d: "In writing, or recorded and transcribed by the Administrator if you are unable to write." },
-    { n: "03", t: "Acknowledgement & review", d: "The Administrator forwards to the Chair of the EOB. You'll be kept informed." },
-    { n: "04", t: "Investigation or mediation", d: "A panel reviews evidence; mediation may be offered with mutual agreement." },
-    { n: "05", t: "Outcome & support", d: "A decision is made with full confidentiality and protection from retaliation." },
->>>>>>> cb1628592c231f56f54661977629a3248306c706
   ];
   return (
     <section className="relative py-28 md:py-36 bg-secondary/60">
@@ -426,17 +323,10 @@ function ReportingPathway() {
         <Reveal delay={0.2}>
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button asChild size="lg" className="rounded-full h-12 px-7">
-<<<<<<< HEAD
               <Link to="/reporting" hash="report-form">Begin a confidential report <ArrowRight className="h-4 w-4" /></Link>
             </Button>
             <Button asChild size="lg" variant="ghost" className="rounded-full h-12 px-7">
               <Link to="/reporting" hash="report-form">Read your rights</Link>
-=======
-              <Link to="/reporting">Begin a confidential report <ArrowRight className="h-4 w-4" /></Link>
-            </Button>
-            <Button asChild size="lg" variant="ghost" className="rounded-full h-12 px-7">
-              <Link to="/reporting">Read your rights</Link>
->>>>>>> cb1628592c231f56f54661977629a3248306c706
             </Button>
           </div>
         </Reveal>
@@ -445,48 +335,6 @@ function ReportingPathway() {
   );
 }
 
-<<<<<<< HEAD
-=======
-/* ---------------- STAKEHOLDERS ---------------- */
-function StakeholdersGrid() {
-  const items = [
-    { t: "University Council", d: "Overall responsibility for compliance with the Gender Policy." },
-    { t: "Vice-Chancellor", d: "Implementation across all units of the University." },
-    { t: "Academic Board", d: "Engendering curriculum and gender-inclusive scholarship." },
-    { t: "Equal Opportunities Board", d: "Oversees implementation and investigates complaints." },
-    { t: "CEGENSA", d: "Centre for Gender Studies & Advocacy — research, training and mentoring." },
-    { t: "Anti-Sexual Harassment Committee", d: "Specialised body addressing harassment and misconduct." },
-  ];
-  return (
-    <section className="relative py-28 md:py-36">
-      <div className="mx-auto max-w-7xl px-6">
-        <SectionHeader
-          eyebrow="Stakeholders"
-          title={<>An institutional architecture of <span className="italic">accountability</span>.</>}
-          description="Every body has a defined role. Every role has clear responsibility."
-        />
-        <StaggerGroup className="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {items.map((s, i) => (
-            <StaggerItem key={i}>
-              <Link to="/stakeholders" className="group block h-full rounded-3xl border border-border bg-card p-7 transition-all hover:border-primary/30 hover:shadow-elegant">
-                <div className="flex items-center justify-between">
-                  <div className="h-10 w-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-                    <Scale className="h-5 w-5" />
-                  </div>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
-                </div>
-                <h3 className="mt-6 font-display text-lg font-semibold">{s.t}</h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.d}</p>
-              </Link>
-            </StaggerItem>
-          ))}
-        </StaggerGroup>
-      </div>
-    </section>
-  );
-}
-
->>>>>>> cb1628592c231f56f54661977629a3248306c706
 /* ---------------- IMPACT QUOTE ---------------- */
 function ImpactQuote() {
   return (
@@ -499,11 +347,7 @@ function ImpactQuote() {
           </p>
         </Reveal>
         <Reveal delay={0.2}>
-<<<<<<< HEAD
           <div className="mt-10 text-sm uppercase tracking-[0.2em] text-muted-foreground">University of Ghana — Anti-Sexual Harassment Committee &amp; CEGENSA</div>
-=======
-          <div className="mt-10 text-sm uppercase tracking-[0.2em] text-muted-foreground">University of Ghana — Equal Opportunities Board</div>
->>>>>>> cb1628592c231f56f54661977629a3248306c706
         </Reveal>
       </div>
     </section>
@@ -513,19 +357,11 @@ function ImpactQuote() {
 /* ---------------- FAQ ---------------- */
 function FaqPreview() {
   const faqs = [
-<<<<<<< HEAD
     { q: "Is my report confidential?", a: "The Anti-Sexual Harassment Committee maintains confidentiality of matters reported to it and of proceedings. Parties and representatives are advised that confidentiality protects the integrity of the process." },
     { q: "What if I'm afraid of retaliation?", a: "The policy requires measures to pre-empt retaliation and treats reports of retaliation under the same procedures. Good-faith reporting and participation should not be punished." },
     { q: "Can I use informal resolution first?", a: "Yes — unless the matter is severe. Choosing not to use informal routes cannot be held against you in a later formal complaint." },
     { q: "What rights does a respondent have?", a: "A respondent is presumed innocent until a final finding; both parties may be represented by counsel (with procedural limits during hearings)." },
     { q: "How long do formal investigations take?", a: "The policy targets completion within 60 working days of the request for formal investigation, unless an extension is approved by the Vice-Chancellor." },
-=======
-    { q: "Is my report confidential?", a: "Yes. All parties to an investigation, including their representatives, are required to maintain confidentiality to protect the integrity of proceedings." },
-    { q: "What if I'm afraid of retaliation?", a: "The policy protects complainants and witnesses. Retaliation is itself a violation of the policy and is taken seriously by the EOB." },
-    { q: "Can I report anonymously?", a: "Yes — initial concerns can be raised anonymously. For a formal investigation to proceed, identifying information may be needed at later stages." },
-    { q: "What rights does a respondent have?", a: "Respondents are presumed innocent until proven otherwise, are informed of allegations, may respond fully, and may object to panel members." },
-    { q: "How long do investigations take?", a: "Timelines vary depending on complexity. The EOB aims to resolve matters efficiently while ensuring fairness for all parties." },
->>>>>>> cb1628592c231f56f54661977629a3248306c706
   ];
   return (
     <section className="relative py-28 md:py-36 bg-secondary/60">
@@ -583,13 +419,8 @@ function EmergencyBanner() {
                 Confidential support is one call away.
               </h3>
               <p className="mt-4 text-primary-foreground/70 max-w-xl leading-relaxed">
-<<<<<<< HEAD
                 Reach CEGENSA&apos;s sexual harassment crisis and counselling unit or the Anti-Sexual Harassment Committee intake.
                 You will be treated with respect, dignity and care.
-=======
-                Speak privately with a trained advisor at the Equal Opportunities Board.
-                You will be believed, respected and supported.
->>>>>>> cb1628592c231f56f54661977629a3248306c706
               </p>
             </div>
             <div className="md:col-span-4 flex md:justify-end gap-3">
