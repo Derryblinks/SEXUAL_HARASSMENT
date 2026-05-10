@@ -8,22 +8,38 @@ import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
 export const Route = createFileRoute("/resources")({
   head: () => ({
     meta: [
+<<<<<<< HEAD
       { title: "Resources — Sexual Harassment & Misconduct | University of Ghana" },
       { name: "description", content: "Policies, education modules and references on sexual harassment, consent, reporting to the Anti-Sexual Harassment Committee, and CEGENSA support." },
       { property: "og:title", content: "Resources — Sexual Harassment & Misconduct | University of Ghana" },
       { property: "og:description", content: "Curated institutional learning on harassment, misconduct and safe reporting." },
+=======
+      { title: "Resources & Learning Hub — Aegis UG" },
+      { name: "description", content: "Policies, guides, training and curated reading on gender equity, consent and safe reporting." },
+      { property: "og:title", content: "Resources & Learning Hub — Aegis UG" },
+      { property: "og:description", content: "Policies, guides, training and curated reading." },
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
     ],
   }),
   component: ResourcesPage,
 });
 
 const RESOURCES = [
+<<<<<<< HEAD
   { icon: FileText, type: "Related policy", title: "UG Gender Policy 2022 (PDF)", desc: "Broader institutional gender framework; use alongside the Sexual Harassment and Misconduct Policy.", href: "/UG-Gender-Policy.pdf", action: "Download PDF", download: true },
   { icon: BookOpen, type: "On-site", title: "Report & support pathway", desc: "How to report safely, what to expect, and rights under the Sexual Harassment and Misconduct Policy.", href: "/reporting", action: "Open pathway" },
   { icon: BookOpen, type: "On-site", title: "Education hub", desc: "Definitions, forms of misconduct, consent, procedures and bystander awareness.", href: "/understanding", action: "Start learning" },
   { icon: Video, type: "Training", title: "Committee & CEGENSA orientation", desc: "Placeholder for future video modules on policy dissemination and trauma-informed response.", href: "#", action: "Coming soon" },
   { icon: Headphones, type: "Audio", title: "Listening project", desc: "Placeholder for anonymised educational audio on help-seeking and institutional support.", href: "#", action: "Coming soon" },
   { icon: FileText, type: "Reference", title: "Glossary of terms", desc: "Plain-language definitions from the sexual harassment policy context.", href: "/glossary", action: "Read glossary" },
+=======
+  { icon: FileText, type: "Policy", title: "UG Gender Policy 2022", desc: "The full policy document — principles, scope and procedures.", href: "/UG-Gender-Policy.pdf", action: "Download PDF", download: true },
+  { icon: BookOpen, type: "Guide", title: "A Survivor's Guide", desc: "Trauma-informed pathway from disclosure to support.", href: "/reporting", action: "Read guide" },
+  { icon: BookOpen, type: "Guide", title: "Bystander Action Toolkit", desc: "Direct, distract, delegate, document — practical scripts.", href: "/understanding", action: "Open toolkit" },
+  { icon: Video, type: "Training", title: "Consent in Practice", desc: "A 12-minute interactive module on consent in everyday life.", href: "#", action: "Coming soon" },
+  { icon: Headphones, type: "Audio", title: "Voices of Dignity", desc: "Anonymised first-person reflections from survivors and allies.", href: "#", action: "Coming soon" },
+  { icon: FileText, type: "Reference", title: "Glossary of Terms", desc: "Key vocabulary in plain, respectful language.", href: "/glossary", action: "Read glossary" },
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
 ];
 
 function ResourcesPage() {
@@ -32,8 +48,12 @@ function ResourcesPage() {
       <PageHero
         eyebrow="Learning Hub"
         title={<>Resources to <span className="italic" style={{ background: "var(--gradient-gold)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>understand</span>, prevent and respond.</>}
+<<<<<<< HEAD
         description="Curated materials for understanding sexual harassment and misconduct, reporting, and support — written in plain language, grounded in dignity."
         bgImage="/resources-hero.png"
+=======
+        description="A curated library of policies, guides and training — written in plain language, grounded in dignity."
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
       />
 
       <section className="py-28 md:py-36">

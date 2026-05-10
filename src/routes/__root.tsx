@@ -4,7 +4,10 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+<<<<<<< HEAD
   useLocation,
+=======
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -75,11 +78,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+<<<<<<< HEAD
       { title: "University of Ghana — Sexual Harassment Awareness & Safe Reporting" },
       { name: "description", content: "Official institutional education on sexual harassment and misconduct, consent, reporting under the UG Sexual Harassment and Misconduct Policy, and confidential support." },
       { name: "author", content: "University of Ghana" },
       { property: "og:title", content: "UG Sexual Harassment Awareness & Reporting Platform" },
       { property: "og:description", content: "Education, prevention and safe reporting aligned with the University of Ghana Sexual Harassment and Misconduct Policy." },
+=======
+      { title: "Aegis UG — Gender Equity & Safe Reporting | University of Ghana" },
+      { name: "description", content: "A safe, respectful and inclusive university community. Learn about the UG Gender Policy, understand sexual harassment, and access confidential support." },
+      { name: "author", content: "University of Ghana — Equal Opportunities Board" },
+      { property: "og:title", content: "Aegis UG — Creating a Safe University Community" },
+      { property: "og:description", content: "Education, prevention and confidential reporting under the University of Ghana Gender Policy." },
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
@@ -113,17 +124,28 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+<<<<<<< HEAD
   const { pathname } = useLocation();
   const isAdminPortal = pathname.toLowerCase().startsWith("/admin");
+=======
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col">
+<<<<<<< HEAD
         {!isAdminPortal && <Navbar />}
         <main className="flex-1">
           <Outlet />
         </main>
         {!isAdminPortal && <Footer />}
+=======
+        <Navbar />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <Footer />
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
       </div>
     </QueryClientProvider>
   );

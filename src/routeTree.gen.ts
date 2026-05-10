@@ -10,13 +10,20 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UnderstandingRouteImport } from './routes/understanding'
+<<<<<<< HEAD
+=======
+import { Route as StakeholdersRouteImport } from './routes/stakeholders'
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ReportingRouteImport } from './routes/reporting'
 import { Route as GlossaryRouteImport } from './routes/glossary'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
+<<<<<<< HEAD
 import { Route as AdminRouteImport } from './routes/Admin'
+=======
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
 import { Route as IndexRouteImport } from './routes/index'
 
 const UnderstandingRoute = UnderstandingRouteImport.update({
@@ -24,6 +31,14 @@ const UnderstandingRoute = UnderstandingRouteImport.update({
   path: '/understanding',
   getParentRoute: () => rootRouteImport,
 } as any)
+<<<<<<< HEAD
+=======
+const StakeholdersRoute = StakeholdersRouteImport.update({
+  id: '/stakeholders',
+  path: '/stakeholders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
 const ResourcesRoute = ResourcesRouteImport.update({
   id: '/resources',
   path: '/resources',
@@ -54,11 +69,14 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+<<<<<<< HEAD
 const AdminRoute = AdminRouteImport.update({
   id: '/Admin',
   path: '/Admin',
   getParentRoute: () => rootRouteImport,
 } as any)
+=======
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -67,83 +85,132 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+<<<<<<< HEAD
   '/Admin': typeof AdminRoute
+=======
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/glossary': typeof GlossaryRoute
   '/reporting': typeof ReportingRoute
   '/resources': typeof ResourcesRoute
+<<<<<<< HEAD
+=======
+  '/stakeholders': typeof StakeholdersRoute
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
   '/understanding': typeof UnderstandingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+<<<<<<< HEAD
   '/Admin': typeof AdminRoute
+=======
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/glossary': typeof GlossaryRoute
   '/reporting': typeof ReportingRoute
   '/resources': typeof ResourcesRoute
+<<<<<<< HEAD
+=======
+  '/stakeholders': typeof StakeholdersRoute
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
   '/understanding': typeof UnderstandingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+<<<<<<< HEAD
   '/Admin': typeof AdminRoute
+=======
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/glossary': typeof GlossaryRoute
   '/reporting': typeof ReportingRoute
   '/resources': typeof ResourcesRoute
+<<<<<<< HEAD
+=======
+  '/stakeholders': typeof StakeholdersRoute
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
   '/understanding': typeof UnderstandingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+<<<<<<< HEAD
     | '/Admin'
+=======
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
     | '/about'
     | '/contact'
     | '/faq'
     | '/glossary'
     | '/reporting'
     | '/resources'
+<<<<<<< HEAD
+=======
+    | '/stakeholders'
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
     | '/understanding'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+<<<<<<< HEAD
     | '/Admin'
+=======
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
     | '/about'
     | '/contact'
     | '/faq'
     | '/glossary'
     | '/reporting'
     | '/resources'
+<<<<<<< HEAD
+=======
+    | '/stakeholders'
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
     | '/understanding'
   id:
     | '__root__'
     | '/'
+<<<<<<< HEAD
     | '/Admin'
+=======
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
     | '/about'
     | '/contact'
     | '/faq'
     | '/glossary'
     | '/reporting'
     | '/resources'
+<<<<<<< HEAD
+=======
+    | '/stakeholders'
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
     | '/understanding'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+<<<<<<< HEAD
   AdminRoute: typeof AdminRoute
+=======
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   GlossaryRoute: typeof GlossaryRoute
   ReportingRoute: typeof ReportingRoute
   ResourcesRoute: typeof ResourcesRoute
+<<<<<<< HEAD
+=======
+  StakeholdersRoute: typeof StakeholdersRoute
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
   UnderstandingRoute: typeof UnderstandingRoute
 }
 
@@ -156,6 +223,16 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnderstandingRouteImport
       parentRoute: typeof rootRouteImport
     }
+<<<<<<< HEAD
+=======
+    '/stakeholders': {
+      id: '/stakeholders'
+      path: '/stakeholders'
+      fullPath: '/stakeholders'
+      preLoaderRoute: typeof StakeholdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
     '/resources': {
       id: '/resources'
       path: '/resources'
@@ -198,6 +275,7 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+<<<<<<< HEAD
     '/Admin': {
       id: '/Admin'
       path: '/Admin'
@@ -205,6 +283,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
+=======
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
     '/': {
       id: '/'
       path: '/'
@@ -217,18 +297,26 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+<<<<<<< HEAD
   AdminRoute: AdminRoute,
+=======
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   GlossaryRoute: GlossaryRoute,
   ReportingRoute: ReportingRoute,
   ResourcesRoute: ResourcesRoute,
+<<<<<<< HEAD
+=======
+  StakeholdersRoute: StakeholdersRoute,
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
   UnderstandingRoute: UnderstandingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+<<<<<<< HEAD
 
 import type { getRouter } from './router.tsx'
 import type { startInstance } from './start.ts'
@@ -239,3 +327,5 @@ declare module '@tanstack/react-start' {
     config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }
+=======
+>>>>>>> cb1628592c231f56f54661977629a3248306c706

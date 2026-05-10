@@ -13,10 +13,17 @@ import { Reveal } from "@/components/site/Reveal";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
+<<<<<<< HEAD
       { title: "Contact & Help — Sexual Harassment Support | University of Ghana" },
       { name: "description", content: "Confidential channels for sexual harassment crisis counselling (CEGENSA), Anti-Sexual Harassment Committee intake, and reporting assistance." },
       { property: "og:title", content: "Contact & Help — Sexual Harassment Support | University of Ghana" },
       { property: "og:description", content: "Reach counselling and committee intake with discretion." },
+=======
+      { title: "Contact & Help — Aegis UG" },
+      { name: "description", content: "Reach the Equal Opportunities Board confidentially. Email, phone and in-person support." },
+      { property: "og:title", content: "Contact & Help — Aegis UG" },
+      { property: "og:description", content: "Confidential channels to reach support and the EOB." },
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
     ],
   }),
   component: ContactPage,
@@ -30,7 +37,11 @@ function ContactPage() {
       <PageHero
         eyebrow="Contact · Confidential"
         title={<>We're <span className="italic" style={{ background: "var(--gradient-gold)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>here</span>, and we will listen.</>}
+<<<<<<< HEAD
         description="For sexual harassment and misconduct concerns, connect with CEGENSA&apos;s crisis and counselling unit or the Anti-Sexual Harassment Committee secretariat. Every contact is treated with discretion, warmth and respect."
+=======
+        description="Reach the Equal Opportunities Board through any of the channels below. Every contact is treated with discretion and care."
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
       />
 
       <section className="py-28 md:py-36">
@@ -39,9 +50,15 @@ function ContactPage() {
             <SectionHeader eyebrow="Channels" title={<>How to reach us.</>} />
             <div className="mt-6 space-y-4">
               {[
+<<<<<<< HEAD
                 { icon: Mail, label: "Committee / intake email", value: "eob@ug.edu.gh", href: "mailto:eob@ug.edu.gh" },
                 { icon: Phone, label: "Helpline (Mon–Fri, 9am–5pm)", value: "+233 (0) 302 213 820", href: "tel:+233302213820" },
                 { icon: MapPin, label: "In-person", value: "CEGENSA / Anti-Sexual Harassment Committee\n(Main Administration — confirm room with reception)\nUniversity of Ghana, Legon", href: "#" },
+=======
+                { icon: Mail, label: "Confidential email", value: "eob@ug.edu.gh", href: "mailto:eob@ug.edu.gh" },
+                { icon: Phone, label: "Helpline (Mon–Fri, 9am–5pm)", value: "+233 (0) 302 213 820", href: "tel:+233302213820" },
+                { icon: MapPin, label: "In-person", value: "Equal Opportunities Board\nMain Administration Block\nUniversity of Ghana, Legon", href: "#" },
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
               ].map((c) => (
                 <Reveal key={c.label}>
                   <a href={c.href} className="group flex items-start gap-4 rounded-2xl border border-border bg-card p-5 hover:shadow-elegant hover:-translate-y-0.5 transition-all duration-500">
@@ -61,7 +78,11 @@ function ContactPage() {
               <div className="mt-6 rounded-2xl border border-border bg-secondary/60 p-5 flex items-start gap-3">
                 <ShieldCheck className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
                 <p className="text-sm text-muted-foreground leading-relaxed">
+<<<<<<< HEAD
                   Communication is handled consistent with the Sexual Harassment and Misconduct Policy. You decide what happens next — we will not act beyond your choices except where safety or the law requires it.
+=======
+                  All communication is handled under the policy's confidentiality standards. You decide what happens next — we will never act without your consent, except where safety legally requires it.
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
                 </p>
               </div>
             </Reveal>
@@ -111,7 +132,11 @@ function ContactPage() {
                       <Textarea id="message" required rows={6} className="mt-2" placeholder="Share as much or as little as you wish." />
                     </div>
                     <div className="flex items-center justify-between gap-3 pt-2">
+<<<<<<< HEAD
                       <div className="text-xs text-muted-foreground">Encrypted in transit · Read only by designated intake staff</div>
+=======
+                      <div className="text-xs text-muted-foreground">Encrypted in transit · Read only by EOB officers</div>
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
                       <Button type="submit" size="lg" className="rounded-full h-12 px-7">
                         <Send className="h-4 w-4" /> Send securely
                       </Button>

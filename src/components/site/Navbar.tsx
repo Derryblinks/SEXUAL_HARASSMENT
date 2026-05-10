@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import ugLogo from "@/assets/ug-logo.jpeg";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "@tanstack/react-router";
@@ -10,6 +11,21 @@ const NAV = [
   { to: "/about", label: "About" },
   { to: "/understanding", label: "Education" },
   { to: "/reporting", label: "Report & Support" },
+=======
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "@tanstack/react-router";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, Phone } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import ugLogo from "@/assets/ug-logo.jpeg";
+
+const NAV = [
+  { to: "/", label: "Home" },
+  { to: "/about", label: "The Policy" },
+  { to: "/understanding", label: "Education" },
+  { to: "/reporting", label: "Report & Support" },
+  { to: "/stakeholders", label: "Stakeholders" },
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
   { to: "/resources", label: "Resources" },
   { to: "/faq", label: "FAQ" },
   { to: "/contact", label: "Contact" },
@@ -17,6 +33,7 @@ const NAV = [
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+<<<<<<< HEAD
   const [forceReadableBg, setForceReadableBg] = useState(false);
   const [open, setOpen] = useState(false);
   const headerRef = useRef<HTMLElement | null>(null);
@@ -94,17 +111,35 @@ export function Navbar() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
+=======
+  const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
   }, []);
 
   useEffect(() => { setOpen(false); }, [pathname]);
 
   return (
     <>
+<<<<<<< HEAD
       <header ref={headerRef} className="fixed inset-x-0 top-0 z-50">
         {/* Top utility bar */}
         <div className="hidden md:block bg-[#143D6B] text-primary-foreground/85 text-[12px]">
           <div className="mx-auto max-w-7xl px-6 flex items-center justify-between h-9">
             <div className="tracking-wide">University of Ghana · Sexual harassment &amp; misconduct response</div>
+=======
+      <header className="fixed inset-x-0 top-0 z-50">
+        {/* Top utility bar */}
+        <div className="hidden md:block bg-primary text-primary-foreground/85 text-[12px]">
+          <div className="mx-auto max-w-7xl px-6 flex items-center justify-between h-9">
+            <div className="tracking-wide">University of Ghana · Equal Opportunities Board</div>
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
             <div className="flex items-center gap-5">
               <a href="tel:+233000000000" className="inline-flex items-center gap-1.5 hover:text-gold transition-colors"><Phone className="h-3 w-3" /> +233 (0) 000 000 000</a>
               <Link to="/contact" className="hover:text-gold transition-colors">Contact</Link>
@@ -114,6 +149,7 @@ export function Navbar() {
         </div>
 
         {/* Main bar */}
+<<<<<<< HEAD
         <div
           className={`border-b transition-[background-color,border-color,box-shadow,backdrop-filter] duration-500 ease-out ${
             scrolled
@@ -123,6 +159,9 @@ export function Navbar() {
               : "bg-white border-border/60 shadow-elegant backdrop-blur-0"
           }`}
         >
+=======
+        <div className={`bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85 border-b transition-shadow duration-300 ${scrolled ? "shadow-elegant border-border" : "border-border/60"}`}>
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <div className="flex items-center justify-between gap-6 h-[72px]">
               <Link to="/" className="flex items-center gap-3 group shrink-0">
@@ -152,8 +191,13 @@ export function Navbar() {
                       {active && (
                         <motion.span
                           layoutId="nav-underline"
+<<<<<<< HEAD
                           transition={{ type: "spring", stiffness: 380, damping: 34 }}
                           className="absolute left-1/2 -translate-x-1/2 bottom-3 h-[3px] w-6 rounded-full bg-gold"
+=======
+                          transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                          className="absolute left-3 right-3 -bottom-px h-[2px] bg-gold"
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
                         />
                       )}
                     </Link>
@@ -163,7 +207,11 @@ export function Navbar() {
 
               <div className="flex items-center gap-2 shrink-0">
                 <Button asChild size="sm" className="hidden sm:inline-flex rounded-sm h-10 px-5 bg-primary hover:bg-primary/90 text-primary-foreground text-[13px] font-medium tracking-wide">
+<<<<<<< HEAD
                   <Link to="/reporting" hash="report-form">Report Safely</Link>
+=======
+                  <Link to="/reporting">Report Safely</Link>
+>>>>>>> cb1628592c231f56f54661977629a3248306c706
                 </Button>
                 <button
                   className="lg:hidden h-10 w-10 inline-flex items-center justify-center rounded-sm border border-border bg-card text-foreground"
