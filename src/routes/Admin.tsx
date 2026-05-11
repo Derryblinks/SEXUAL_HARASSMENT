@@ -15,7 +15,19 @@ import {
   Download,
   Eye,
   EyeOff,
-  ChevronLeft
+  ChevronLeft,
+  Mail,
+  Phone,
+  Calendar,
+  MapPin,
+  ShieldCheck,
+  Lock,
+  Smartphone,
+  Globe,
+  Palette,
+  CreditCard,
+  User,
+  Shield
 } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, Cell, Pie, PieChart, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { Button } from "@/components/ui/button";
@@ -56,18 +68,30 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import ugLogo from "@/assets/ug-logo.jpeg";
+import { 
+  getReports, 
+  setReports, 
+  type ReportRecord, 
+  type CaseStatus, 
+  type PriorityLevel 
+} from "@/lib/reporting";
 
 export const Route = createFileRoute("/Admin")({
   component: AdminPortalPage,
 });
 
 const ADMIN_AUTH_KEY = "ug_admin_session_v2";
-type TabId = "dashboard" | "records" | "investigations" | "evidence" | "messages" | "audit" | "team" | "settings";
+type TabId = "dashboard" | "records" | "investigations" | "evidence" | "messages" | "audit" | "team" | "settings" | "profile" | "preferences";
 
 function AdminPortalPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState<TabId>("dashboard");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+
+  // Expose to window for sub-components (quick fix for current structure)
+  useEffect(() => {
+    (window as any).setActiveTab = setActiveTab;
+  }, []);
 
   useEffect(() => {
     const session = window.localStorage.getItem(ADMIN_AUTH_KEY);
@@ -92,10 +116,10 @@ function AdminPortalPage() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F8FAFC]">
+    <div className="flex h-screen overflow-hidden bg-background text-foreground transition-colors duration-300">
       <Sidebar collapsed={isSidebarCollapsed} onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)} activeTab={activeTab} setActiveTab={setActiveTab} />
       <div className="flex-1 flex flex-col min-w-0">
-        <Header activeTab={activeTab} onLogout={handleLogout} />
+        <Header activeTab={activeTab} onLogout={handleLogout} setActiveTab={setActiveTab} />
         <main className="flex-1 overflow-auto p-8">
           {activeTab === "dashboard" && <DashboardView />}
           {activeTab === "records" && <CaseRecordsView />}
@@ -103,8 +127,10 @@ function AdminPortalPage() {
           {activeTab === "evidence" && <EvidenceView />}
           {activeTab === "messages" && <MessagesView />}
           {activeTab === "team" && <TeamView />}
-          {activeTab === "settings" && <SettingsView />}
+          {activeTab === "settings" && <PreferencesView setActiveTab={setActiveTab} />}
           {activeTab === "audit" && <AuditLogsView />}
+          {activeTab === "profile" && <ProfileView setActiveTab={setActiveTab} />}
+          {activeTab === "preferences" && <PreferencesView setActiveTab={setActiveTab} />}
         </main>
       </div>
     </div>
@@ -127,7 +153,7 @@ function Sidebar({ collapsed, onToggle, activeTab, setActiveTab }: { collapsed: 
   ] as const;
 
   return (
-    <aside className={`flex flex-col border-r border-border bg-white transition-all duration-300 ease-in-out ${collapsed ? "w-[72px]" : "w-[240px]"}`}>
+    <aside className={`flex flex-col border-r border-border bg-card transition-all duration-300 ease-in-out ${collapsed ? "w-[72px]" : "w-[240px]"}`}>
       <div className="flex h-[72px] shrink-0 items-center justify-between border-b border-border px-4">
         <div className="flex items-center gap-2 overflow-hidden">
           <img src={ugLogo} alt="UG Logo" className="h-8 w-8 object-contain shrink-0" />
@@ -185,7 +211,7 @@ function SidebarItem({ item, active, collapsed, onClick }: any) {
   );
 }
 
-function Header({ activeTab, onLogout }: { activeTab: string; onLogout: () => void }) {
+function Header({ activeTab, onLogout, setActiveTab }: { activeTab: string; onLogout: () => void; setActiveTab: (t: TabId) => void }) {
   const titleMap: Record<string, string> = {
     dashboard: "Dashboard",
     records: "Case records",
@@ -195,10 +221,12 @@ function Header({ activeTab, onLogout }: { activeTab: string; onLogout: () => vo
     audit: "Audit logs",
     team: "Team & roles",
     settings: "Settings",
+    profile: "Profile Settings",
+    preferences: "Account Preferences",
   };
 
   return (
-    <header className="flex h-[72px] shrink-0 items-center justify-between border-b border-border bg-white px-8">
+    <header className="flex h-[72px] shrink-0 items-center justify-between border-b border-border bg-card px-8">
       <div className="flex items-center gap-8 w-full max-w-2xl">
         <h1 className="text-xl font-semibold text-[#1f3a5f] w-48 shrink-0">{titleMap[activeTab]}</h1>
         <div className="relative flex-1 hidden md:block">
@@ -232,11 +260,17 @@ function Header({ activeTab, onLogout }: { activeTab: string; onLogout: () => vo
           <DropdownMenuContent align="end" className="w-56 rounded-sm border-slate-200 shadow-xl">
             <DropdownMenuLabel className="text-[11px] font-bold text-slate-400 uppercase tracking-widest px-4 py-3">Account</DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-slate-100" />
-            <DropdownMenuItem className="px-4 py-3 text-[13px] cursor-pointer focus:bg-slate-50">
-              <Users className="mr-3 h-4 w-4 text-slate-400" /> Profile Settings
+            <DropdownMenuItem 
+              onClick={() => setActiveTab("profile")}
+              className="px-4 py-3 text-[13px] cursor-pointer focus:bg-slate-50"
+            >
+              <User className="mr-3 h-4 w-4 text-slate-400" /> Profile Settings
             </DropdownMenuItem>
-            <DropdownMenuItem className="px-4 py-3 text-[13px] cursor-pointer focus:bg-slate-50">
-              <Bell className="mr-3 h-4 w-4 text-slate-400" /> Preferences
+            <DropdownMenuItem 
+              onClick={() => setActiveTab("preferences")}
+              className="px-4 py-3 text-[13px] cursor-pointer focus:bg-slate-50"
+            >
+              <Settings className="mr-3 h-4 w-4 text-slate-400" /> Preferences
             </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-slate-100" />
             <DropdownMenuItem
@@ -255,13 +289,26 @@ function Header({ activeTab, onLogout }: { activeTab: string; onLogout: () => vo
 // --- Views ---
 
 function DashboardView() {
+  const [reports, _setReports] = useState<ReportRecord[]>([]);
+
+  useEffect(() => {
+    _setReports(getReports());
+  }, []);
+
+  const metrics = useMemo(() => {
+    const open = reports.filter(r => r.status !== "Resolved").length;
+    const resolved = reports.filter(r => r.status === "Resolved").length;
+    const critical = reports.filter(r => r.priority === "Urgent" && r.status !== "Resolved").length;
+    return { open, resolved, critical };
+  }, [reports]);
+
   const trendData = [
     { name: "Dec", resolved: 8, reports: 12 },
     { name: "Jan", resolved: 12, reports: 18 },
     { name: "Feb", resolved: 16, reports: 22 },
     { name: "Mar", resolved: 22, reports: 26 },
     { name: "Apr", resolved: 24, reports: 31 },
-    { name: "May", resolved: 18, reports: 28 },
+    { name: "May", resolved: metrics.resolved, reports: reports.length },
   ];
 
   const pieData = [
@@ -275,14 +322,14 @@ function DashboardView() {
   return (
     <div className="space-y-6 max-w-[1200px] animate-in fade-in duration-500">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <MetricCard title="OPEN CASES" value="28" subtitle="+3 vs last month" subColor="text-green-600" />
-        <MetricCard title="RESOLVED THIS MONTH" value="19" subtitle="+12%" subColor="text-green-600" />
+        <MetricCard title="OPEN CASES" value={metrics.open.toString()} subtitle="+3 vs last month" subColor="text-green-600" />
+        <MetricCard title="RESOLVED" value={metrics.resolved.toString()} subtitle="+12%" subColor="text-green-600" />
         <MetricCard title="AVG. RESPONSE" value="22h" subtitle="-5h" subColor="text-green-600" />
-        <MetricCard title="CRITICAL ALERTS" value="1" subtitle="Requires review" subColor="text-red-500" />
+        <MetricCard title="CRITICAL ALERTS" value={metrics.critical.toString()} subtitle="Requires review" subColor={metrics.critical > 0 ? "text-red-500 font-bold animate-pulse" : "text-slate-400"} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white border border-slate-200 rounded-sm p-6 shadow-none">
+        <div className="lg:col-span-2 bg-card border border-slate-200 rounded-sm p-6 shadow-none">
           <h3 className="text-[15px] font-semibold text-[#1f3a5f]">Caseload trend</h3>
           <p className="text-[13px] text-slate-500 mt-1 mb-8">Reports vs resolutions, last 6 months</p>
           <div className="h-[280px] w-full">
@@ -309,7 +356,7 @@ function DashboardView() {
           </div>
         </div>
 
-        <div className="bg-white border border-slate-200 rounded-sm p-6 shadow-none flex flex-col">
+        <div className="bg-card border border-slate-200 rounded-sm p-6 shadow-none flex flex-col">
           <h3 className="text-[15px] font-semibold text-[#1f3a5f]">Case mix</h3>
           <p className="text-[13px] text-slate-500 mt-1 mb-8">By incident type</p>
           <div className="flex-1 flex flex-col items-center justify-between">
@@ -337,7 +384,7 @@ function DashboardView() {
         </div>
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-sm shadow-none mt-6">
+      <div className="bg-card border border-slate-200 rounded-sm shadow-none mt-6">
         <CaseManagementTable />
       </div>
     </div>
@@ -345,21 +392,36 @@ function DashboardView() {
 }
 
 function CaseManagementTable() {
+  const [reports, setReportsLocal] = useState<ReportRecord[]>([]);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const data = [
-    { id: "UG-2026-1004", type: "Non-verbal or physical conduct", date: "5/1/2026, 4:24:00 PM", status: "Pending", identity: "Identified", priority: "High", pColor: "text-orange-600 bg-orange-50", lead: "Unassigned", files: "1 file(s)" },
-    { id: "UG-2026-1002", type: "Verbal, written or electronic conduct", date: "4/29/2026, 9:40:00 AM", status: "Under Review", identity: "Identified", priority: "High", pColor: "text-orange-600 bg-orange-50", lead: "Committee intake officer", files: "None" },
-    { id: "UG-2026-1001", type: "Quid pro quo / conditioning outcomes", date: "4/21/2026, 2:02:00 PM", status: "Investigating", identity: "Anonymous", priority: "Urgent", pColor: "text-red-600 bg-red-50", lead: "Anti-Sexual Harassment Committee", files: "1 file(s)" },
-    { id: "UG-2026-1003", type: "Hostile environment", date: "3/11/2026, 10:12:00 AM", status: "Resolved", identity: "Anonymous", priority: "Medium", pColor: "text-slate-600 bg-slate-100", lead: "Anti-Sexual Harassment Committee", files: "1 file(s)" },
-    { id: "UG-2026-1005", type: "Sexual assault or abuse", date: "2/19/2026, 8:30:00 AM", status: "Escalated", identity: "Anonymous", priority: "Urgent", pColor: "text-red-600 bg-red-50", lead: "Committee / security liaison", files: "None" },
-  ];
-  const filtered = data.filter(r => {
+
+  useEffect(() => {
+    setReportsLocal(getReports());
+  }, []);
+
+  const handleStatusChange = (reportId: string, newStatus: CaseStatus) => {
+    const updated = reports.map(r => r.id === reportId ? { ...r, status: newStatus } : r);
+    setReportsLocal(updated);
+    setReports(updated);
+  };
+
+  const handleAssigneeChange = (reportId: string, newLead: string) => {
+    const updated = reports.map(r => r.id === reportId ? { ...r, assignedInvestigator: newLead } : r);
+    setReportsLocal(updated);
+    setReports(updated);
+  };
+
+  const filtered = reports.filter(r => {
     const q = search.toLowerCase();
-    const matchSearch = r.id.toLowerCase().includes(q) || r.type.toLowerCase().includes(q) || r.lead.toLowerCase().includes(q);
+    const matchSearch = r.id.toLowerCase().includes(q) || 
+                       r.incidentType.toLowerCase().includes(q) || 
+                       r.assignedInvestigator.toLowerCase().includes(q) ||
+                       r.description.toLowerCase().includes(q);
     const matchStatus = statusFilter === "all" || r.status === statusFilter;
     return matchSearch && matchStatus;
   });
+
   return (
     <>
       <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -370,7 +432,7 @@ function CaseManagementTable() {
         <div className="flex flex-wrap items-center gap-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
-            <Input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search case ID, incident, assignee..." className="h-9 pl-9 w-60 text-[12px] rounded-sm border-slate-200 bg-slate-50" />
+            <Input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search reports..." className="h-9 pl-9 w-60 text-[12px] rounded-sm border-slate-200 bg-slate-50" />
           </div>
           <Select value={statusFilter} onValueChange={setStatusFilter}>
             <SelectTrigger className="h-9 w-36 text-[12px] border-slate-200 rounded-sm"><SelectValue placeholder="All Statuses" /></SelectTrigger>
@@ -403,21 +465,52 @@ function CaseManagementTable() {
             {filtered.map((row, i) => (
               <TableRow key={i} className="border-slate-50 hover:bg-slate-50/50 transition-colors">
                 <TableCell className="px-4 py-3 text-[13px] font-semibold text-[#1f3a5f] whitespace-nowrap">{row.id}</TableCell>
-                <TableCell className="px-4 py-3 text-[13px] text-slate-600 max-w-[180px]"><span className="truncate block">{row.type}</span></TableCell>
-                <TableCell className="px-4 py-3 text-[12px] text-slate-400 whitespace-nowrap">{row.date}</TableCell>
+                <TableCell className="px-4 py-3 text-[13px] text-slate-600 max-w-[180px]"><span className="truncate block">{row.incidentType}</span></TableCell>
+                <TableCell className="px-4 py-3 text-[12px] text-slate-400 whitespace-nowrap">{new Date(row.submittedAt).toLocaleDateString()}</TableCell>
                 <TableCell className="px-4 py-3">
-                  <Badge variant="outline" className={`text-[10px] font-semibold border rounded-full px-2 ${
-                    row.status === "Resolved" ? "bg-emerald-50 text-emerald-600 border-emerald-200" :
-                    row.status === "Escalated" ? "bg-red-50 text-red-600 border-red-200" :
-                    row.status === "Investigating" ? "bg-blue-50 text-blue-600 border-blue-200" :
-                    row.status === "Under Review" ? "bg-amber-50 text-amber-600 border-amber-200" :
-                    "bg-slate-100 text-slate-600 border-slate-200"
-                  }`}>{row.status}</Badge>
+                   <Select value={row.status} onValueChange={(v) => handleStatusChange(row.id, v as CaseStatus)}>
+                    <SelectTrigger className="h-7 border-0 bg-transparent p-0 focus:ring-0 focus:ring-offset-0">
+                      <Badge variant="outline" className={`text-[10px] font-semibold border rounded-full px-2 cursor-pointer ${
+                        row.status === "Resolved" ? "bg-emerald-50 text-emerald-600 border-emerald-200" :
+                        row.status === "Escalated" ? "bg-red-50 text-red-600 border-red-200" :
+                        row.status === "Investigating" ? "bg-blue-50 text-blue-600 border-blue-200" :
+                        row.status === "Under Review" ? "bg-amber-50 text-amber-600 border-amber-200" :
+                        "bg-slate-100 text-slate-600 border-slate-200"
+                      }`}>{row.status}</Badge>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Pending">Pending</SelectItem>
+                      <SelectItem value="Under Review">Under Review</SelectItem>
+                      <SelectItem value="Investigating">Investigating</SelectItem>
+                      <SelectItem value="Resolved">Resolved</SelectItem>
+                      <SelectItem value="Escalated">Escalated</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </TableCell>
-                <TableCell className="px-4 py-3"><Badge variant="outline" className="text-[10px] font-semibold border-slate-200 text-slate-600">{row.identity}</Badge></TableCell>
-                <TableCell className="px-4 py-3"><Badge variant="outline" className={`text-[10px] font-bold border-0 ${row.pColor}`}>{row.priority}</Badge></TableCell>
-                <TableCell className="px-4 py-3 text-[12px] text-slate-600">{row.lead}</TableCell>
-                <TableCell className="px-4 py-3 text-[12px] text-slate-400 text-right">{row.files}</TableCell>
+                <TableCell className="px-4 py-3"><Badge variant="outline" className="text-[10px] font-semibold border-slate-200 text-slate-600">{row.anonymous ? "Anonymous" : "Identified"}</Badge></TableCell>
+                <TableCell className="px-4 py-3">
+                  <Badge variant="outline" className={`text-[10px] font-bold border-0 ${
+                    row.priority === "Urgent" ? "text-red-600 bg-red-50" :
+                    row.priority === "High" ? "text-orange-600 bg-orange-50" :
+                    row.priority === "Medium" ? "text-amber-600 bg-amber-50" :
+                    "text-slate-500 bg-slate-100"
+                  }`}>{row.priority}</Badge>
+                </TableCell>
+                <TableCell className="px-4 py-3">
+                  <Select value={row.assignedInvestigator} onValueChange={(v) => handleAssigneeChange(row.id, v)}>
+                    <SelectTrigger className="h-7 border-0 bg-transparent p-0 focus:ring-0 focus:ring-offset-0 text-[12px] text-slate-600">
+                      <span className="truncate">{row.assignedInvestigator}</span>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Unassigned">Unassigned</SelectItem>
+                      <SelectItem value="L. Boateng">L. Boateng</SelectItem>
+                      <SelectItem value="D. Owusu">D. Owusu</SelectItem>
+                      <SelectItem value="K. Asante">K. Asante</SelectItem>
+                      <SelectItem value="Anti-Sexual Harassment Committee">Committee Board</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </TableCell>
+                <TableCell className="px-4 py-3 text-[12px] text-slate-400 text-right">{row.evidence.length} file(s)</TableCell>
               </TableRow>
             ))}
             {filtered.length === 0 && (
@@ -432,7 +525,7 @@ function CaseManagementTable() {
 
 function MetricCard({ title, value, subtitle, subColor }: any) {
   return (
-    <div className="bg-white border border-slate-200 rounded-sm p-5">
+    <div className="bg-card border border-slate-200 rounded-sm p-5">
       <div className="text-[11px] font-semibold tracking-widest text-slate-400 uppercase mb-3">{title}</div>
       <div className="text-3xl font-semibold text-[#1f3a5f] mb-3">{value}</div>
       <div className={`text-[12px] font-medium ${subColor}`}>{subtitle}</div>
@@ -441,46 +534,25 @@ function MetricCard({ title, value, subtitle, subColor }: any) {
 }
 
 function InvestigationsView() {
-  const columns = [
-    {
-      title: "INTAKE",
-      count: 1,
-      bgColor: "bg-amber-50/50",
-      borderColor: "border-amber-100",
-      cards: [
-        { id: "UG-SH-2026-00044", type: "Verbal misconduct", priority: "MEDIUM", priorityColor: "text-amber-600 bg-amber-50", dept: "Registry", lead: "D. Owusu" }
-      ]
-    },
-    {
-      title: "UNDER INVESTIGATION",
-      count: 2,
-      bgColor: "bg-blue-50/50",
-      borderColor: "border-blue-100",
-      cards: [
-        { id: "UG-SH-2026-00045", type: "Sexual Harassment", priority: "HIGH", priorityColor: "text-orange-600 bg-orange-50", dept: "Economics", lead: "L. Boateng" },
-        { id: "UG-SH-2026-00040", type: "Coercion", priority: "HIGH", priorityColor: "text-orange-600 bg-orange-50", dept: "Computer Science", lead: "L. Boateng" }
-      ]
-    },
-    {
-      title: "AWAITING HEARING",
-      count: 1,
-      bgColor: "bg-fuchsia-50/50",
-      borderColor: "border-fuchsia-100",
-      cards: [
-        { id: "UG-SH-2026-00043", type: "Sexual assault", priority: "CRITICAL", priorityColor: "text-red-600 bg-red-50", dept: "Law School", lead: "K. Asante" }
-      ]
-    },
-    {
-      title: "RESOLVED",
-      count: 2,
-      bgColor: "bg-emerald-50/50",
-      borderColor: "border-emerald-100",
-      cards: [
-        { id: "UG-SH-2026-00042", type: "Stalking", priority: "LOW", priorityColor: "text-slate-500 bg-slate-100", dept: "Sociology", lead: "System" },
-        { id: "UG-SH-2026-00041", type: "Harassment", priority: "LOW", priorityColor: "text-slate-500 bg-slate-100", dept: "Finance", lead: "System" }
-      ]
-    }
-  ];
+  const [reports, setReportsLocal] = useState<ReportRecord[]>([]);
+
+  useEffect(() => {
+    setReportsLocal(getReports());
+  }, []);
+
+  const columns = useMemo(() => {
+    const statuses: { title: string; status: CaseStatus; bgColor: string; borderColor: string }[] = [
+      { title: "INTAKE", status: "Pending", bgColor: "bg-amber-50/50", borderColor: "border-amber-100" },
+      { title: "UNDER INVESTIGATION", status: "Investigating", bgColor: "bg-blue-50/50", borderColor: "border-blue-100" },
+      { title: "AWAITING HEARING", status: "Under Review", bgColor: "bg-fuchsia-50/50", borderColor: "border-fuchsia-100" },
+      { title: "RESOLVED", status: "Resolved", bgColor: "bg-emerald-50/50", borderColor: "border-emerald-100" },
+    ];
+
+    return statuses.map(col => ({
+      ...col,
+      cards: reports.filter(r => r.status === col.status || (col.status === "Pending" && r.status === "Pending"))
+    }));
+  }, [reports]);
 
   return (
     <div className="h-full animate-in fade-in duration-500 flex gap-6 overflow-x-auto pb-4">
@@ -488,65 +560,71 @@ function InvestigationsView() {
         <div key={idx} className={`flex-shrink-0 w-[320px] border rounded-sm flex flex-col ${col.bgColor} ${col.borderColor}`}>
           <div className="p-4 flex items-center justify-between border-b border-transparent">
             <h3 className="text-[12px] font-semibold text-slate-700 tracking-wider uppercase">{col.title}</h3>
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-[12px] font-medium text-slate-500 shadow-none border border-slate-100">{col.count}</span>
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-card text-[12px] font-medium text-slate-500 shadow-none border border-slate-100">{col.cards.length}</span>
           </div>
           <div className="flex-1 p-3 space-y-3">
-            {col.cards.map((card, i) => (
-              <Dialog key={i}>
-                <DialogTrigger asChild>
-                  <div className="bg-white border border-slate-200 rounded-sm p-4 shadow-none hover:border-[#1f3a5f] transition-all cursor-pointer group">
-                    <div className="flex justify-between items-start mb-3">
-                      <div className="text-[11px] font-bold text-[#1f3a5f]">{card.id}</div>
-                      <Badge variant="outline" className={`h-4 px-1.5 text-[10px] font-bold border-0 ${card.priorityColor}`}>{card.priority}</Badge>
-                    </div>
-                    <div className="text-[13px] font-medium text-slate-900 mb-6 leading-tight group-hover:text-[#1f3a5f]">{card.type}</div>
-                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-50">
-                      <div className="flex items-center gap-2">
-                        <div className="h-5 w-5 rounded-full bg-slate-100 flex items-center justify-center text-[8px] font-bold text-slate-400">
-                          {card.lead.split(' ').map(n => n[0]).join('')}
+            {col.cards.map((card, i) => {
+              const pColor = card.priority === "Urgent" ? "text-red-600 bg-red-50" :
+                            card.priority === "High" ? "text-orange-600 bg-orange-50" :
+                            card.priority === "Medium" ? "text-amber-600 bg-amber-50" :
+                            "text-slate-500 bg-slate-100";
+              return (
+                <Dialog key={i}>
+                  <DialogTrigger asChild>
+                    <div className="bg-card border border-slate-200 rounded-sm p-4 shadow-none hover:border-[#1f3a5f] transition-all cursor-pointer group">
+                      <div className="flex justify-between items-start mb-3">
+                        <div className="text-[11px] font-bold text-[#1f3a5f]">{card.id}</div>
+                        <Badge variant="outline" className={`h-4 px-1.5 text-[10px] font-bold border-0 ${pColor}`}>{card.priority}</Badge>
+                      </div>
+                      <div className="text-[13px] font-medium text-slate-900 mb-6 leading-tight group-hover:text-[#1f3a5f]">{card.incidentType}</div>
+                      <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-50">
+                        <div className="flex items-center gap-2">
+                          <div className="h-5 w-5 rounded-full bg-slate-100 flex items-center justify-center text-[8px] font-bold text-slate-400">
+                            {card.assignedInvestigator.split(' ').map(n => n[0]).join('')}
+                          </div>
+                          <span className="text-[11px] text-slate-500">{card.assignedInvestigator}</span>
                         </div>
-                        <span className="text-[11px] text-slate-500">{card.lead}</span>
-                      </div>
-                      <span className="text-[11px] text-slate-400">{card.dept}</span>
-                    </div>
-                  </div>
-                </DialogTrigger>
-                <DialogContent className="max-w-xl rounded-sm border-slate-200">
-                  <DialogHeader>
-                    <div className="flex items-center gap-3 mb-2">
-                      <DialogTitle className="text-xl font-semibold text-[#1f3a5f]">Investigation Brief</DialogTitle>
-                      <Badge className="bg-orange-50 text-orange-600 border-0 rounded-full h-5 px-2 text-[10px]">IN PROGRESS</Badge>
-                    </div>
-                    <DialogDescription>Case ID: {card.id}</DialogDescription>
-                  </DialogHeader>
-                  <div className="mt-6 space-y-6">
-                    <div className="grid grid-cols-2 gap-6">
-                      <div>
-                        <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Lead Investigator</label>
-                        <div className="text-[14px] text-slate-900 font-medium">{card.lead}</div>
-                      </div>
-                      <div>
-                        <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Priority Level</label>
-                        <div className="text-[14px] text-slate-900 font-medium">{card.priority}</div>
+                        <span className="text-[11px] text-slate-400">GH-SEC</span>
                       </div>
                     </div>
-                    <div className="p-4 bg-slate-50 rounded-sm border border-slate-100">
-                      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-3">Status Update</label>
-                      <p className="text-[13px] text-slate-600 leading-relaxed italic">
-                        "Gathering witness statements and verifying digital evidence EV-9821. Expected completion: Friday."
-                      </p>
-                    </div>
-                    <div className="flex justify-between items-center pt-4">
-                      <div className="text-[12px] text-slate-400">Last updated: 2 hours ago</div>
-                      <div className="flex gap-2">
-                        <Button variant="outline" className="h-9 px-4 text-[12px] font-bold rounded-sm uppercase">History</Button>
-                        <Button className="h-9 px-4 text-[12px] font-bold rounded-sm uppercase bg-[#1f3a5f]">Update Status</Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-xl rounded-sm border-slate-200">
+                    <DialogHeader>
+                      <div className="flex items-center gap-3 mb-2">
+                        <DialogTitle className="text-xl font-semibold text-[#1f3a5f]">Investigation Brief</DialogTitle>
+                        <Badge className="bg-blue-50 text-blue-600 border-0 rounded-full h-5 px-2 text-[10px] uppercase font-bold">{card.status}</Badge>
+                      </div>
+                      <DialogDescription>Case ID: {card.id}</DialogDescription>
+                    </DialogHeader>
+                    <div className="mt-6 space-y-6">
+                      <div className="grid grid-cols-2 gap-6">
+                        <div>
+                          <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Lead Investigator</label>
+                          <div className="text-[14px] text-slate-900 font-medium">{card.assignedInvestigator}</div>
+                        </div>
+                        <div>
+                          <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Priority Level</label>
+                          <div className="text-[14px] text-slate-900 font-medium">{card.priority}</div>
+                        </div>
+                      </div>
+                      <div className="p-4 bg-slate-50 rounded-sm border border-slate-100">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-3">Case Description</label>
+                        <p className="text-[13px] text-slate-600 leading-relaxed italic">
+                          "{card.description}"
+                        </p>
+                      </div>
+                      <div className="flex justify-between items-center pt-4">
+                        <div className="text-[12px] text-slate-400">Submitted: {new Date(card.submittedAt).toLocaleDateString()}</div>
+                        <div className="flex gap-2">
+                          <Button variant="outline" className="h-9 px-4 text-[12px] font-bold rounded-sm uppercase">Full Record</Button>
+                          <Button className="h-9 px-4 text-[12px] font-bold rounded-sm uppercase bg-[#1f3a5f]">Update Case</Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </DialogContent>
-              </Dialog>
-            ))}
+                  </DialogContent>
+                </Dialog>
+              );
+            })}
           </div>
         </div>
       ))}
@@ -564,7 +642,7 @@ function AuditLogsView() {
   ];
 
   return (
-    <div className="max-w-[1200px] animate-in fade-in duration-500 bg-white border border-slate-200 rounded-sm shadow-none">
+    <div className="max-w-[1200px] animate-in fade-in duration-500 bg-card border border-slate-200 rounded-sm shadow-none">
       <div className="p-6 border-b border-slate-100 space-y-6">
         <div className="flex items-start justify-between">
           <div>
@@ -622,19 +700,18 @@ function AuditLogsView() {
 }
 
 function CaseRecordsView() {
+  const [reports, _setReports] = useState<ReportRecord[]>([]);
+
+  useEffect(() => {
+    _setReports(getReports());
+  }, []);
+
   const handleExport = (type: string) => {
-    alert(`Exporting case records as ${type.toUpperCase()}...`);
+    alert(`Exporting ${reports.length} case records as ${type.toUpperCase()}...`);
   };
 
-  const records = [
-    { id: "UG-SH-2026-00045", type: "Sexual Harassment", complainant: "Anonymous", date: "2026-05-08", status: "Active", dept: "Economics", details: "Initial report submitted via secure form. Complainant requested anonymity." },
-    { id: "UG-SH-2026-00044", type: "Verbal misconduct", complainant: "L. Quansah", date: "2026-05-07", status: "Intake", dept: "Registry", details: "Verbal altercation reported in the main hall." },
-    { id: "UG-SH-2026-00043", type: "Sexual assault", complainant: "Anonymous", date: "2026-05-06", status: "Hearing", dept: "Law School", details: "Critical case moved to hearing stage. Legal team notified." },
-    { id: "UG-SH-2026-00042", type: "Stalking", complainant: "J. Mensah", date: "2026-05-05", status: "Resolved", dept: "Sociology", details: "Case closed after mediation and no-contact order." },
-  ];
-
   return (
-    <div className="max-w-[1200px] animate-in fade-in duration-500 bg-white border border-slate-200 rounded-sm shadow-none">
+    <div className="max-w-[1200px] animate-in fade-in duration-500 bg-card border border-slate-200 rounded-sm shadow-none">
       <div className="p-6 border-b border-slate-100 flex items-start justify-between">
         <div>
           <h2 className="text-[15px] font-semibold text-[#1f3a5f]">All Case Records</h2>
@@ -661,16 +738,18 @@ function CaseRecordsView() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {records.map((rec, i) => (
+          {reports.map((rec, i) => (
             <TableRow key={i} className="border-slate-100 group">
               <TableCell className="px-6 py-4 text-[13px] font-semibold text-[#1f3a5f]">{rec.id}</TableCell>
-              <TableCell className="px-6 py-4 text-[13px] text-slate-600">{rec.type}</TableCell>
-              <TableCell className="px-6 py-4 text-[13px] text-slate-600">{rec.complainant}</TableCell>
-              <TableCell className="px-6 py-4 text-[12px] text-slate-500">{rec.date}</TableCell>
+              <TableCell className="px-6 py-4 text-[13px] text-slate-600">{rec.incidentType}</TableCell>
+              <TableCell className="px-6 py-4 text-[13px] text-slate-600">{rec.anonymous ? "Anonymous" : rec.identity?.fullName || "Identified"}</TableCell>
+              <TableCell className="px-6 py-4 text-[12px] text-slate-500">{new Date(rec.submittedAt).toLocaleDateString()}</TableCell>
               <TableCell className="px-6 py-4">
-                <Badge variant="outline" className={`rounded-full px-2 py-0 h-5 text-[10px] font-bold uppercase tracking-wide border-0 ${rec.status === 'Resolved' ? 'bg-emerald-50 text-emerald-600' :
-                    rec.status === 'Hearing' ? 'bg-fuchsia-50 text-fuchsia-600' :
-                      'bg-blue-50 text-blue-600'
+                <Badge variant="outline" className={`rounded-full px-2 py-0 h-5 text-[10px] font-bold uppercase tracking-wide border-0 ${
+                    rec.status === 'Resolved' ? 'bg-emerald-50 text-emerald-600' :
+                    rec.status === 'Investigating' ? 'bg-blue-50 text-blue-600' :
+                    rec.status === 'Under Review' ? 'bg-amber-50 text-amber-600' :
+                    'bg-slate-100 text-slate-600'
                   }`}>
                   {rec.status}
                 </Badge>
@@ -686,40 +765,40 @@ function CaseRecordsView() {
                     <DialogHeader>
                       <div className="flex items-center gap-3 mb-2">
                         <DialogTitle className="text-xl font-semibold text-[#1f3a5f]">{rec.id}</DialogTitle>
-                        <Badge className="bg-blue-50 text-blue-600 border-0 rounded-full h-5 px-2 text-[10px]">{rec.status}</Badge>
+                        <Badge className="bg-blue-50 text-blue-600 border-0 rounded-full h-5 px-2 text-[10px] uppercase font-bold">{rec.status}</Badge>
                       </div>
                       <DialogDescription className="text-slate-500 text-[14px]">
-                        Detailed record of the incident reported on {rec.date}.
+                        Detailed record of the incident reported on {new Date(rec.submittedAt).toLocaleString()}.
                       </DialogDescription>
                     </DialogHeader>
                     <div className="mt-6 space-y-6">
                       <div className="grid grid-cols-2 gap-8">
                         <div>
                           <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Incident Type</label>
-                          <div className="text-[15px] text-slate-900 font-medium">{rec.type}</div>
+                          <div className="text-[15px] text-slate-900 font-medium">{rec.incidentType}</div>
                         </div>
                         <div>
                           <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Complainant</label>
-                          <div className="text-[15px] text-slate-900 font-medium">{rec.complainant}</div>
+                          <div className="text-[15px] text-slate-900 font-medium">{rec.anonymous ? "Anonymous" : rec.identity?.fullName || "Identified"}</div>
                         </div>
                         <div>
-                          <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Department</label>
-                          <div className="text-[15px] text-slate-900 font-medium">{rec.dept}</div>
+                          <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Investigator</label>
+                          <div className="text-[15px] text-slate-900 font-medium">{rec.assignedInvestigator}</div>
                         </div>
                         <div>
                           <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Submission Date</label>
-                          <div className="text-[15px] text-slate-900 font-medium">{rec.date}</div>
+                          <div className="text-[15px] text-slate-900 font-medium">{new Date(rec.submittedAt).toLocaleDateString()}</div>
                         </div>
                       </div>
                       <div className="border-t border-slate-100 pt-6">
                         <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-3">Case Brief</label>
                         <p className="text-[14px] text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-sm italic border-l-2 border-slate-200">
-                          "{rec.details}"
+                          "{rec.description}"
                         </p>
                       </div>
                       <div className="flex justify-end gap-3 pt-4">
-                        <Button variant="outline" className="rounded-sm h-10 px-6 text-[12px] font-bold uppercase border-slate-200">Archive</Button>
-                        <Button onClick={() => alert('Assigning investigator...')} className="rounded-sm h-10 px-6 text-[12px] font-bold uppercase bg-[#1f3a5f] hover:bg-[#152a47]">Assign Investigator</Button>
+                        <Button variant="outline" onClick={() => alert('Case archived.')} className="rounded-sm h-10 px-6 text-[12px] font-bold uppercase border-slate-200">Archive</Button>
+                        <Button onClick={() => alert('Updating status...')} className="rounded-sm h-10 px-6 text-[12px] font-bold uppercase bg-[#1f3a5f] hover:bg-[#152a47]">Update Status</Button>
                       </div>
                     </div>
                   </DialogContent>
@@ -727,6 +806,9 @@ function CaseRecordsView() {
               </TableCell>
             </TableRow>
           ))}
+          {reports.length === 0 && (
+             <TableRow><TableCell colSpan={6} className="text-center py-10 text-[13px] text-slate-400">No case records found.</TableCell></TableRow>
+          )}
         </TableBody>
       </Table>
     </div>
@@ -734,22 +816,33 @@ function CaseRecordsView() {
 }
 
 function EvidenceView() {
+  const [evidenceList, setEvidenceList] = useState<{ id: string; caseId: string; type: string; uploader: string; date: string; size: string }[]>([]);
+
+  useEffect(() => {
+    const reports = getReports();
+    const allEvidence = reports.flatMap(r => 
+      r.evidence.map((e, idx) => ({
+        id: `EV-${r.id.split('-').pop()}-${idx + 1}`,
+        caseId: r.id,
+        type: e.type.split('/')[1]?.toUpperCase() || 'FILE',
+        uploader: r.anonymous ? 'System/Secure' : r.identity?.fullName || 'Reporter',
+        date: new Date(r.submittedAt).toLocaleDateString(),
+        size: `${(e.size / 1024 / 1024).toFixed(1)} MB`
+      }))
+    );
+    setEvidenceList(allEvidence);
+  }, []);
+
   const handleDownload = (id: string) => {
     alert(`Downloading evidence ${id}...`);
   };
 
   const handleBulkDownload = () => {
-    alert(`Preparing bulk download of all evidence...`);
+    alert(`Preparing bulk download of ${evidenceList.length} evidence items...`);
   };
 
-  const evidence = [
-    { id: "EV-9821", caseId: "UG-SH-2026-00045", type: "Image", uploader: "Coordinator A", date: "2026-05-08", size: "2.4 MB" },
-    { id: "EV-9820", caseId: "UG-SH-2026-00045", type: "PDF Document", uploader: "D. Owusu", date: "2026-05-08", size: "1.1 MB" },
-    { id: "EV-9819", caseId: "UG-SH-2026-00044", type: "Audio", uploader: "System", date: "2026-05-07", size: "4.8 MB" },
-  ];
-
   return (
-    <div className="max-w-[1200px] animate-in fade-in duration-500 bg-white border border-slate-200 rounded-sm shadow-none">
+    <div className="max-w-[1200px] animate-in fade-in duration-500 bg-card border border-slate-200 rounded-sm shadow-none">
       <div className="p-6 border-b border-slate-100 flex items-center justify-between">
         <div>
           <h2 className="text-[15px] font-semibold text-[#1f3a5f]">Evidence Center</h2>
@@ -771,7 +864,7 @@ function EvidenceView() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {evidence.map((ev, i) => (
+          {evidenceList.map((ev, i) => (
             <TableRow key={i} className="border-slate-100 group">
               <TableCell className="px-6 py-4 text-[13px] font-semibold text-slate-800">{ev.id}</TableCell>
               <TableCell className="px-6 py-4 text-[13px] text-[#1f3a5f]">{ev.caseId}</TableCell>
@@ -786,7 +879,7 @@ function EvidenceView() {
               <TableCell className="px-6 py-4 text-[12px] text-slate-500">{ev.date}</TableCell>
               <TableCell className="px-6 py-4 text-right">
                 <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-slate-400 hover:text-[#1f3a5f]">
+                  <Button variant="ghost" size="sm" onClick={() => handleDownload(ev.id)} className="h-8 w-8 p-0 text-slate-400 hover:text-[#1f3a5f]">
                     <Eye className="h-4 w-4" />
                   </Button>
                   <Button variant="ghost" size="sm" onClick={() => handleDownload(ev.id)} className="h-8 w-8 p-0 text-slate-400 hover:text-[#1f3a5f]">
@@ -796,6 +889,9 @@ function EvidenceView() {
               </TableCell>
             </TableRow>
           ))}
+          {evidenceList.length === 0 && (
+             <TableRow><TableCell colSpan={6} className="text-center py-10 text-[13px] text-slate-400">No evidence found in current cases.</TableCell></TableRow>
+          )}
         </TableBody>
       </Table>
     </div>
@@ -825,7 +921,7 @@ function TeamView() {
     <div className="space-y-8 animate-in fade-in duration-500 max-w-[1200px]">
       <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
         {roles.map((r, i) => (
-          <div key={i} className="bg-white border border-slate-200 rounded-sm p-4 hover:border-[#1f3a5f] transition-colors cursor-pointer">
+          <div key={i} className="bg-card border border-slate-200 rounded-sm p-4 hover:border-[#1f3a5f] transition-colors cursor-pointer">
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Role</div>
             <div className="text-[14px] font-semibold text-[#1f3a5f] truncate">{r.name}</div>
             <div className="text-[11px] text-slate-500 mt-2">{r.count} member(s)</div>
@@ -833,7 +929,7 @@ function TeamView() {
         ))}
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-sm shadow-none">
+      <div className="bg-card border border-slate-200 rounded-sm shadow-none">
         <div className="p-6 border-b border-slate-100 flex items-center justify-between">
           <h2 className="text-[15px] font-semibold text-[#1f3a5f]">Team members</h2>
           <Dialog>
@@ -920,90 +1016,363 @@ function TeamView() {
   );
 }
 
-function SettingsView() {
-  const [activeMenu, setActiveMenu] = useState("General");
-  const menuItems = ["General", "Security", "Notifications", "Templates", "Roles & Permissions"];
+function ProfileView({ setActiveTab }: { setActiveTab: (t: TabId) => void }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [profile, setProfile] = useState({
+    fullName: "Dr. A. Mensah",
+    username: "amensah_super",
+    email: "a.mensah@ug.edu.gh",
+    phone: "+233 24 123 4567",
+    dob: "12/05/1978",
+    address: "Legon Campus, Staff Quarters",
+    city: "Accra",
+    country: "Ghana",
+    plan: "Super Admin",
+    type: "Staff-Institutional",
+    startDate: "15 Jan 2020"
+  });
+
+  const handleSave = () => {
+    setIsEditing(false);
+    alert("Profile updated successfully!");
+  };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-sm shadow-none max-w-[1000px] animate-in fade-in duration-500 flex min-h-[600px]">
-      <div className="w-64 border-r border-slate-100 py-6">
-        <div className="px-6 mb-4 text-[10px] font-semibold tracking-widest text-slate-400 uppercase">Settings Menu</div>
-        <nav className="space-y-1 px-3">
-          {menuItems.map((item) => (
-            <button
-              key={item}
-              onClick={() => setActiveMenu(item)}
-              className={`w-full text-left px-4 py-2.5 rounded-sm text-[13px] font-medium transition-colors ${activeMenu === item ? "bg-[#1f3a5f] text-white" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                }`}
+    <div className="max-w-[1200px] animate-in fade-in slide-in-from-bottom-4 duration-700 pb-12">
+      <div className="mb-6">
+        <Button variant="ghost" onClick={() => setActiveTab("dashboard")} className="text-slate-500 hover:text-[#1f3a5f] p-0 flex gap-2 items-center text-[12px] font-bold uppercase tracking-widest">
+          <ChevronLeft className="h-4 w-4" /> Back to Dashboard
+        </Button>
+      </div>
+      <div className="bg-card border border-slate-200 rounded-sm overflow-hidden mb-8">
+        <div className="h-40 w-full bg-gradient-to-r from-[#1f3a5f] via-[#2a4d7d] to-[#c59d5f] opacity-90 relative">
+           <div className="absolute inset-0 grain opacity-20" />
+        </div>
+        <div className="px-8 pb-8 flex flex-col md:flex-row items-end gap-6 -mt-12 relative z-10">
+          <div className="h-32 w-32 rounded-full border-4 border-white bg-slate-200 overflow-hidden shadow-xl shrink-0">
+            <img 
+              src="https://api.dicebear.com/7.x/notionists/svg?seed=Felix&backgroundColor=e2e8f0" 
+              alt="Profile Avatar" 
+              className="h-full w-full object-cover" 
+            />
+          </div>
+          <div className="flex-1 flex flex-col md:flex-row justify-between items-center md:items-end w-full gap-4">
+            <div>
+              <div className="flex items-center gap-3 mb-1">
+                <h2 className="text-3xl font-bold text-slate-900">{profile.fullName}</h2>
+                <Badge className="bg-emerald-50 text-emerald-600 border-emerald-100 rounded-full flex gap-1 items-center h-6 px-2 text-[10px] font-bold">
+                  <ShieldCheck className="h-3 w-3" /> VERIFIED PROFILE
+                </Badge>
+              </div>
+              <div className="flex items-center gap-4 text-slate-500 text-[13px]">
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-3.5 w-3.5" /> Start Date: {profile.startDate}
+                </div>
+              </div>
+            </div>
+            <Button 
+              variant={isEditing ? "default" : "outline"}
+              onClick={() => isEditing ? handleSave() : setIsEditing(true)}
+              className={`h-11 px-8 rounded-sm text-[12px] font-bold uppercase tracking-widest ${
+                isEditing ? "bg-[#1f3a5f] hover:bg-[#152a47]" : "border-slate-200 text-slate-600"
+              }`}
             >
-              {item}
-            </button>
-          ))}
-        </nav>
+              {isEditing ? "Save Changes" : "Edit Profile"}
+            </Button>
+          </div>
+        </div>
       </div>
 
-      <div className="flex-1 p-10">
-        <h2 className="text-xl font-semibold text-[#1f3a5f] mb-8">{activeMenu} Settings</h2>
-
-        {activeMenu === "General" && (
-          <div className="max-w-xl space-y-8">
-            <div className="space-y-2">
-              <label className="text-[11px] font-bold tracking-widest text-slate-500 uppercase">Institution Name</label>
-              <Input defaultValue="University of Ghana" className="h-11 border-slate-200 rounded-sm focus-visible:ring-1 focus-visible:ring-[#1f3a5f]" />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-8">
+          <div className="bg-card border border-slate-200 rounded-sm p-10">
+            <div className="flex items-center justify-between mb-10">
+              <h3 className="text-lg font-semibold text-[#1f3a5f]">Profile Details</h3>
+              <button onClick={() => setIsEditing(!isEditing)} className="text-[12px] font-bold text-slate-400 hover:text-[#1f3a5f] uppercase tracking-widest">Edit</button>
             </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              <ProfileDetailItem icon={User} label="Full Name" value={profile.fullName} isEditing={isEditing} onChange={(v: string) => setProfile({...profile, fullName: v})} />
+              <ProfileDetailItem icon={Mail} label="Email Address" value={profile.email} isEditing={isEditing} onChange={(v: string) => setProfile({...profile, email: v})} badge="Verified" />
+              <ProfileDetailItem icon={Calendar} label="Date of Birth" value={profile.dob} isEditing={isEditing} onChange={(v: string) => setProfile({...profile, dob: v})} />
+              
+              <ProfileDetailItem icon={User} label="Username" value={profile.username} isEditing={isEditing} onChange={(v: string) => setProfile({...profile, username: v})} />
+              <ProfileDetailItem icon={Phone} label="Contact Number" value={profile.phone} isEditing={isEditing} onChange={(v: string) => setProfile({...profile, phone: v})} badge="Verified" />
+              <ProfileDetailItem icon={Shield} label="Access Plan" value={profile.plan} isEditing={false} />
 
-            <div className="space-y-2">
-              <label className="text-[11px] font-bold tracking-widest text-slate-500 uppercase">Support Email</label>
-              <Input defaultValue="support@ug.edu.gh" className="h-11 border-slate-200 rounded-sm focus-visible:ring-1 focus-visible:ring-[#1f3a5f]" />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-[11px] font-bold tracking-widest text-slate-500 uppercase">Timezone</label>
-              <Select defaultValue="GMT">
-                <SelectTrigger className="h-11 border-slate-200 rounded-sm focus:ring-1 focus:ring-[#1f3a5f]">
-                  <SelectValue placeholder="Select timezone" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="GMT">GMT (Accra)</SelectItem>
-                  <SelectItem value="UTC">UTC</SelectItem>
-                  <SelectItem value="EST">EST</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="pt-6 border-t border-slate-100">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <div className="text-[14px] font-semibold text-slate-900">Maintenance Mode</div>
-                  <div className="text-[12px] text-slate-500">Temporarily disable public reporting form</div>
-                </div>
-                <Switch />
-              </div>
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <div className="text-[14px] font-semibold text-slate-900">Anonymous Reporting</div>
-                  <div className="text-[12px] text-slate-500">Allow users to submit without identity</div>
-                </div>
-                <Switch defaultChecked />
-              </div>
-            </div>
-
-            <div className="pt-4">
-              <Button className="bg-[#1f3a5f] hover:bg-[#152a47] text-[13px] font-bold h-11 px-8 rounded-sm uppercase tracking-wider">Save Changes</Button>
+              <ProfileDetailItem icon={MapPin} label="Office Address" value={profile.address} isEditing={isEditing} onChange={(v: string) => setProfile({...profile, address: v})} />
+              <ProfileDetailItem icon={Globe} label="City / Region" value={profile.city} isEditing={isEditing} onChange={(v: string) => setProfile({...profile, city: v})} />
+              <ProfileDetailItem icon={Shield} label="Account Type" value={profile.type} isEditing={false} />
             </div>
           </div>
-        )}
 
-        {activeMenu !== "General" && (
-          <div className="h-full flex flex-col items-center justify-center text-slate-400 italic">
-            <Settings className="h-12 w-12 mb-4 opacity-20" />
-            <p>{activeMenu} settings coming soon...</p>
+          <div className="bg-gradient-to-br from-emerald-50/50 to-white border border-emerald-100 rounded-sm p-8 flex items-center justify-between">
+            <div className="flex items-center gap-6">
+              <div className="h-14 w-14 rounded-full bg-card border border-emerald-100 flex items-center justify-center text-emerald-500 shadow-sm">
+                <Shield className="h-7 w-7" />
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-[#1f3a5f]">2-Factor Authentication</h4>
+                <p className="text-[14px] text-slate-500 max-w-sm">Add an extra layer of security to your admin account with multi-factor authentication.</p>
+              </div>
+            </div>
+            <Button className="bg-emerald-600 hover:bg-emerald-700 rounded-sm h-11 px-8 text-[12px] font-bold uppercase tracking-widest">Manage</Button>
+          </div>
+
+          <div className="bg-card border border-slate-200 rounded-sm p-8">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-[15px] font-semibold text-[#1f3a5f]">Access History</h3>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <Switch defaultChecked />
+                  <span className="text-[12px] font-medium text-slate-500">New Login Alerts</span>
+                </div>
+                <Button variant="outline" className="h-8 rounded-sm border-red-100 text-red-600 hover:bg-red-50 text-[11px] font-bold uppercase">Logout all other sessions</Button>
+              </div>
+            </div>
+            <div className="space-y-4">
+              {[
+                { browser: "Chrome on Windows", location: "Accra, GH", ip: "10.0.4.2", time: "Active now" },
+                { browser: "Safari on iPhone", location: "Kumasi, GH", ip: "192.168.1.5", time: "2 days ago" },
+                { browser: "Firefox on macOS", location: "London, UK", ip: "84.22.1.9", time: "5 days ago" },
+              ].map((login, i) => (
+                <div key={i} className="flex items-center justify-between py-4 border-b border-slate-50 last:border-0">
+                  <div className="flex items-center gap-4">
+                    <div className="h-9 w-9 rounded-sm bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400">
+                      <Smartphone className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <div className="text-[14px] font-medium text-slate-800">{login.browser}</div>
+                      <div className="text-[11px] text-slate-400">{login.location} • {login.ip}</div>
+                    </div>
+                  </div>
+                  <span className={`text-[12px] font-medium ${login.time === "Active now" ? "text-emerald-600" : "text-slate-400"}`}>{login.time}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <div className="bg-[#1f3a5f] text-white rounded-sm p-8 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 h-32 w-32 bg-card/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110" />
+            <h4 className="text-xl font-bold mb-4">Security Overview</h4>
+            <p className="text-slate-300 text-[14px] leading-relaxed mb-8">Your account security score is currently <span className="text-[#c59d5f] font-bold">Excellent</span>. Keep your credentials safe.</p>
+            <div className="space-y-4">
+              <SecurityItem label="Password Strength" score={100} />
+              <SecurityItem label="Identity Verification" score={100} />
+              <SecurityItem label="Recent Activity" score={92} />
+            </div>
+          </div>
+
+          <div className="bg-card border border-slate-200 rounded-sm p-6">
+            <h4 className="text-[14px] font-bold text-[#1f3a5f] uppercase tracking-widest mb-6">Quick Preferences</h4>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-[13px] text-slate-600">Email Notifications</span>
+                <Switch defaultChecked />
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[13px] text-slate-600">Desktop Alerts</span>
+                <Switch />
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[13px] text-slate-600">Dark Mode</span>
+                <Switch 
+                  checked={document.documentElement.classList.contains("dark")}
+                  onCheckedChange={(checked) => {
+                    (window as any).setGlobalTheme(checked ? "dark" : "light");
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProfileDetailItem({ icon: Icon, label, value, isEditing, badge, onChange }: any) {
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-2">
+        <Icon className="h-4 w-4 text-slate-400" />
+        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">{label}</span>
+      </div>
+      <div className="relative">
+        {isEditing ? (
+          <Input 
+            value={value} 
+            onChange={(e) => onChange(e.target.value)} 
+            className="h-10 border-slate-200 bg-card text-[14px] font-medium rounded-sm focus-visible:ring-1 focus-visible:ring-[#1f3a5f]" 
+          />
+        ) : (
+          <div className="flex items-center gap-2">
+            <span className="text-[15px] font-semibold text-slate-800">{value}</span>
+            {badge && (
+              <Badge className="bg-emerald-50 text-emerald-600 border-0 rounded-full h-4 px-1.5 text-[8px] font-bold">
+                {badge}
+              </Badge>
+            )}
           </div>
         )}
       </div>
     </div>
   );
 }
+
+function SecurityItem({ label, score }: { label: string; score: number }) {
+  return (
+    <div className="space-y-2">
+      <div className="flex justify-between text-[11px]">
+        <span className="text-slate-300 font-medium">{label}</span>
+        <span className="text-[#c59d5f] font-bold">{score}%</span>
+      </div>
+      <div className="h-1.5 w-full bg-card/10 rounded-full overflow-hidden">
+        <div className="h-full bg-[#c59d5f] transition-all duration-1000" style={{ width: `${score}%` }} />
+      </div>
+    </div>
+  );
+}
+
+function PreferencesView({ setActiveTab }: { setActiveTab: (t: TabId) => void }) {
+  const [theme, setTheme] = useState(() => window.localStorage.getItem("ug_theme") || "system");
+  const [language, setLanguage] = useState("English (UK)");
+  const [notifFrequency, setNotifFrequency] = useState("Real-time");
+
+  const handleThemeChange = (newTheme: string) => {
+    setTheme(newTheme);
+    (window as any).setGlobalTheme(newTheme);
+  };
+
+  return (
+    <div className="max-w-[900px] animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="mb-6">
+        <Button variant="ghost" onClick={() => setActiveTab("dashboard")} className="text-slate-500 hover:text-[#1f3a5f] p-0 flex gap-2 items-center text-[12px] font-bold uppercase tracking-widest">
+          <ChevronLeft className="h-4 w-4" /> Back to Dashboard
+        </Button>
+      </div>
+      <div className="bg-card border border-slate-200 rounded-sm shadow-none">
+        <div className="p-10 border-b border-slate-100">
+          <h2 className="text-2xl font-semibold text-[#1f3a5f] mb-2">Portal Preferences</h2>
+          <p className="text-slate-500 text-[14px]">Customize your dashboard experience and notification settings.</p>
+        </div>
+        
+        <div className="p-10 space-y-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div>
+              <h3 className="text-[13px] font-bold text-slate-900 uppercase tracking-widest mb-4">Display & Appearance</h3>
+              <p className="text-[12px] text-slate-400 leading-relaxed">Adjust how the SpeakSafe dashboard looks on your device.</p>
+            </div>
+            <div className="md:col-span-2 space-y-8">
+               <div className="space-y-4">
+                <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest flex gap-2 items-center">
+                  <Palette className="h-3.5 w-3.5" /> Dashboard Theme
+                </label>
+                <div className="grid grid-cols-3 gap-3">
+                  {["light", "dark", "system"].map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => handleThemeChange(t)}
+                      className={`h-11 rounded-sm border text-[13px] font-medium transition-all capitalize ${
+                        theme === t ? "border-[#1f3a5f] bg-[#1f3a5f]/5 text-[#1f3a5f]" : "border-slate-200 text-slate-500 hover:border-slate-300"
+                      }`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-4 border-t border-slate-50">
+                 <div>
+                    <div className="text-[14px] font-semibold text-slate-900">Sidebar Collapsed</div>
+                    <div className="text-[12px] text-slate-400">Keep navigation compact by default</div>
+                 </div>
+                 <Switch />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pt-12 border-t border-slate-50">
+            <div>
+              <h3 className="text-[13px] font-bold text-slate-900 uppercase tracking-widest mb-4">Language & Region</h3>
+              <p className="text-[12px] text-slate-400 leading-relaxed">Choose your preferred language and time format for data display.</p>
+            </div>
+            <div className="md:col-span-2 space-y-6">
+              <div className="space-y-2">
+                <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest flex gap-2 items-center">
+                  <Globe className="h-3.5 w-3.5" /> Default Language
+                </label>
+                <Select value={language} onValueChange={setLanguage}>
+                  <SelectTrigger className="h-11 rounded-sm border-slate-200 bg-slate-50/30">
+                    <SelectValue placeholder="Select language" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="English (UK)">English (UK)</SelectItem>
+                    <SelectItem value="English (US)">English (US)</SelectItem>
+                    <SelectItem value="French">French</SelectItem>
+                    <SelectItem value="Twi">Twi (Akan)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pt-12 border-t border-slate-50">
+            <div>
+              <h3 className="text-[13px] font-bold text-slate-900 uppercase tracking-widest mb-4">Communication</h3>
+              <p className="text-[12px] text-slate-400 leading-relaxed">Manage how and when you receive portal updates.</p>
+            </div>
+            <div className="md:col-span-2 space-y-8">
+              <div className="space-y-4">
+                <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest flex gap-2 items-center">
+                  <Bell className="h-3.5 w-3.5" /> Notification Frequency
+                </label>
+                <div className="flex flex-wrap gap-3">
+                  {["Real-time", "Daily Summary", "Weekly Digest", "Critical Only"].map((f) => (
+                    <button
+                      key={f}
+                      onClick={() => setNotifFrequency(f)}
+                      className={`px-6 h-10 rounded-sm border text-[12px] font-medium transition-all ${
+                        notifFrequency === f ? "border-[#1f3a5f] bg-[#1f3a5f]/5 text-[#1f3a5f]" : "border-slate-200 text-slate-500 hover:border-slate-300"
+                      }`}
+                    >
+                      {f}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-4 pt-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-[14px] font-semibold text-slate-900">Push Notifications</div>
+                    <div className="text-[12px] text-slate-400">Receive alerts in your browser</div>
+                  </div>
+                  <Switch defaultChecked />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-[14px] font-semibold text-slate-900">Marketing & News</div>
+                    <div className="text-[12px] text-slate-400">Receive SpeakSafe UG newsletters</div>
+                  </div>
+                  <Switch />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-12 border-t border-slate-50 flex justify-end">
+             <Button className="bg-[#1f3a5f] hover:bg-[#152a47] rounded-sm h-12 px-10 text-[13px] font-bold uppercase tracking-wider">Save All Preferences</Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function MessagesView() {
   const [selectedChat, setSelectedChat] = useState<number | null>(0);
   const chats = [
@@ -1013,7 +1382,7 @@ function MessagesView() {
   ];
 
   return (
-    <div className="bg-white border border-slate-200 rounded-sm shadow-none h-[calc(100vh-200px)] animate-in fade-in duration-500 flex overflow-hidden">
+    <div className="bg-card border border-slate-200 rounded-sm shadow-none h-[calc(100vh-200px)] animate-in fade-in duration-500 flex overflow-hidden">
       {/* List */}
       <div className="w-80 border-r border-slate-100 flex flex-col shrink-0">
         <div className="p-5 border-b border-slate-50 flex gap-2">
@@ -1075,7 +1444,7 @@ function MessagesView() {
       <div className="flex-1 flex flex-col bg-slate-50/30">
         {selectedChat !== null ? (
           <>
-            <div className="h-[64px] border-b border-slate-100 bg-white flex items-center justify-between px-6 shrink-0">
+            <div className="h-[64px] border-b border-slate-100 bg-card flex items-center justify-between px-6 shrink-0">
               <div className="flex items-center gap-3">
                 <div className="h-8 w-8 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-400">
                   {chats[selectedChat].user.substring(0, 2).toUpperCase()}
@@ -1089,10 +1458,10 @@ function MessagesView() {
             </div>
             <div className="flex-1 p-6 space-y-6 overflow-y-auto bg-slate-50/10">
               <div className="flex justify-center">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white px-3 py-1 border border-slate-100 rounded-sm">Today</span>
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-card px-3 py-1 border border-slate-100 rounded-sm">Today</span>
               </div>
               <div className="flex flex-col gap-2 max-w-[70%]">
-                <div className="bg-white border border-slate-200 p-4 rounded-sm shadow-none">
+                <div className="bg-card border border-slate-200 p-4 rounded-sm shadow-none">
                   <p className="text-[13px] text-slate-700 leading-relaxed">
                     Hello, I'm checking on the status of my case UG-SH-2026-00045. When will the next hearing take place?
                   </p>
@@ -1108,7 +1477,7 @@ function MessagesView() {
                 <span className="text-[10px] text-slate-400 mr-1">12:45 PM</span>
               </div>
             </div>
-            <div className="p-4 bg-white border-t border-slate-100 flex gap-3 shrink-0">
+            <div className="p-4 bg-card border-t border-slate-100 flex gap-3 shrink-0">
               <Input placeholder="Type a message..." className="flex-1 border-transparent bg-slate-50 focus-visible:ring-0 rounded-sm text-sm" />
               <Button onClick={() => alert('Message sent successfully!')} className="bg-[#1f3a5f] hover:bg-[#152a47] rounded-sm px-6 text-[12px] font-bold">SEND</Button>
             </div>
@@ -1129,7 +1498,7 @@ function LoginView({ onLogin }: { onLogin: (e: FormEvent) => void }) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2 bg-white">
+    <div className="min-h-screen grid lg:grid-cols-2 bg-card">
       {/* Left Form Side */}
       <div className="flex flex-col px-8 py-10 md:px-16 lg:px-24">
         <div className="mb-20">
@@ -1163,7 +1532,7 @@ function LoginView({ onLogin }: { onLogin: (e: FormEvent) => void }) {
               <Input
                 type="email"
                 defaultValue="staff@ug.edu.gh"
-                className="h-12 rounded-sm border-slate-200 bg-white text-[15px] focus-visible:ring-1 focus-visible:ring-[#1f3a5f]"
+                className="h-12 rounded-sm border-slate-200 bg-card text-[15px] focus-visible:ring-1 focus-visible:ring-[#1f3a5f]"
               />
             </div>
             <div className="space-y-2">
@@ -1172,7 +1541,7 @@ function LoginView({ onLogin }: { onLogin: (e: FormEvent) => void }) {
                 <Input
                   type={showPassword ? "text" : "password"}
                   defaultValue="password"
-                  className="h-12 rounded-sm border-slate-200 bg-white text-[15px] focus-visible:ring-1 focus-visible:ring-[#1f3a5f] pr-10"
+                  className="h-12 rounded-sm border-slate-200 bg-card text-[15px] focus-visible:ring-1 focus-visible:ring-[#1f3a5f] pr-10"
                 />
                 <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}

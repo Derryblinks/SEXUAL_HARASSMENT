@@ -8,6 +8,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
 import { Navbar } from "@/components/site/Navbar";
@@ -129,6 +130,22 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const { pathname } = useLocation();
   const isAdminPortal = pathname.toLowerCase().startsWith("/admin");
+
+  useEffect(() => {
+    const theme = window.localStorage.getItem("ug_theme") || "system";
+    const applyTheme = (t: string) => {
+      const isDark = t === "dark" || (t === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      document.documentElement.classList.toggle("dark", isDark);
+    };
+    applyTheme(theme);
+
+    (window as any).setGlobalTheme = (newTheme: string) => {
+      window.localStorage.setItem("ug_theme", newTheme);
+      applyTheme(newTheme);
+      // Trigger a storage event for other components
+      window.dispatchEvent(new Event("storage"));
+    };
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
