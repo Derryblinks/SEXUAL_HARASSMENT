@@ -45,7 +45,7 @@ function StakeholdersPage() {
           <StaggerGroup className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {STAKEHOLDERS.map((s) => (
               <StaggerItem key={s.name}>
-                <div className="group h-full rounded-3xl border border-border bg-card p-7 hover:shadow-elegant hover:-translate-y-0.5 transition-all duration-500">
+                <div className="group h-full rounded-sm border border-slate-200 border border-border bg-card p-7 hover:shadow-elegant hover:-translate-y-0.5 transition-all duration-500">
                   <div className="h-11 w-11 rounded-xl bg-secondary text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                     <s.icon className="h-5 w-5" strokeWidth={1.6} />
                   </div>
@@ -58,7 +58,7 @@ function StakeholdersPage() {
         </div>
       </section>
 
-      <section className="py-20 md:py-24 bg-secondary/60">
+      <section className="py-20 md:py-24 bg-slate-50">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <Reveal>
             <h3 className="font-display text-3xl md:text-4xl font-semibold tracking-tight">Need to reach a stakeholder?</h3>

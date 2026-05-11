@@ -89,8 +89,8 @@ function GlossaryPage() {
     <>
       <PageHero
         eyebrow="Reference · Glossary"
-        title={<>The <span className="italic" style={{ background: "var(--gradient-gold)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>language</span> of dignity and accountability.</>}
-        description="Plain-language definitions drawn from the Sexual Harassment and Misconduct Policy context at the University of Ghana."
+        title={<>The <span style={{ color: "var(--color-gold)" }}>language</span> of dignity and accountability.</>}
+        description="Plain-language definitions from the educational framework at the University of Ghana."
       />
 
       <section className="py-24 md:py-32">
@@ -109,7 +109,7 @@ function GlossaryPage() {
         </div>
       </section>
 
-      <section className="py-20 md:py-24 bg-secondary/60">
+      <section className="py-20 md:py-24 bg-slate-50">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <Reveal>
             <h3 className="font-display text-3xl md:text-4xl font-semibold tracking-tight">Need clarification?</h3>

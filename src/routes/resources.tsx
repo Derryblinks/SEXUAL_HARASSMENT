@@ -46,9 +46,9 @@ function ResourcesPage() {
             {RESOURCES.map((r) => {
               const isExternal = r.href.startsWith("/UG-") || r.href.startsWith("http");
               const inner = (
-                <div className="group h-full rounded-3xl border border-border bg-card p-7 hover:shadow-elegant hover:-translate-y-0.5 transition-all duration-500">
+                <div className="group h-full rounded-sm border border-slate-200 border border-border bg-card p-7 hover:shadow-elegant hover:-translate-y-0.5 transition-all duration-500">
                   <div className="flex items-center justify-between">
-                    <div className="h-11 w-11 rounded-xl bg-secondary text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                    <div className="h-11 w-11 rounded-sm bg-secondary text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                       <r.icon className="h-5 w-5" strokeWidth={1.6} />
                     </div>
                     <div className="text-[10px] uppercase tracking-[0.2em] text-gold font-medium">{r.type}</div>
@@ -81,7 +81,51 @@ function ResourcesPage() {
         </div>
       </section>
 
-      <section className="py-20 md:py-24 bg-secondary/60">
+      <section className="py-28 md:py-36 bg-white border-t border-slate-100">
+        <div className="mx-auto max-w-7xl px-8">
+          <div className="grid lg:grid-cols-12 gap-20">
+            {/* Left Column */}
+            <div className="lg:col-span-5">
+              <div className="text-[10px] font-bold tracking-[0.2em] text-[#c59d5f] uppercase mb-6">Your Academic Rights</div>
+              <h2 className="text-4xl font-semibold text-[#1f3a5f] mb-8 leading-tight">Academic protections.</h2>
+              <p className="text-[17px] text-slate-500 leading-relaxed max-w-md">
+                Your education is a right, not collateral. The 2017 Policy provides specific institutional safeguards so that responding to harm — or being responded to — does not derail your progress, your residency, or your record.
+              </p>
+            </div>
+
+            {/* Right Column (List) */}
+            <div className="lg:col-span-7 space-y-12 pt-4">
+              {[
+                {
+                  id: "01",
+                  title: "No-contact directives",
+                  desc: "On request, the Anti-Sexual Harassment Committee can issue a binding no-contact instruction to the respondent — covering classrooms, halls, and online channels. Breach is itself a disciplinary offence.",
+                },
+                {
+                  id: "02",
+                  title: "Examination accommodations",
+                  desc: "You may sit examinations in a separate room, request an alternate invigilator, or defer a paper without academic penalty. The Faculty Officer is informed only of the accommodation, never of the underlying matter.",
+                },
+                {
+                  id: "03",
+                  title: "Schedule and supervision changes",
+                  desc: "Tutorial groups, lab partners, project supervisors, and timetables can be quietly reassigned to prevent forced contact. Where the respondent is your supervisor, alternative supervision is arranged through your department head.",
+                },
+              ].map((p) => (
+                <div key={p.id} className="grid sm:grid-cols-12 gap-6 group border-b border-slate-100 pb-12 last:border-0">
+                  <div className="sm:col-span-2 text-2xl font-semibold text-[#c59d5f]/30">{p.id}</div>
+                  <div className="sm:col-span-10">
+                    <h3 className="text-xl font-semibold text-[#1f3a5f] mb-4 group-hover:text-[#c59d5f] transition-colors">{p.title}</h3>
+                    <p className="text-[15px] text-slate-500 leading-relaxed">{p.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 md:py-24 bg-slate-50 border-t border-slate-100">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <Reveal>
             <h3 className="font-display text-3xl md:text-4xl font-semibold tracking-tight">Have a resource to suggest?</h3>

@@ -124,7 +124,7 @@ function UnderstandingPage() {
           </div>
           <div className="lg:col-span-7">
             <Reveal>
-              <div className="rounded-3xl border border-border bg-card p-8 md:p-10 shadow-elegant">
+              <div className="rounded-sm border border-slate-200 border border-border bg-card p-8 md:p-10 shadow-elegant">
                 <p className="font-display text-2xl leading-relaxed text-pretty">
                   Sexual harassment means <em className="text-primary">unwelcome conduct of a sexual nature</em>, including advances, requests for sexual favours, and verbal, non-verbal, written, electronic, graphic or physical behaviour when submission is tied to outcomes, affects evaluations, or{" "}
                   <em className="text-primary">unreasonably interferes</em> with work or study or creates an{" "}
@@ -144,7 +144,7 @@ function UnderstandingPage() {
                     key={p.t}
                     whileHover={{ y: -4 }}
                     transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    className="group relative rounded-2xl border border-border bg-card p-5 overflow-hidden cursor-default"
+                    className="group relative rounded-sm border border-slate-200 border border-border bg-card p-5 overflow-hidden cursor-default"
                   >
                     <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(120% 80% at 50% 0%, oklch(0.78 0.13 75 / 0.10), transparent 70%)" }} />
                     <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -164,7 +164,7 @@ function UnderstandingPage() {
       </section>
 
       {/* Types interactive */}
-      <section className="py-28 md:py-36 bg-secondary/60">
+      <section className="py-28 md:py-36 bg-slate-50">
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeader
             eyebrow="Forms of misconduct"
@@ -179,7 +179,7 @@ function UnderstandingPage() {
                   <button
                     key={t.id}
                     onClick={() => setActive(t.id)}
-                    className={`group flex-shrink-0 lg:flex-shrink text-left flex items-center gap-3 rounded-2xl border px-4 py-3.5 transition-all ${
+                    className={`group flex-shrink-0 lg:flex-shrink text-left flex items-center gap-3 rounded-sm border border-slate-200 border px-4 py-3.5 transition-all ${
                       isActive
                         ? "border-primary bg-card shadow-elegant"
                         : "border-border bg-card/50 hover:bg-card"
@@ -204,7 +204,7 @@ function UnderstandingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -16 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="rounded-3xl border border-border bg-card p-8 md:p-10 shadow-elegant"
+                  className="rounded-sm border border-slate-200 border border-border bg-card p-8 md:p-10 shadow-elegant"
                 >
                   <current.icon className="h-10 w-10 text-primary" strokeWidth={1.5} />
                   <h3 className="mt-6 font-display text-3xl font-semibold tracking-tight">{current.title}</h3>
@@ -222,6 +222,90 @@ function UnderstandingPage() {
                   </div>
                 </motion.div>
               </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Research & Global Context */}
+      <section className="py-24 md:py-32 bg-white">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid lg:grid-cols-12 gap-12">
+            {/* Left Content */}
+            <div className="lg:col-span-7">
+              <h2 className="text-3xl font-semibold text-[#1f3a5f] tracking-tight mb-8">Research & Global Context</h2>
+              
+              <div className="space-y-6 text-[16px] text-slate-600 leading-relaxed max-w-2xl">
+                <p>
+                  The University of Ghana's policy does not exist in a vacuum. It is informed by global best practices,
+                  international human rights law, and localized academic research into the dynamics of campus safety in
+                  West Africa.
+                </p>
+                <p>
+                  Our <span className="font-bold text-[#1f3a5f]">Knowledge Center</span> provides access to peer-reviewed research papers and institutional studies that
+                  examine the socio-economic and psychological drivers of sexual misconduct. By understanding the root
+                  causes, our community can better implement preventative strategies.
+                </p>
+
+                <div className="bg-[#F8FAFC] border-l-4 border-[#c59d5f] p-8 my-10">
+                  <p className="text-lg md:text-xl font-medium text-[#1f3a5f] italic leading-relaxed">
+                    "Knowledge is the prerequisite for transformation. We provide the intellectual tools
+                    needed to dismantle institutional harassment."
+                  </p>
+                </div>
+
+                <p>
+                  We encourage faculty members to utilize these resources in their curriculum and for students to engage
+                  with the research for academic projects related to social justice and institutional reform.
+                </p>
+              </div>
+            </div>
+
+            {/* Right Sidebar */}
+            <div className="lg:col-span-5 space-y-6">
+              {/* External Links Box */}
+              <div className="bg-white border border-slate-200 p-8 rounded-sm shadow-sm">
+                <h3 className="text-[17px] font-semibold text-[#1f3a5f] mb-6">External Links</h3>
+                <div className="space-y-4">
+                  {[
+                    "Ministry of Gender (Ghana)",
+                    "UN Women - African Region",
+                    "Global Campus Safety Alliance",
+                    "Ghana Police Service",
+                  ].map((link) => (
+                    <a
+                      key={link}
+                      href="#"
+                      className="flex items-center justify-between text-[14px] text-slate-600 hover:text-[#1f3a5f] transition-colors group"
+                    >
+                      <span>{link}</span>
+                      <span className="text-slate-300 group-hover:text-[#1f3a5f]">
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Physical Archive Box */}
+              <div className="bg-[#F8FAFC] border border-slate-100 p-8 rounded-sm">
+                <div className="flex items-start gap-4">
+                  <div className="mt-1">
+                    <svg className="h-6 w-6 text-[#1f3a5f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-[17px] font-semibold text-[#1f3a5f] mb-3">Physical Archive</h3>
+                    <p className="text-[14px] text-slate-500 leading-relaxed">
+                      Hard copies available at the Balme Library<br />
+                      (Reference Section) and ASHC Secretariat.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -247,7 +331,7 @@ function UnderstandingPage() {
                 <motion.div
                   whileHover={{ y: -6 }}
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                  className="group relative h-full rounded-3xl border border-border bg-card p-6 overflow-hidden cursor-default"
+                  className="group relative h-full rounded-sm border border-slate-200 border border-border bg-card p-6 overflow-hidden cursor-default"
                 >
                   <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(120% 80% at 50% 0%, oklch(0.78 0.13 75 / 0.12), transparent 70%)" }} />
                   <div className="pointer-events-none absolute left-6 right-6 top-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
@@ -266,7 +350,7 @@ function UnderstandingPage() {
       </section>
 
       {/* Procedures overview */}
-      <section className="py-28 md:py-36 bg-secondary/40">
+      <section id="procedures" className="py-28 md:py-36 bg-slate-50">
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeader
             eyebrow="Institutional procedures"
@@ -274,7 +358,7 @@ function UnderstandingPage() {
             description="These steps summarise Annex III of the policy. They are not a substitute for the full text; they help you know what the University framework provides."
           />
           <Reveal>
-            <div className="mt-12 max-w-3xl rounded-3xl border border-border bg-card p-2 shadow-elegant">
+            <div className="mt-12 max-w-3xl rounded-sm border border-slate-200 border border-border bg-card p-2 shadow-elegant">
               <Accordion type="single" collapsible className="w-full">
                 {[
                   {
@@ -310,7 +394,7 @@ function UnderstandingPage() {
       </section>
 
       {/* Bystander */}
-      <section className="py-28 md:py-36 bg-primary text-primary-foreground relative overflow-hidden">
+      <section id="bystander" className="py-28 md:py-36 bg-primary text-primary-foreground relative overflow-hidden">
         <div className="absolute inset-0 grain opacity-[0.05]" />
         <div className="relative mx-auto max-w-7xl px-6 grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-6">
@@ -331,7 +415,7 @@ function UnderstandingPage() {
               { t: "Document", d: "Record what happened, when, where." },
             ].map((s) => (
               <Reveal key={s.t}>
-                <div className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 backdrop-blur p-6">
+                <div className="rounded-sm border border-slate-200 border border-primary-foreground/15 bg-primary-foreground/5 backdrop-blur p-6">
                   <div className="font-display text-2xl font-semibold text-gold">{s.t}</div>
                   <div className="mt-2 text-sm text-primary-foreground/70">{s.d}</div>
                 </div>

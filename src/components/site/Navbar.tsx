@@ -1,211 +1,133 @@
 import ugLogo from "@/assets/ug-logo.jpeg";
-import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "@tanstack/react-router";
-import { AnimatePresence, motion } from "framer-motion";
-import { Menu, Phone, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-
-const NAV = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/understanding", label: "Education" },
-  { to: "/reporting", label: "Report & Support" },
-  { to: "/resources", label: "Resources" },
-  { to: "/faq", label: "FAQ" },
-  { to: "/contact", label: "Contact" },
-] as const;
+import { ChevronDown, Menu, X } from "lucide-react";
+import { useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [forceReadableBg, setForceReadableBg] = useState(false);
   const [open, setOpen] = useState(false);
-  const headerRef = useRef<HTMLElement | null>(null);
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    const parseRgb = (colorValue: string) => {
-      const channels = colorValue.match(/\d+(\.\d+)?/g);
-      if (!channels || channels.length < 3) return null;
-
-      const [r, g, b, a] = channels.map(Number);
-      return { r, g, b, a: a ?? 1 };
-    };
-
-    const resolveBackground = (start: HTMLElement | null) => {
-      let current: HTMLElement | null = start;
-
-      while (current) {
-        const styles = window.getComputedStyle(current);
-        if (styles.backgroundImage && styles.backgroundImage !== "none") {
-          return { imageLike: true as const };
-        }
-
-        if (["IMG", "VIDEO", "CANVAS"].includes(current.tagName)) {
-          return { imageLike: true as const };
-        }
-
-        const parsed = parseRgb(styles.backgroundColor);
-        if (parsed && parsed.a > 0.05) {
-          return {
-            imageLike: false as const,
-            r: parsed.r,
-            g: parsed.g,
-            b: parsed.b,
-          };
-        }
-
-        current = current.parentElement;
-      }
-
-      return null;
-    };
-
-    const needsReadableBg = () => {
-      const sampleX = window.innerWidth / 2;
-      const utilityHeight = window.matchMedia("(min-width: 768px)").matches ? 36 : 0;
-      const sampleY = utilityHeight + 36;
-      const stackedElements = document.elementsFromPoint(sampleX, sampleY) as HTMLElement[];
-      const contentElement = stackedElements.find(
-        (element) => !headerRef.current?.contains(element),
-      );
-      const background = resolveBackground(contentElement ?? null);
-
-      if (!background) return false;
-      if (background.imageLike) return true;
-
-      const { r, g, b } = background;
-      const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-      const blueDominant = b > r + 20 && b > g + 10 && b > 90;
-
-      return luminance < 0.56 || blueDominant;
-    };
-
-    const onScroll = () => {
-      const nextScrolled = window.scrollY > 8;
-      setScrolled(nextScrolled);
-      setForceReadableBg(nextScrolled && needsReadableBg());
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
-
-  useEffect(() => { setOpen(false); }, [pathname]);
+  const isActive = (path: string) => pathname === path || (path !== "/" && pathname.startsWith(path));
 
   return (
-    <>
-      <header ref={headerRef} className="fixed inset-x-0 top-0 z-50">
-        {/* Top utility bar */}
-        <div className="hidden md:block bg-[#143D6B] text-primary-foreground/85 text-[12px]">
-          <div className="mx-auto max-w-7xl px-6 flex items-center justify-between h-9">
-            <div className="tracking-wide">University of Ghana · Sexual harassment &amp; misconduct response</div>
-            <div className="flex items-center gap-5">
-              <a href="tel:+233000000000" className="inline-flex items-center gap-1.5 hover:text-gold transition-colors"><Phone className="h-3 w-3" /> +233 (0) 000 000 000</a>
-              <Link to="/contact" className="hover:text-gold transition-colors">Contact</Link>
-              <Link to="/faq" className="hover:text-gold transition-colors">Help</Link>
-            </div>
-          </div>
-        </div>
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-md">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-[72px]">
+          
+          <Link to="/" className="flex items-center gap-4 group shrink-0">
+            <img
+              src={ugLogo}
+              alt="UG Logo"
+              className="h-10 w-auto object-contain"
+            />
+            <div className="h-6 w-px bg-slate-300"></div>
+            <span className="font-bold tracking-tighter text-[#1f3a5f] md:text-xl lg:text-2xl">
+              SpeakSafe UG
+            </span>
+          </Link>
 
-        {/* Main bar */}
-        <div
-          className={`border-b transition-[background-color,border-color,box-shadow,backdrop-filter] duration-500 ease-out ${
-            scrolled
-              ? forceReadableBg
-                ? "bg-white/90 border-border/60 shadow-elegant backdrop-blur-md"
-                : "bg-transparent border-transparent shadow-none backdrop-blur-sm"
-              : "bg-white border-border/60 shadow-elegant backdrop-blur-0"
-          }`}
-        >
-          <div className="mx-auto max-w-7xl px-4 sm:px-6">
-            <div className="flex items-center justify-between gap-6 h-[72px]">
-              <Link to="/" className="flex items-center gap-3 group shrink-0">
-                <img
-                  src={ugLogo}
-                  alt="University of Ghana coat of arms"
-                  className="h-12 w-auto object-contain"
-                />
-                <div className="leading-tight border-l border-border/70 pl-3">
-                  <div className="font-display text-[15px] font-semibold text-foreground tracking-tight">University of Ghana</div>
-                  <div className="text-[11px] uppercase tracking-[0.18em] text-gold font-medium">Sextortion Platform</div>
-                </div>
-              </Link>
+          <nav className="hidden lg:flex items-center gap-8 h-full">
+            <NavLink to="/" label="Home" active={pathname === "/"} />
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger className={`h-full flex items-center gap-1.5 text-[15px] transition-colors focus:outline-none group ${isActive("/understanding") ? "text-[#1f3a5f]" : "text-slate-600 hover:text-[#1f3a5f]"}`}>
+                <span className={`py-1 border-b-2 transition-all ${isActive("/understanding") ? "border-[#c59d5f]" : "border-transparent group-hover:border-slate-200"}`}>
+                  Learn
+                </span>
+                <ChevronDown className="h-4 w-4 text-slate-400" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-64 p-2 rounded-sm bg-white border border-slate-200 shadow-sm mt-1">
+                <DropdownMenuItem asChild className="p-3 text-[14px] cursor-pointer rounded-sm hover:bg-slate-50 focus:bg-slate-50">
+                  <Link to="/understanding">What is Sexual Harassment?</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="p-3 text-[14px] cursor-pointer rounded-sm hover:bg-slate-50 focus:bg-slate-50">
+                  <Link to="/understanding">Consent and Power Dynamics</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="p-3 text-[14px] cursor-pointer rounded-sm hover:bg-slate-50 focus:bg-slate-50">
+                  <Link to="/understanding">Recognizing Misconduct</Link>
+                </DropdownMenuItem>
+                <div className="h-px bg-slate-100 my-1 mx-2" />
+                <DropdownMenuItem asChild className="p-3 text-[14px] font-medium cursor-pointer rounded-sm hover:bg-[#1f3a5f]/5 text-[#1f3a5f] focus:bg-[#1f3a5f]/5">
+                  <Link to="/quiz">Take the Quiz</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-              <nav className="hidden lg:flex items-center">
-                {NAV.map((item) => {
-                  const active = pathname === item.to;
-                  return (
-                    <Link
-                      key={item.to}
-                      to={item.to}
-                      className={`relative px-3.5 py-6 text-[13.5px] font-medium tracking-wide transition-colors ${
-                        active ? "text-primary" : "text-foreground/75 hover:text-primary"
-                      }`}
-                    >
-                      {item.label}
-                      {active && (
-                        <motion.span
-                          layoutId="nav-underline"
-                          transition={{ type: "spring", stiffness: 380, damping: 34 }}
-                          className="absolute left-1/2 -translate-x-1/2 bottom-3 h-[3px] w-6 rounded-full bg-gold"
-                        />
-                      )}
-                    </Link>
-                  );
-                })}
-              </nav>
+            <NavLink to="/reporting" label="Reporting" active={isActive("/reporting")} />
+            <NavLink to="/resources" label="Support" active={isActive("/resources")} />
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger className={`h-full flex items-center gap-1.5 text-[15px] transition-colors focus:outline-none group ${isActive("/training") ? "text-[#1f3a5f]" : "text-slate-600 hover:text-[#1f3a5f]"}`}>
+                <span className={`py-1 border-b-2 transition-all ${isActive("/training") ? "border-[#c59d5f]" : "border-transparent group-hover:border-slate-200"}`}>
+                  Training
+                </span>
+                <ChevronDown className="h-4 w-4 text-slate-400" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56 p-2 rounded-sm bg-white border border-slate-200 shadow-sm mt-1">
+                <DropdownMenuItem asChild className="p-3 text-[14px] cursor-pointer rounded-sm hover:bg-slate-50 focus:bg-slate-50">
+                  <Link to="/understanding" hash="bystander">Bystander Intervention</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="p-3 text-[14px] cursor-pointer rounded-sm hover:bg-slate-50 focus:bg-slate-50">
+                  <Link to="/understanding" hash="procedures">Staff Requirements</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-              <div className="flex items-center gap-2 shrink-0">
-                <Button asChild size="sm" className="hidden sm:inline-flex rounded-sm h-10 px-5 bg-primary hover:bg-primary/90 text-primary-foreground text-[13px] font-medium tracking-wide">
-                  <Link to="/reporting" hash="report-form">Report Safely</Link>
-                </Button>
-                <button
-                  className="lg:hidden h-10 w-10 inline-flex items-center justify-center rounded-sm border border-border bg-card text-foreground"
-                  onClick={() => setOpen((o) => !o)}
-                  aria-label="Toggle menu"
-                >
-                  {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+            <NavLink to="/contact" label="Contact" active={isActive("/contact")} />
+          </nav>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 lg:hidden bg-background pt-28"
+          <button
+            className="lg:hidden text-slate-600 hover:text-[#1f3a5f]"
+            onClick={() => setOpen(!open)}
           >
-            <nav className="flex flex-col px-6 gap-1">
-              {NAV.map((item, i) => (
-                <motion.div
-                  key={item.to}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.03 * i }}
-                >
-                  <Link
-                    to={item.to}
-                    className="block py-4 text-xl font-display font-medium border-b border-border/60 text-foreground hover:text-primary transition-colors"
-                  >
-                    {item.label}
-                  </Link>
-                </motion.div>
-              ))}
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
+      </div>
+
+      {open && (
+        <div className="lg:hidden border-t border-slate-100 bg-white px-4 py-4 space-y-1 shadow-sm absolute w-full">
+          <MobileNavLink to="/" label="Home" onClick={() => setOpen(false)} />
+          <MobileNavLink to="/understanding" label="Learn" onClick={() => setOpen(false)} />
+          <MobileNavLink to="/reporting" label="Reporting" onClick={() => setOpen(false)} />
+          <MobileNavLink to="/resources" label="Support" onClick={() => setOpen(false)} />
+          <MobileNavLink to="/understanding" label="Training" onClick={() => setOpen(false)} />
+          <MobileNavLink to="/contact" label="Contact" onClick={() => setOpen(false)} />
+        </div>
+      )}
+    </header>
+  );
+}
+
+function NavLink({ to, label, active }: { to: string; label: string; active: boolean }) {
+  return (
+    <Link
+      to={to}
+      className={`h-full flex items-center text-[15px] transition-colors group ${
+        active ? "text-[#1f3a5f]" : "text-slate-600 hover:text-[#1f3a5f]"
+      }`}
+    >
+      <span className={`py-1 border-b-2 transition-all ${active ? "border-[#c59d5f]" : "border-transparent group-hover:border-slate-200"}`}>
+        {label}
+      </span>
+    </Link>
+  );
+}
+
+function MobileNavLink({ to, label, onClick }: { to: string; label: string; onClick: () => void }) {
+  return (
+    <Link
+      to={to}
+      onClick={onClick}
+      className="block py-3 px-4 text-[16px] text-slate-700 hover:bg-slate-50 hover:text-[#1f3a5f] rounded-sm"
+    >
+      {label}
+    </Link>
   );
 }

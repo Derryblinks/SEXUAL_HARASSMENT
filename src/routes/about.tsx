@@ -62,7 +62,7 @@ function AboutPage() {
               { icon: HeartHandshake, title: "Support", desc: "CEGENSA facilitates implementation and maintains a sexual harassment crisis and counselling unit for staff and students." },
             ].map((o, i) => (
               <StaggerItem key={i}>
-                <div className="h-full rounded-3xl border border-border bg-card p-7 hover:shadow-elegant transition-shadow">
+                <div className="h-full rounded-sm border border-slate-200 border border-border bg-card p-7 hover:shadow-elegant transition-shadow">
                   <o.icon className="h-8 w-8 text-primary" strokeWidth={1.5} />
                   <h3 className="mt-5 font-display text-lg font-semibold">{o.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{o.desc}</p>
@@ -73,7 +73,7 @@ function AboutPage() {
         </div>
       </section>
 
-      <section className="py-28 md:py-36 bg-secondary/60">
+      <section className="py-28 md:py-36 bg-slate-50">
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeader
             eyebrow="Definitions at a glance"
@@ -90,7 +90,7 @@ function AboutPage() {
                 { t: "Hostile environment", b: "Conduct sufficiently severe or pervasive to alter the conditions of education or employment so a reasonable person would find it intimidating, uncomfortable or offensive." },
               ].map((p, i) => (
                 <Reveal key={i} delay={i * 0.04}>
-                  <AccordionItem value={`p${i}`} className="rounded-2xl border border-border bg-card px-6 overflow-hidden data-[state=open]:shadow-elegant">
+                  <AccordionItem value={`p${i}`} className="rounded-sm border border-slate-200 border border-border bg-card px-6 overflow-hidden data-[state=open]:shadow-elegant">
                     <AccordionTrigger className="text-left font-display text-base font-medium py-5">{p.t}</AccordionTrigger>
                     <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{p.b}</AccordionContent>
                   </AccordionItem>
@@ -111,7 +111,7 @@ function AboutPage() {
 
           <div className="mt-16 grid lg:grid-cols-12 gap-5">
             <Reveal className="lg:col-span-7">
-              <div className="relative h-full rounded-3xl border border-border bg-card p-8 md:p-10 shadow-elegant overflow-hidden">
+              <div className="relative h-full rounded-sm border border-slate-200 border border-border bg-card p-8 md:p-10 shadow-elegant overflow-hidden">
                 <div className="text-xs uppercase tracking-[0.2em] text-gold font-medium">Institutional roles</div>
                 <ul className="mt-6 space-y-4 text-sm text-muted-foreground leading-relaxed">
                   <li className="flex gap-3"><Gavel className="h-4 w-4 text-primary mt-0.5 shrink-0" /><span><strong className="text-foreground">University Council</strong> — overall responsibility for compliance; ensuring the policy is reflected in statutes, handbooks and regulations.</span></li>
@@ -124,7 +124,7 @@ function AboutPage() {
 
             <div className="lg:col-span-5 grid gap-5 content-start">
               <Reveal delay={0.05}>
-                <div className="rounded-3xl border border-border bg-card p-6 hover:shadow-elegant transition-shadow">
+                <div className="rounded-sm border border-slate-200 border border-border bg-card p-6 hover:shadow-elegant transition-shadow">
                   <div className="font-display text-base font-semibold">Official publication</div>
                   <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
                     The Sexual Harassment and Misconduct Policy was published in the <em>Republic of Ghana Gazette</em>, Vol. 54, No. 20, Friday 5 May 2017 (Special Reporter No. 873). The University reviews the policy periodically.
@@ -132,7 +132,7 @@ function AboutPage() {
                 </div>
               </Reveal>
               <Reveal delay={0.1}>
-                <div className="rounded-3xl border border-border bg-card p-6">
+                <div className="rounded-sm border border-slate-200 border border-border bg-card p-6">
                   <div className="font-display text-base font-semibold">Who is covered</div>
                   <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
                     {["Students and staff", "Persons serving as University agents", "All University locations and facilities"].map((x) => (

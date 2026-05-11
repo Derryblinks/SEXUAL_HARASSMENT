@@ -12,6 +12,7 @@ import {
 import appCss from "../styles.css?url";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
+import { MessageSquareWarning } from "lucide-react";
 
 function NotFoundComponent() {
   return (
@@ -75,16 +76,29 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "University of Ghana — Sexual Harassment Awareness & Safe Reporting" },
-      { name: "description", content: "Official institutional education on sexual harassment and misconduct, consent, reporting under the UG Sexual Harassment and Misconduct Policy, and confidential support." },
+      { title: "SpeakSafe UG — Sexual Harassment Awareness & Safe Reporting" },
+      { name: "description", content: "The official University of Ghana platform for sexual harassment education, confidential reporting, and institutional support." },
       { name: "author", content: "University of Ghana" },
-      { property: "og:title", content: "UG Sexual Harassment Awareness & Reporting Platform" },
-      { property: "og:description", content: "Education, prevention and safe reporting aligned with the University of Ghana Sexual Harassment and Misconduct Policy." },
+      { property: "og:title", content: "SpeakSafe UG Awareness & Reporting Platform" },
+      { property: "og:description", content: "Confidential reporting and educational resources for the University of Ghana community." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      {
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap",
+      },
       {
         rel: "stylesheet",
         href: appCss,
@@ -123,7 +137,18 @@ function RootComponent() {
         <main className="flex-1">
           <Outlet />
         </main>
-        {!isAdminPortal && <Footer />}
+        {!isAdminPortal && (
+          <>
+            <Footer />
+            <Link
+              to="/contact"
+              className="fixed bottom-6 right-6 z-50 flex items-center justify-center gap-2 rounded-full bg-[#1f3a5f] px-6 py-3.5 text-[14px] font-medium text-white shadow-2xl hover:bg-[#152a47] transition-all hover:-translate-y-0.5 border border-white/10"
+            >
+              <MessageSquareWarning className="h-4 w-4" />
+              <span className="hidden sm:inline">Get help</span>
+            </Link>
+          </>
+        )}
       </div>
     </QueryClientProvider>
   );

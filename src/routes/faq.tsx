@@ -144,7 +144,7 @@ function FAQPage() {
               <Accordion type="single" collapsible className="mt-8 space-y-3">
                 {g.items.map((item, i) => (
                   <Reveal key={item.q} delay={i * 0.04}>
-                    <AccordionItem value={`${gi}-${i}`} className="rounded-2xl border border-border bg-card px-6 overflow-hidden data-[state=open]:shadow-elegant">
+                    <AccordionItem value={`${gi}-${i}`} className="rounded-sm border border-slate-200 border border-border bg-card px-6 overflow-hidden data-[state=open]:shadow-elegant">
                       <AccordionTrigger className="text-left font-display text-base font-medium py-5">{item.q}</AccordionTrigger>
                       <AccordionContent className="text-muted-foreground leading-relaxed pb-5">{item.a}</AccordionContent>
                     </AccordionItem>
@@ -156,7 +156,7 @@ function FAQPage() {
         </div>
       </section>
 
-      <section className="py-20 md:py-24 bg-secondary/60">
+      <section className="py-20 md:py-24 bg-slate-50">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <Reveal>
             <h3 className="font-display text-3xl md:text-4xl font-semibold tracking-tight">Still have questions?</h3>

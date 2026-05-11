@@ -235,8 +235,8 @@ function ReportingPage() {
           <div className="mt-12 grid gap-8 lg:grid-cols-12">
             <div className="lg:col-span-8">
               {submittedReport ? (
-                <div className="rounded-3xl border border-border bg-card p-8 md:p-10 shadow-elegant">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                <div className="rounded-sm border border-slate-200 border border-border bg-card p-8 md:p-10 shadow-elegant">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[11px] font-medium text-primary">
                     <CheckCircle2 className="h-3.5 w-3.5" />
                     Report submitted successfully
                   </div>
@@ -250,14 +250,14 @@ function ReportingPage() {
                     selected privacy settings.
                   </p>
                   <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-2xl border border-border bg-secondary/30 p-4">
-                      <div className="text-xs uppercase tracking-[0.14em] text-muted-foreground">Next steps</div>
+                    <div className="rounded-sm border border-slate-200 border border-border bg-secondary/30 p-4">
+                      <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">Next steps</div>
                       <p className="mt-2 text-sm text-muted-foreground">
                         Initial triage within institutional timelines (formal investigations target 60 working days unless extended with VC approval).
                       </p>
                     </div>
-                    <div className="rounded-2xl border border-border bg-secondary/30 p-4">
-                      <div className="text-xs uppercase tracking-[0.14em] text-muted-foreground">Support now</div>
+                    <div className="rounded-sm border border-slate-200 border border-border bg-secondary/30 p-4">
+                      <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">Support now</div>
                       <p className="mt-2 text-sm text-muted-foreground">
                         Call <a href="tel:+233000000000" className="text-primary hover:underline">+233 (0) 000 000 000</a> or email{" "}
                         <a href="mailto:eob@ug.edu.gh" className="text-primary hover:underline">eob@ug.edu.gh</a>.
@@ -269,14 +269,14 @@ function ReportingPage() {
                   </Button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="rounded-3xl border border-border bg-card p-7 md:p-9 shadow-elegant space-y-8">
+                <form onSubmit={handleSubmit} className="rounded-sm border border-slate-200 border border-border bg-card p-7 md:p-9 shadow-elegant space-y-8">
                   <div>
-                    <label className="text-sm font-medium text-foreground">Incident Type</label>
-                    <p className="mt-1 text-xs text-muted-foreground">
+                    <label className="text-[13px] font-medium text-foreground uppercase tracking-wider">Incident Type</label>
+                    <p className="mt-1 text-[11px] text-muted-foreground uppercase tracking-wide">
                       Select the category closest to your experience.
                     </p>
                     <Select value={incidentType} onValueChange={(value) => setIncidentType(value as IncidentType)}>
-                      <SelectTrigger className="mt-3 h-11 rounded-xl bg-background">
+                      <SelectTrigger className="mt-3 h-11 rounded-sm bg-background">
                         <SelectValue placeholder="Choose incident type" />
                       </SelectTrigger>
                       <SelectContent>
@@ -293,18 +293,17 @@ function ReportingPage() {
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium text-foreground">Incident Description</label>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      Share only what you are comfortable sharing. You can include people involved, location and
-                      sequence of events.
+                    <label className="text-[13px] font-medium text-foreground uppercase tracking-wider">Incident Description</label>
+                    <p className="mt-1 text-[11px] text-muted-foreground uppercase tracking-wide">
+                      Share only what you are comfortable sharing. You can include people involved, location and sequence of events.
                     </p>
                     <Textarea
                       value={description}
                       onChange={(event) => setDescription(event.target.value)}
                       placeholder="Describe what happened in your own words..."
-                      className="mt-3 min-h-[180px] rounded-xl bg-background leading-relaxed"
+                      className="mt-3 min-h-[180px] rounded-sm bg-background leading-relaxed"
                     />
-                    <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
+                    <div className="mt-2 flex items-center justify-between text-[11px] text-muted-foreground uppercase tracking-wide">
                       <span>Calm tip: short, factual points are enough.</span>
                       <span>{description.length} characters</span>
                     </div>
@@ -315,14 +314,14 @@ function ReportingPage() {
 
                   <div className="grid gap-4 md:grid-cols-2">
                     <div>
-                      <label className="text-sm font-medium text-foreground">Incident Date</label>
+                      <label className="text-[13px] font-medium text-foreground uppercase tracking-wider">Incident Date</label>
                       <div className="relative mt-3">
                         <CalendarDays className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground" />
                         <Input
                           type="date"
                           value={incidentDate}
                           onChange={(event) => setIncidentDate(event.target.value)}
-                          className="h-11 rounded-xl pl-9 bg-background"
+                          className="h-11 rounded-sm pl-9 bg-background"
                         />
                       </div>
                       {errors.incidentDate && (
@@ -330,22 +329,22 @@ function ReportingPage() {
                       )}
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-foreground">Incident Time (optional)</label>
+                      <label className="text-[13px] font-medium text-foreground uppercase tracking-wider">Incident Time (optional)</label>
                       <div className="relative mt-3">
                         <Clock3 className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground" />
                         <Input
                           type="time"
                           value={incidentTime}
                           onChange={(event) => setIncidentTime(event.target.value)}
-                          className="h-11 rounded-xl pl-9 bg-background"
+                          className="h-11 rounded-sm pl-9 bg-background"
                         />
                       </div>
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium text-foreground">Evidence Upload</label>
-                    <p className="mt-1 text-xs text-muted-foreground">
+                    <label className="text-[13px] font-medium text-foreground uppercase tracking-wider">Evidence Upload</label>
+                    <p className="mt-1 text-[11px] text-muted-foreground uppercase tracking-wide">
                       Upload images, screenshots or documents to support this report.
                     </p>
                     <label
@@ -359,7 +358,7 @@ function ReportingPage() {
                         setIsDragging(false);
                         handleFiles(event.dataTransfer.files);
                       }}
-                      className={`mt-3 block cursor-pointer rounded-2xl border-2 border-dashed p-7 transition-colors ${
+                      className={`mt-3 block cursor-pointer rounded-sm border border-slate-200 border-2 border-dashed p-7 transition-colors ${
                         isDragging ? "border-primary bg-primary/5" : "border-border bg-background/60"
                       }`}
                     >
@@ -377,7 +376,7 @@ function ReportingPage() {
                       </div>
                     </label>
                     {!!uploads.length && (
-                      <div className="mt-4 space-y-3 rounded-2xl border border-border bg-secondary/20 p-4">
+                      <div className="mt-4 space-y-3 rounded-sm border border-slate-200 border border-border bg-secondary/20 p-4">
                         <div className="flex items-center justify-between">
                           <p className="text-xs font-medium text-foreground">Upload progress</p>
                           <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
@@ -385,7 +384,7 @@ function ReportingPage() {
                           </Badge>
                         </div>
                         {uploads.map((item) => (
-                          <div key={item.id} className="rounded-xl border border-border bg-card p-3">
+                          <div key={item.id} className="rounded-sm border border-border bg-card p-3">
                             <div className="flex items-center justify-between gap-3">
                               <div className="flex items-center gap-2 min-w-0">
                                 <FileText className="h-4 w-4 text-primary shrink-0" />
@@ -405,13 +404,13 @@ function ReportingPage() {
                     )}
                   </div>
 
-                  <div className="rounded-2xl border border-border bg-secondary/20 p-5">
+                  <div className="rounded-sm border border-slate-200 border border-border bg-secondary/20 p-5">
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <label htmlFor="anonymous-toggle" className="text-sm font-medium text-foreground">
+                        <label htmlFor="anonymous-toggle" className="text-[13px] font-medium text-foreground uppercase tracking-wider">
                           Anonymous Reporting
                         </label>
-                        <p className="mt-1 text-xs text-muted-foreground">
+                        <p className="mt-1 text-[11px] text-muted-foreground uppercase tracking-wide">
                           You may stay anonymous. If you prefer follow-up contact, switch anonymous mode off.
                         </p>
                       </div>
@@ -429,7 +428,7 @@ function ReportingPage() {
                   </div>
 
                   {!isAnonymous && (
-                    <div className="space-y-4 rounded-2xl border border-border bg-background/70 p-5">
+                    <div className="space-y-4 rounded-sm border border-slate-200 border border-border bg-background/70 p-5">
                       <div className="flex items-center gap-2 text-sm font-medium">
                         <UserCircle2 className="h-4 w-4 text-primary" />
                         Identity Information
@@ -440,7 +439,7 @@ function ReportingPage() {
                             placeholder="Full Name"
                             value={fullName}
                             onChange={(event) => setFullName(event.target.value)}
-                            className="h-11 rounded-xl bg-background"
+                            className="h-11 rounded-sm bg-background"
                           />
                           {errors.fullName && <p className="mt-1 text-xs text-destructive">{errors.fullName}</p>}
                         </div>
@@ -449,7 +448,7 @@ function ReportingPage() {
                             placeholder="Student/Staff ID"
                             value={studentOrStaffId}
                             onChange={(event) => setStudentOrStaffId(event.target.value)}
-                            className="h-11 rounded-xl bg-background"
+                            className="h-11 rounded-sm bg-background"
                           />
                           {errors.studentOrStaffId && (
                             <p className="mt-1 text-xs text-destructive">{errors.studentOrStaffId}</p>
@@ -461,7 +460,7 @@ function ReportingPage() {
                             placeholder="Email"
                             value={email}
                             onChange={(event) => setEmail(event.target.value)}
-                            className="h-11 rounded-xl bg-background"
+                            className="h-11 rounded-sm bg-background"
                           />
                           {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
                         </div>
@@ -470,7 +469,7 @@ function ReportingPage() {
                           placeholder="Phone number (optional)"
                           value={phone}
                           onChange={(event) => setPhone(event.target.value)}
-                          className="h-11 rounded-xl bg-background"
+                          className="h-11 rounded-sm bg-background"
                         />
                       </div>
                     </div>
@@ -488,7 +487,7 @@ function ReportingPage() {
             </div>
 
             <div className="lg:col-span-4 space-y-5">
-              <div className="rounded-2xl border border-border bg-card p-5">
+              <div className="rounded-sm border border-slate-200 border border-border bg-card p-5">
                 <div className="text-xs uppercase tracking-[0.18em] text-gold">Safety notes</div>
                 <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
                   {[
@@ -503,7 +502,7 @@ function ReportingPage() {
                   ))}
                 </ul>
               </div>
-              <div className="rounded-2xl border border-border bg-card p-5">
+              <div className="rounded-sm border border-slate-200 border border-border bg-card p-5">
                 <div className="text-xs uppercase tracking-[0.18em] text-gold">Need immediate help?</div>
                 <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
                   For urgent risk to safety, contact Police and reach CEGENSA or the Committee intake for institutional support.
@@ -529,7 +528,7 @@ function ReportingPage() {
           <div className="mt-16 grid lg:grid-cols-5 gap-4">
             {STEPS.map((s, i) => (
               <Reveal key={i} delay={i * 0.06}>
-                <div className="relative h-full rounded-3xl border border-border bg-card p-6">
+                <div className="relative h-full rounded-sm border border-slate-200 border border-border bg-card p-6">
                   <div className="font-display text-4xl font-semibold text-gold/80">{s.n}</div>
                   <h4 className="mt-4 font-display text-base font-semibold">{s.t}</h4>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.d}</p>
@@ -540,37 +539,58 @@ function ReportingPage() {
         </div>
       </section>
 
-      {/* Rights */}
-      <section className="py-28 md:py-36 bg-secondary/60">
-        <div className="mx-auto max-w-7xl px-6">
-          <SectionHeader eyebrow="Your rights" title={<>Protection on both sides of the process.</>} description="The Sexual Harassment and Misconduct Policy sets out rights for complainants and respondents, including representation and confidentiality." />
-          <div className="mt-16 grid md:grid-cols-2 gap-6">
-            <Reveal>
-              <div className="h-full rounded-3xl border border-border bg-card p-8">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-xl bg-primary text-primary-foreground flex items-center justify-center"><ShieldCheck className="h-5 w-5" /></div>
-                  <h3 className="font-display text-xl font-semibold">Rights of the Complainant</h3>
-                </div>
-                <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
-                  {["To pursue redress without reprimand, retaliation or discrimination in good faith", "To have retaliation monitored and reported under the same procedures", "To request mediation where appropriate", "To withdraw a complaint in writing with reasons, even during investigation", "To representation by counsel (subject to hearing rules)", "To referral for counselling or psycho-social support when appropriate"].map((r) => (
-                    <li key={r} className="flex gap-3"><span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-gold flex-shrink-0" /><span className="leading-relaxed">{r}</span></li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <div className="h-full rounded-3xl border border-border bg-card p-8">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-xl bg-primary text-primary-foreground flex items-center justify-center"><Scale className="h-5 w-5" /></div>
-                  <h3 className="font-display text-xl font-semibold">Rights of the Respondent</h3>
-                </div>
-                <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
-                  {["To be presumed innocent unless and until a final finding of culpability or a stipulated admission", "To be notified and to file a written response within seven days (with assistance if needed)", "To be heard by an adjudication panel and to cross-examine as provided", "To representation by counsel (counsel may not speak for parties during proceedings)", "To have the investigation proceed even if you do not participate", "To confidentiality as advised for all parties"].map((r) => (
-                    <li key={r} className="flex gap-3"><span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-gold flex-shrink-0" /><span className="leading-relaxed">{r}</span></li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
+      {/* Rights During Inquiry */}
+      <section className="py-24 md:py-32 bg-[#F8FAFC]">
+        <div className="mx-auto max-w-[1000px] px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-semibold text-[#1f3a5f] tracking-tight mb-4">Rights During Inquiry</h2>
+            <p className="text-[17px] text-slate-600 max-w-2xl mx-auto">
+              Your rights do not end when you submit the form. They are active protections throughout the entire process.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-white border border-slate-200 p-8 hover:border-[#1f3a5f] transition-colors cursor-pointer group">
+              <h3 className="text-[17px] font-semibold text-[#1f3a5f] mb-3 group-hover:text-[#152a47]">Accompaniment</h3>
+              <p className="text-[14px] text-slate-500 leading-relaxed">
+                The right to bring a support person or advisor to any meeting or hearing.
+              </p>
+            </div>
+            
+            <div className="bg-white border border-[#1f3a5f] p-8 shadow-sm">
+              <h3 className="text-[17px] font-semibold text-[#1f3a5f] mb-3">Periodic Updates</h3>
+              <p className="text-[14px] text-slate-500 leading-relaxed">
+                The right to be informed of the status of the investigation at regular intervals.
+              </p>
+            </div>
+
+            <div className="bg-white border border-slate-200 p-8 hover:border-[#1f3a5f] transition-colors cursor-pointer group">
+              <h3 className="text-[17px] font-semibold text-[#1f3a5f] mb-3 group-hover:text-[#152a47]">Evidence Submission</h3>
+              <p className="text-[14px] text-slate-500 leading-relaxed">
+                The right to provide relevant documents, messages, and names of potential witnesses.
+              </p>
+            </div>
+
+            <div className="bg-white border border-slate-200 p-8 hover:border-[#1f3a5f] transition-colors cursor-pointer group">
+              <h3 className="text-[17px] font-semibold text-[#1f3a5f] mb-3 group-hover:text-[#152a47]">Safe Space</h3>
+              <p className="text-[14px] text-slate-500 leading-relaxed">
+                The right to meet in locations that are physically and psychologically safe for you.
+              </p>
+            </div>
+
+            <div className="bg-white border border-slate-200 p-8 hover:border-[#1f3a5f] transition-colors cursor-pointer group">
+              <h3 className="text-[17px] font-semibold text-[#1f3a5f] mb-3 group-hover:text-[#152a47]">No-Contact</h3>
+              <p className="text-[14px] text-slate-500 leading-relaxed">
+                The right to institutional enforcement of strict no-contact orders with the respondent.
+              </p>
+            </div>
+
+            <div className="bg-white border border-slate-200 p-8 hover:border-[#1f3a5f] transition-colors cursor-pointer group">
+              <h3 className="text-[17px] font-semibold text-[#1f3a5f] mb-3 group-hover:text-[#152a47]">Appeal</h3>
+              <p className="text-[14px] text-slate-500 leading-relaxed">
+                The right to appeal the final determination if procedural errors occurred or new evidence emerges.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -586,7 +606,7 @@ function ReportingPage() {
               { i: AlertTriangle, t: "Malicious complaints", d: "Deliberately malicious allegations may attract formal disciplinary action under University procedures." },
             ].map((c, idx) => (
               <StaggerItem key={idx}>
-                <div className="h-full rounded-3xl border border-border bg-card p-7">
+                <div className="h-full rounded-sm border border-slate-200 border border-border bg-card p-7">
                   <c.i className="h-7 w-7 text-primary" strokeWidth={1.5} />
                   <h4 className="mt-5 font-display text-lg font-semibold">{c.t}</h4>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{c.d}</p>
@@ -600,7 +620,7 @@ function ReportingPage() {
       {/* CTA Banner */}
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="relative overflow-hidden rounded-[2rem] border border-border bg-primary text-primary-foreground p-10 md:p-14">
+          <div className="relative overflow-hidden rounded-sm border border-border bg-primary text-primary-foreground p-10 md:p-14">
             <div className="absolute inset-0 grain opacity-[0.06]" />
             <div className="relative grid md:grid-cols-12 gap-8 items-center">
               <div className="md:col-span-8">

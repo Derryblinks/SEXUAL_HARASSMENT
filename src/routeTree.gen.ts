@@ -13,6 +13,7 @@ import { Route as UnderstandingRouteImport } from './routes/understanding'
 import { Route as StakeholdersRouteImport } from './routes/stakeholders'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ReportingRouteImport } from './routes/reporting'
+import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as GlossaryRouteImport } from './routes/glossary'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -38,6 +39,11 @@ const ResourcesRoute = ResourcesRouteImport.update({
 const ReportingRoute = ReportingRouteImport.update({
   id: '/reporting',
   path: '/reporting',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GlossaryRoute = GlossaryRouteImport.update({
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/glossary': typeof GlossaryRoute
+  '/quiz': typeof QuizRoute
   '/reporting': typeof ReportingRoute
   '/resources': typeof ResourcesRoute
   '/stakeholders': typeof StakeholdersRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/glossary': typeof GlossaryRoute
+  '/quiz': typeof QuizRoute
   '/reporting': typeof ReportingRoute
   '/resources': typeof ResourcesRoute
   '/stakeholders': typeof StakeholdersRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/glossary': typeof GlossaryRoute
+  '/quiz': typeof QuizRoute
   '/reporting': typeof ReportingRoute
   '/resources': typeof ResourcesRoute
   '/stakeholders': typeof StakeholdersRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/glossary'
+    | '/quiz'
     | '/reporting'
     | '/resources'
     | '/stakeholders'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/glossary'
+    | '/quiz'
     | '/reporting'
     | '/resources'
     | '/stakeholders'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/glossary'
+    | '/quiz'
     | '/reporting'
     | '/resources'
     | '/stakeholders'
@@ -154,6 +166,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   GlossaryRoute: typeof GlossaryRoute
+  QuizRoute: typeof QuizRoute
   ReportingRoute: typeof ReportingRoute
   ResourcesRoute: typeof ResourcesRoute
   StakeholdersRoute: typeof StakeholdersRoute
@@ -188,6 +201,13 @@ declare module '@tanstack/react-router' {
       path: '/reporting'
       fullPath: '/reporting'
       preLoaderRoute: typeof ReportingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/glossary': {
@@ -242,6 +262,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   GlossaryRoute: GlossaryRoute,
+  QuizRoute: QuizRoute,
   ReportingRoute: ReportingRoute,
   ResourcesRoute: ResourcesRoute,
   StakeholdersRoute: StakeholdersRoute,
