@@ -6,18 +6,20 @@ export function SectionHeader({
   title,
   description,
   align = "left",
+  dark = false,
 }: {
   eyebrow?: string;
   title: ReactNode;
   description?: ReactNode;
   align?: "left" | "center";
+  dark?: boolean;
 }) {
   const a = align === "center" ? "text-center mx-auto" : "";
   return (
     <div className={`max-w-3xl ${a}`}>
       {eyebrow && (
         <Reveal>
-          <div className={`inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.22em] text-primary border-l-2 border-gold pl-3`}>
+          <div className={`inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.22em] border-l-2 border-gold pl-3 ${dark ? "text-white" : "text-primary"}`}>
             {eyebrow}
           </div>
         </Reveal>

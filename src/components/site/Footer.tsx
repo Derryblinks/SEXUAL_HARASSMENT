@@ -13,16 +13,16 @@ const COL_SUPPORT: Array<[string, string]> = [
 const COL_APP_LINKS: Array<[string, string]> = [
   ["Initiate a Report", "/reporting"],
   ["Resource Library", "/resources"],
-  ["Understanding Consent", "/understanding"],
+  ["Understanding Consent", "/understanding/consent"],
   ["Take the Quiz", "/quiz"],
   ["Crisis Help", "/contact"],
 ];
 
 const COL_POLICY: Array<[string, string]> = [
   ["Institutional Policy", "/understanding"],
-  ["Staff Requirements", "/understanding"],
-  ["Bystander Training", "/understanding"],
-  ["Privacy Statute", "/contact"],
+  ["Staff Requirements", "/understanding/procedures"],
+  ["Bystander Training", "/understanding/bystander"],
+  ["Recognising Misconduct", "/understanding/misconduct"],
   ["Admin Portal", "/Admin"],
 ];
 

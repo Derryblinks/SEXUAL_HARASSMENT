@@ -75,6 +75,7 @@ function ReportingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedReport, setSubmittedReport] = useState<ReportRecord | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [formPhase, setFormPhase] = useState<"input" | "review">("input");
 
   useEffect(() => {
     if (window.location.hash === "#report-form") {
@@ -154,12 +155,15 @@ function ReportingPage() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!validate() || !incidentType) return;
+    setFormPhase("review");
+  };
 
+  const handleFinalSubmit = () => {
     setIsSubmitting(true);
     const existing = getReports();
     const report: ReportRecord = {
       id: createReportId(existing),
-      incidentType,
+      incidentType: incidentType as IncidentType,
       description: description.trim(),
       incidentDate,
       incidentTime: incidentTime || undefined,
@@ -173,7 +177,7 @@ function ReportingPage() {
             email: email.trim(),
             phone: phone.trim(),
           },
-      priority: derivePriority(incidentType, description),
+      priority: derivePriority(incidentType as IncidentType, description),
       status: "Pending",
       assignedInvestigator: "Unassigned",
       evidence: uploads.map((item) => ({
@@ -188,6 +192,7 @@ function ReportingPage() {
       setReports([report, ...existing]);
       setSubmittedReport(report);
       setIsSubmitting(false);
+      setFormPhase("input");
       resetForm();
     }, 1200);
   };
@@ -198,6 +203,7 @@ function ReportingPage() {
         eyebrow="Confidential and trauma-informed"
         title={<>You will be <span className="italic" style={{ background: "var(--gradient-gold)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>believed</span>, respected and supported.</>}
         description="The reporting process is designed to reduce anxiety. Your rights are protected at every stage. So are those of the respondent."
+        bgImage="/src/assets/reporting-hero.png"
       >
         <div className="flex flex-wrap gap-3">
           <Button
@@ -268,8 +274,15 @@ function ReportingPage() {
                     Submit another report
                   </Button>
                 </div>
-              ) : (
+              ) : formPhase === "input" ? (
                 <form onSubmit={handleSubmit} className="rounded-sm border border-slate-200 border border-border bg-card p-7 md:p-9 shadow-elegant space-y-8">
+                  <div className="flex items-center gap-4 mb-2">
+                    <div className="h-8 w-8 rounded-full bg-[#1f3a5f] text-white flex items-center justify-center text-xs font-bold">1</div>
+                    <div className="h-px flex-1 bg-slate-100" />
+                    <div className="h-8 w-8 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center text-xs font-bold">2</div>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Step 1: Input Details</span>
+                  </div>
+
                   <div>
                     <label className="text-[13px] font-medium text-foreground uppercase tracking-wider">Incident Type</label>
                     <p className="mt-1 text-[11px] text-muted-foreground uppercase tracking-wide">
@@ -316,13 +329,13 @@ function ReportingPage() {
                     <div>
                       <label className="text-[13px] font-medium text-foreground uppercase tracking-wider">Incident Date</label>
                       <div className="relative mt-3">
-                        <CalendarDays className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground" />
                         <Input
                           type="date"
                           value={incidentDate}
                           onChange={(event) => setIncidentDate(event.target.value)}
-                          className="h-11 rounded-sm pl-9 bg-background"
+                          className="h-11 rounded-sm pr-10 bg-background"
                         />
+                        <CalendarDays className="absolute right-3 top-3.5 h-4 w-4 text-muted-foreground pointer-events-none" />
                       </div>
                       {errors.incidentDate && (
                         <p className="mt-2 text-xs text-destructive">{errors.incidentDate}</p>
@@ -331,13 +344,13 @@ function ReportingPage() {
                     <div>
                       <label className="text-[13px] font-medium text-foreground uppercase tracking-wider">Incident Time (optional)</label>
                       <div className="relative mt-3">
-                        <Clock3 className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground" />
                         <Input
                           type="time"
                           value={incidentTime}
                           onChange={(event) => setIncidentTime(event.target.value)}
-                          className="h-11 rounded-sm pl-9 bg-background"
+                          className="h-11 rounded-sm pr-10 bg-background"
                         />
+                        <Clock3 className="absolute right-3 top-3.5 h-4 w-4 text-muted-foreground pointer-events-none" />
                       </div>
                     </div>
                   </div>
@@ -477,12 +490,105 @@ function ReportingPage() {
 
                   <Button
                     type="submit"
-                    disabled={isSubmitting}
-                    className="h-12 rounded-sm px-6 bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto"
+                    className="h-12 rounded-sm px-8 bg-[#1f3a5f] hover:bg-[#152a47] text-white w-full sm:w-auto font-bold uppercase tracking-widest text-[12px]"
                   >
-                    {isSubmitting ? "Submitting securely..." : "Submit Report Safely"}
+                    Review Details <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </form>
+              ) : (
+                <div className="rounded-sm border border-slate-200 border border-border bg-card p-7 md:p-9 shadow-elegant space-y-8">
+                  <div className="flex items-center gap-4 mb-2">
+                    <div className="h-8 w-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs font-bold">✓</div>
+                    <div className="h-px flex-1 bg-emerald-100" />
+                    <div className="h-8 w-8 rounded-full bg-[#1f3a5f] text-white flex items-center justify-center text-xs font-bold">2</div>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#1f3a5f]">Step 2: Review Information</span>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2">Incident Category</h4>
+                      <p className="text-lg font-semibold text-[#1f3a5f]">{incidentType}</p>
+                    </div>
+
+                    <div>
+                      <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2">Description</h4>
+                      <div className="p-5 bg-slate-50 border border-slate-100 rounded-sm text-sm text-slate-600 leading-relaxed italic">
+                        "{description}"
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-8">
+                      <div>
+                        <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2">Date</h4>
+                        <p className="text-sm font-medium text-slate-700">{incidentDate}</p>
+                      </div>
+                      <div>
+                        <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2">Time</h4>
+                        <p className="text-sm font-medium text-slate-700">{incidentTime || "Not specified"}</p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2">Anonymous Mode</h4>
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline" className={isAnonymous ? "bg-emerald-50 text-emerald-700 border-emerald-100" : "bg-slate-50 text-slate-700 border-slate-200"}>
+                          {isAnonymous ? "ON (Identity hidden)" : "OFF (Identity included)"}
+                        </Badge>
+                      </div>
+                    </div>
+
+                    {!isAnonymous && (
+                      <div className="p-5 border border-slate-200 rounded-sm bg-slate-50/50">
+                        <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">Your Identity</h4>
+                        <div className="grid grid-cols-2 gap-y-4 gap-x-8">
+                          <div>
+                            <span className="text-[10px] text-slate-400 uppercase block">Name</span>
+                            <span className="text-sm font-medium">{fullName}</span>
+                          </div>
+                          <div>
+                            <span className="text-[10px] text-slate-400 uppercase block">ID</span>
+                            <span className="text-sm font-medium">{studentOrStaffId}</span>
+                          </div>
+                          <div className="col-span-2">
+                            <span className="text-[10px] text-slate-400 uppercase block">Email</span>
+                            <span className="text-sm font-medium">{email}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {uploads.length > 0 && (
+                      <div>
+                        <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2">Evidence Attached</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {uploads.map((u) => (
+                            <Badge key={u.id} variant="secondary" className="bg-slate-100 text-slate-600 font-normal">
+                              {u.file.name}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
+                    <Button
+                      onClick={handleFinalSubmit}
+                      disabled={isSubmitting}
+                      className="h-12 rounded-sm px-8 bg-emerald-600 hover:bg-emerald-700 text-white font-bold uppercase tracking-widest text-[12px] flex-1"
+                    >
+                      {isSubmitting ? "Submitting..." : "Confirm & Submit Report"}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => setFormPhase("input")}
+                      disabled={isSubmitting}
+                      className="h-12 rounded-sm px-8 border-slate-200 text-slate-600 font-bold uppercase tracking-widest text-[12px]"
+                    >
+                      Back to Edit
+                    </Button>
+                  </div>
+                </div>
               )}
             </div>
 

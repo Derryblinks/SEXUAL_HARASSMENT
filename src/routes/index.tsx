@@ -54,7 +54,7 @@ function Hero() {
       {/* Refined gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#1f3a5f]/60 via-[#1f3a5f]/40 to-[#1f3a5f]/90" />
       <div className="absolute inset-0 bg-black/20" />
-      
+
       <div className="relative mx-auto max-w-5xl px-6 py-32 text-center">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -162,12 +162,12 @@ function CommitmentSection() {
 /* ---------------- POLICY HIGHLIGHTS ---------------- */
 function PolicyHighlights() {
   const items = [
-    { icon: ShieldCheck, title: "Prohibited conduct defined", body: "Sexual harassment and related misconduct — including quid pro quo, hostile environments, and abuse of authority in teaching or employment relationships.", href: "/about" },
-    { icon: Scale, title: "Formal & informal pathways", body: "Direct communication, trusted intervention, optional mediation where appropriate, and formal complaints to the Anti-Sexual Harassment Committee.", href: "/reporting" },
+    { icon: ShieldCheck, title: "Prohibited conduct defined", body: "Sexual harassment and related misconduct — including quid pro quo, hostile environments, and abuse of authority in teaching or employment relationships.", href: "/understanding/misconduct" },
+    { icon: Scale, title: "Formal & informal pathways", body: "Direct communication, trusted intervention, optional mediation where appropriate, and formal complaints to the Anti-Sexual Harassment Committee.", href: "/understanding/procedures" },
     { icon: BookOpen, title: "Education & training", body: "Wide dissemination of the policy, materials on reporting, and training for those who receive informal disclosures.", href: "/understanding" },
     { icon: Users, title: "Institutional accountability", body: "Oversight by Council and the Vice-Chancellor; CEGENSA supports implementation and crisis counselling.", href: "/about" },
     { icon: Lock, title: "Confidentiality", body: "The Committee maintains confidentiality of reports and proceedings to protect the integrity of investigations.", href: "/reporting" },
-    { icon: HeartHandshake, title: "Victim protection & non-retaliation", body: "Complainants and participants should not face retaliation or stigmatisation; retaliation may be reported under the same procedures.", href: "/reporting" },
+    { icon: HeartHandshake, title: "Victim protection & non-retaliation", body: "Complainants and participants should not face retaliation or stigmatisation; retaliation may be reported under the same procedures.", href: "/understanding/consent" },
   ];
   return (
     <section className="relative py-28 md:py-36 bg-slate-50">
@@ -211,6 +211,7 @@ function StatsSection() {
           <div className="lg:col-span-5">
             <SectionHeader
               eyebrow="Why it matters"
+              dark={true}
               title={<span className="text-primary-foreground">Clear timelines and structures — so people know what to expect.</span>}
               description={<span className="text-primary-foreground">The platform outlines who investigates, how confidentiality works, and how outcomes and sanctions are approached — alongside rights for complainants and respondents.</span>}
             />

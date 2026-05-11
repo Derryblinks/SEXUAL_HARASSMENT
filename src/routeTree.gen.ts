@@ -20,6 +20,11 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdminRouteImport } from './routes/Admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as UnderstandingIndexRouteImport } from './routes/understanding/index'
+import { Route as UnderstandingProceduresRouteImport } from './routes/understanding/procedures'
+import { Route as UnderstandingMisconductRouteImport } from './routes/understanding/misconduct'
+import { Route as UnderstandingConsentRouteImport } from './routes/understanding/consent'
+import { Route as UnderstandingBystanderRouteImport } from './routes/understanding/bystander'
 
 const UnderstandingRoute = UnderstandingRouteImport.update({
   id: '/understanding',
@@ -76,6 +81,31 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UnderstandingIndexRoute = UnderstandingIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => UnderstandingRoute,
+} as any)
+const UnderstandingProceduresRoute = UnderstandingProceduresRouteImport.update({
+  id: '/procedures',
+  path: '/procedures',
+  getParentRoute: () => UnderstandingRoute,
+} as any)
+const UnderstandingMisconductRoute = UnderstandingMisconductRouteImport.update({
+  id: '/misconduct',
+  path: '/misconduct',
+  getParentRoute: () => UnderstandingRoute,
+} as any)
+const UnderstandingConsentRoute = UnderstandingConsentRouteImport.update({
+  id: '/consent',
+  path: '/consent',
+  getParentRoute: () => UnderstandingRoute,
+} as any)
+const UnderstandingBystanderRoute = UnderstandingBystanderRouteImport.update({
+  id: '/bystander',
+  path: '/bystander',
+  getParentRoute: () => UnderstandingRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -88,7 +118,12 @@ export interface FileRoutesByFullPath {
   '/reporting': typeof ReportingRoute
   '/resources': typeof ResourcesRoute
   '/stakeholders': typeof StakeholdersRoute
-  '/understanding': typeof UnderstandingRoute
+  '/understanding': typeof UnderstandingRouteWithChildren
+  '/understanding/bystander': typeof UnderstandingBystanderRoute
+  '/understanding/consent': typeof UnderstandingConsentRoute
+  '/understanding/misconduct': typeof UnderstandingMisconductRoute
+  '/understanding/procedures': typeof UnderstandingProceduresRoute
+  '/understanding/': typeof UnderstandingIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -101,7 +136,11 @@ export interface FileRoutesByTo {
   '/reporting': typeof ReportingRoute
   '/resources': typeof ResourcesRoute
   '/stakeholders': typeof StakeholdersRoute
-  '/understanding': typeof UnderstandingRoute
+  '/understanding/bystander': typeof UnderstandingBystanderRoute
+  '/understanding/consent': typeof UnderstandingConsentRoute
+  '/understanding/misconduct': typeof UnderstandingMisconductRoute
+  '/understanding/procedures': typeof UnderstandingProceduresRoute
+  '/understanding': typeof UnderstandingIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -115,7 +154,12 @@ export interface FileRoutesById {
   '/reporting': typeof ReportingRoute
   '/resources': typeof ResourcesRoute
   '/stakeholders': typeof StakeholdersRoute
-  '/understanding': typeof UnderstandingRoute
+  '/understanding': typeof UnderstandingRouteWithChildren
+  '/understanding/bystander': typeof UnderstandingBystanderRoute
+  '/understanding/consent': typeof UnderstandingConsentRoute
+  '/understanding/misconduct': typeof UnderstandingMisconductRoute
+  '/understanding/procedures': typeof UnderstandingProceduresRoute
+  '/understanding/': typeof UnderstandingIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +175,11 @@ export interface FileRouteTypes {
     | '/resources'
     | '/stakeholders'
     | '/understanding'
+    | '/understanding/bystander'
+    | '/understanding/consent'
+    | '/understanding/misconduct'
+    | '/understanding/procedures'
+    | '/understanding/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -143,6 +192,10 @@ export interface FileRouteTypes {
     | '/reporting'
     | '/resources'
     | '/stakeholders'
+    | '/understanding/bystander'
+    | '/understanding/consent'
+    | '/understanding/misconduct'
+    | '/understanding/procedures'
     | '/understanding'
   id:
     | '__root__'
@@ -157,6 +210,11 @@ export interface FileRouteTypes {
     | '/resources'
     | '/stakeholders'
     | '/understanding'
+    | '/understanding/bystander'
+    | '/understanding/consent'
+    | '/understanding/misconduct'
+    | '/understanding/procedures'
+    | '/understanding/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -170,7 +228,7 @@ export interface RootRouteChildren {
   ReportingRoute: typeof ReportingRoute
   ResourcesRoute: typeof ResourcesRoute
   StakeholdersRoute: typeof StakeholdersRoute
-  UnderstandingRoute: typeof UnderstandingRoute
+  UnderstandingRoute: typeof UnderstandingRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -252,8 +310,63 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/understanding/': {
+      id: '/understanding/'
+      path: '/'
+      fullPath: '/understanding/'
+      preLoaderRoute: typeof UnderstandingIndexRouteImport
+      parentRoute: typeof UnderstandingRoute
+    }
+    '/understanding/procedures': {
+      id: '/understanding/procedures'
+      path: '/procedures'
+      fullPath: '/understanding/procedures'
+      preLoaderRoute: typeof UnderstandingProceduresRouteImport
+      parentRoute: typeof UnderstandingRoute
+    }
+    '/understanding/misconduct': {
+      id: '/understanding/misconduct'
+      path: '/misconduct'
+      fullPath: '/understanding/misconduct'
+      preLoaderRoute: typeof UnderstandingMisconductRouteImport
+      parentRoute: typeof UnderstandingRoute
+    }
+    '/understanding/consent': {
+      id: '/understanding/consent'
+      path: '/consent'
+      fullPath: '/understanding/consent'
+      preLoaderRoute: typeof UnderstandingConsentRouteImport
+      parentRoute: typeof UnderstandingRoute
+    }
+    '/understanding/bystander': {
+      id: '/understanding/bystander'
+      path: '/bystander'
+      fullPath: '/understanding/bystander'
+      preLoaderRoute: typeof UnderstandingBystanderRouteImport
+      parentRoute: typeof UnderstandingRoute
+    }
   }
 }
+
+interface UnderstandingRouteChildren {
+  UnderstandingBystanderRoute: typeof UnderstandingBystanderRoute
+  UnderstandingConsentRoute: typeof UnderstandingConsentRoute
+  UnderstandingMisconductRoute: typeof UnderstandingMisconductRoute
+  UnderstandingProceduresRoute: typeof UnderstandingProceduresRoute
+  UnderstandingIndexRoute: typeof UnderstandingIndexRoute
+}
+
+const UnderstandingRouteChildren: UnderstandingRouteChildren = {
+  UnderstandingBystanderRoute: UnderstandingBystanderRoute,
+  UnderstandingConsentRoute: UnderstandingConsentRoute,
+  UnderstandingMisconductRoute: UnderstandingMisconductRoute,
+  UnderstandingProceduresRoute: UnderstandingProceduresRoute,
+  UnderstandingIndexRoute: UnderstandingIndexRoute,
+}
+
+const UnderstandingRouteWithChildren = UnderstandingRoute._addFileChildren(
+  UnderstandingRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -266,7 +379,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReportingRoute: ReportingRoute,
   ResourcesRoute: ResourcesRoute,
   StakeholdersRoute: StakeholdersRoute,
-  UnderstandingRoute: UnderstandingRoute,
+  UnderstandingRoute: UnderstandingRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
