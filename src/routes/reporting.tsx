@@ -172,11 +172,11 @@ function ReportingPage() {
       identity: isAnonymous
         ? undefined
         : {
-            fullName: fullName.trim(),
-            studentOrStaffId: studentOrStaffId.trim(),
-            email: email.trim(),
-            phone: phone.trim(),
-          },
+          fullName: fullName.trim(),
+          studentOrStaffId: studentOrStaffId.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+        },
       priority: derivePriority(incidentType as IncidentType, description),
       status: "Pending",
       assignedInvestigator: "Unassigned",
@@ -371,9 +371,8 @@ function ReportingPage() {
                         setIsDragging(false);
                         handleFiles(event.dataTransfer.files);
                       }}
-                      className={`mt-3 block cursor-pointer rounded-sm border border-slate-200 border-2 border-dashed p-7 transition-colors ${
-                        isDragging ? "border-primary bg-primary/5" : "border-border bg-background/60"
-                      }`}
+                      className={`mt-3 block cursor-pointer rounded-sm border border-slate-200 border-2 border-dashed p-7 transition-colors ${isDragging ? "border-primary bg-primary/5" : "border-border bg-background/60"
+                        }`}
                     >
                       <input
                         type="file"
@@ -662,7 +661,7 @@ function ReportingPage() {
                 The right to bring a support person or advisor to any meeting or hearing.
               </p>
             </div>
-            
+
             <div className="bg-white border border-[#1f3a5f] p-8 shadow-sm">
               <h3 className="text-[17px] font-semibold text-[#1f3a5f] mb-3">Periodic Updates</h3>
               <p className="text-[14px] text-slate-500 leading-relaxed">

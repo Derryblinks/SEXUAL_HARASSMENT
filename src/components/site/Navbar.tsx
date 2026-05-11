@@ -46,12 +46,12 @@ export function Navbar() {
             <DropdownMenu>
               <DropdownMenuTrigger
                 className={`h-full flex items-center gap-1 text-[15px] transition-colors focus:outline-none group ${
-                  isActive("/understanding") ? "text-[#1f3a5f]" : "text-slate-600 hover:text-[#1f3a5f]"
+                  isActive("/understanding") && !pathname.includes("/bystander") && !pathname.includes("/procedures") ? "text-[#1f3a5f]" : "text-slate-600 hover:text-[#1f3a5f]"
                 }`}
               >
                 <span
                   className={`py-1 border-b-2 transition-all ${
-                    isActive("/understanding") ? "border-[#c59d5f]" : "border-transparent group-hover:border-slate-200"
+                    isActive("/understanding") && !pathname.includes("/bystander") && !pathname.includes("/procedures") ? "border-[#c59d5f]" : "border-transparent group-hover:border-slate-200"
                   }`}
                 >
                   Learn
@@ -84,9 +84,13 @@ export function Navbar() {
             {/* Training dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger
-                className={`h-full flex items-center gap-1 text-[15px] transition-colors focus:outline-none group text-slate-600 hover:text-[#1f3a5f]`}
+                className={`h-full flex items-center gap-1 text-[15px] transition-colors focus:outline-none group ${
+                  pathname.includes("/bystander") || pathname.includes("/procedures") ? "text-[#1f3a5f]" : "text-slate-600 hover:text-[#1f3a5f]"
+                }`}
               >
-                <span className="py-1 border-b-2 border-transparent group-hover:border-slate-200 transition-all">
+                <span className={`py-1 border-b-2 transition-all ${
+                  pathname.includes("/bystander") || pathname.includes("/procedures") ? "border-[#c59d5f]" : "border-transparent group-hover:border-slate-200"
+                }`}>
                   Training
                 </span>
                 <ChevronDown className="h-3.5 w-3.5 text-slate-400 mt-0.5" />
